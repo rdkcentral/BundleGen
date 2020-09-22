@@ -1,0 +1,14 @@
+{
+    "id": "com.rdk.wayland-egl-test",
+    "type": "application/vnd.rdk-app.dac.native",
+    "graphics": true,
+    "network": {
+        "type": "none"
+    },
+    "storage": {},
+    "resources": {
+        "ram": "128M"
+    },
+    "features": [],
+    "mounts": []
+}

@@ -1,0 +1,32 @@
+{
+    "id": "com.rdk.flutter",
+    "type": "application/vnd.rdk-app.dac.native",
+    "graphics": true,
+    "network": {
+        "type": "nat",
+        "dnsmasq": "true"
+    },
+    "storage": {
+        "persistent": [
+            {
+                "size": "60M",
+                "path": "/home/private"
+            }
+        ],
+        "temp": [
+            {
+                "size": "100M",
+                "path": "/home/temp"
+            },
+            {
+                "size": "10M",
+                "path": "/var/volatile"
+            }
+        ]
+    },
+    "resources": {
+        "ram": "256M"
+    },
+    "features": [],
+    "mounts": []
+}

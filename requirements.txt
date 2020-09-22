@@ -1,0 +1,4 @@
+autopep8==1.5.3
+click==7.1.2
+humanfriendly==8.2
+loguru==0.5.1

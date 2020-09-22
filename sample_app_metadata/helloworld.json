@@ -1,0 +1,31 @@
+{
+    "id": "com.docker.helloworld",
+    "type": "application/vnd.rdk-app.dac.native",
+    "graphics": false,
+    "network": {
+        "type": "open"
+    },
+    "storage": {
+        "persistent": [
+            {
+                "size": "60M",
+                "path": "/home/private"
+            }
+        ],
+        "temp": [
+            {
+                "size": "100M",
+                "path": "/home/temp"
+            },
+            {
+                "size": "10M",
+                "path": "/var/volatile"
+            }
+        ]
+    },
+    "resources": {
+        "ram": "5M"
+    },
+    "features": [],
+    "mounts": []
+}
