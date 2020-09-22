@@ -10,7 +10,7 @@ Platform templates define specific information about a platform that is used whe
     * OCI images can contain multiple variants of an application, compiled for different architectures
     * Supported values are listed in the Go language document for [`GOARCH`](https://golang.org/doc/install/source#environment):
   * `variant` (string, OPTIONAL). The variant of the CPU, if applicable. Supported architecture/variant combinations are:
-    
+
     |    ISA/ABI     | architecture | variant |
     | :------------: | :----------: | :-----: |
     | ARM 32-bit, v6 |    `arm`     |  `v6`   |
@@ -21,7 +21,7 @@ Platform templates define specific information about a platform that is used whe
   * `version` (string, REQUIRED). Version of RDK installed on the platform
   * `supportedFeatures` (array of strings, REQUIRED). Which RDK services/Thunder NanoServices are installed and available on the platform. Images that require features not present on the platform cannot be converted to OCI bundles
 * `hardware`
-  * `graphics` (boolean, REQUIRED). Whether the platform supports graphics output or not (e.g. on a headless developement VM)
+  * `graphics` (boolean, REQUIRED). Whether the platform supports graphics output or not (e.g. on a headless development VM)
   * `maxRAM` (string, REQUIRED). The maximum amount of RAM an application can use. If an application requires more RAM, a warning will be shown during bundle generation.
 * `storage`
   * `persistent` (object, OPTIONAL) Dobby supports persistent storage using loopback mounts. If the platform should not support loopback mounts, do not define this section
@@ -63,4 +63,4 @@ Platform templates define specific information about a platform that is used whe
 * `dobby`
   * `pluginDir` (string, REQUIRED). Location where Dobby plugins are found on the platform. Dobby plugins are by default found in `/usr/lib/plugins/dobby`
   * `pluginDependencies` (array of strings, REQUIRED. Libraries that the Dobby plugins depend on.
-    * Dobby plugins are shared objects and have dependencies that must exist in the container. THe exact dependencies needed will depend on which plugins are being used on the platform. To find dependencies, run `/lib/ld-linux-armhf.so.3 --list /usr/lib/plugins/dobby/ <plugin-name>` on the platform for each plugin
+    * Dobby plugins are shared objects and have dependencies that must exist in the container. The exact dependencies needed will depend on which plugins are being used on the platform. To find dependencies, run `/lib/ld-linux-armhf.so.3 --list /usr/lib/plugins/dobby/ <plugin-name>` on the platform for each plugin

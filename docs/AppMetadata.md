@@ -1,7 +1,7 @@
 # App Metadata Documentation
 Each app requires a small metadata file which describes it's specific requirements.
 
-Some application options are defined within the OCI Image, such as the entrypoint command, working directory and envrionment variables. See [here](https://github.com/opencontainers/image-spec/blob/master/config.md) for more info.
+Some application options are defined within the OCI Image, such as the entrypoint command, working directory and environment variables. See [here](https://github.com/opencontainers/image-spec/blob/master/config.md) for more info.
 
 ## Options
 * `id` (string, REQUIRED). Unique ID for the app. Should be in reverse domain name notation format (e.g `com.rdk.mycoolapp`)

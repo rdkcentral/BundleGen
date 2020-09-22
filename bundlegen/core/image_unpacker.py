@@ -43,7 +43,7 @@ class ImageUnpackager():
 
         Calls out to umoci to handle the base conversion
         """
-        # If umoci isn't installed, can't download
+        # If umoci isn't installed, can't unpack
         if not self.umoci_found:
             logger.error("Cannot unpack image as cannot find umoci")
             return

@@ -7,7 +7,7 @@ You will need Python >=3.7 installed and configured. You will also require some 
 A Fedora 32 `Vagrantfile` is included to provide a ready-to-use environment. Otherwise follow the steps later in this document
 to set up your own Fedora/Ubuntu environment.
 
-Once you have an environnement setup, follow the below Quick Start instructions
+Once you have an environment setup, follow the below Quick Start instructions
 
 ## Quick Start
 ```
@@ -19,7 +19,7 @@ pip install -r requirements.txt
 pip install --editable .
 bundlegen generate --platform <platform-name> --appmetadata <path-to-app-metadata> <img-url> <output-dir>
 ```
-Note the image URL should be in the form `docker://image-url`. If the image is on the Docker Hub, the full URL can be ommited - e.g `docker://hello-world`.
+Note the image URL should be in the form `docker://image-url`. If the image is on the Docker Hub, the full URL can be omitted - e.g `docker://hello-world`.
 
 See the `docs` directory for more detailed documentation
 
