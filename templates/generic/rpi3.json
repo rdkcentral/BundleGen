@@ -143,7 +143,23 @@
             "soft": 6
         }
     ],
-    "disableUserNamespacing": true,
+    "disableUserNamespacing": false,
+    "usersAndGroups": {
+        "uidMap": [
+            {
+                "containerID": 0,
+                "hostID": 998,
+                "size": 1
+            }
+        ],
+        "gidMap": [
+            {
+                "containerID": 0,
+                "hostID": 997,
+                "size": 1
+            }
+        ]
+    },
     "logging": {
         "mode": "file",
         "logDir": "/var/log"
