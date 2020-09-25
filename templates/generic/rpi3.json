@@ -50,6 +50,7 @@
     },
     "gpu": {
         "westeros": {
+            "hostSocket": "/tmp/westeros-dac"
         },
         "extraMounts": [
         ],
