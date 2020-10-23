@@ -1,0 +1,32 @@
+version: '3.2'
+
+services:
+  bundlegen:
+    build: .
+    stdin_open: true
+    tty: true
+    environment:
+      - "RDK_PLATFORM_SEARCHPATH=/templates"
+    volumes:
+      - bundlegen_bundles:/bundles
+      - type: bind
+        source: ${TEMPLATE_DIR}
+        target: /templates
+      - type: bind
+        source: ${METADATA_FILE}
+        target: /home/bundlegenuser/metadata.json
+      - type: bind
+        source: ${EXTRACTED_IMG_DIR}
+        target: /image
+    depends_on:
+      - web
+
+  web:
+    image: nginx
+    ports:
+      - '8080:80'
+    volumes:
+      - bundlegen_bundles:/usr/share/nginx/html
+
+volumes:
+  bundlegen_bundles: null
