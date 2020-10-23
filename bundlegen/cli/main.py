@@ -28,7 +28,6 @@ from bundlegen.core.image_unpacker import ImageUnpackager
 from bundlegen.core.bundle_processor import BundleProcessor
 from bundlegen.core.utils import Utils
 
-
 @click.group()
 @click.option('-v', '--verbose', count=True, help='Set logging level')
 def cli(verbose):
@@ -57,18 +56,21 @@ def cli(verbose):
 @click.option('-a', '--appmetadata', required=True, help='Path to metadata json for the app (will be embedded in the image itself in future)')
 @click.option('-s', '--searchpath', required=False, help='Where to search for platform templates', envvar="RDK_PLATFORM_SEARCHPATH", type=click.Path())
 @click.option('-c', '--creds', required=False, help='Credentials for the registry (username:password). Can be set using RDK_OCI_REGISTRY_CREDS environment variable for security', envvar="RDK_OCI_REGISTRY_CREDS")
+@click.option('-y', '--yes', help='Automatic yes to prompt', is_flag=True)
 # @click.option('--disable-lib-mounts', required=False, help='Disable automatically bind mounting in libraries that exist on the STB. May increase bundle size', is_flag=True)
-def generate(image, outputdir, platform, appmetadata, searchpath, creds):
+def generate(image, outputdir, platform, appmetadata, searchpath, creds, yes):
     """Generate an OCI Bundle for a specified platform
     """
+
     logger.info(f'Generating new OCI bundle* from {image} for {platform}')
 
     outputdir = os.path.abspath(outputdir)
 
     # Check if the output dir already exists
     if os.path.exists(outputdir):
-        click.confirm(
-            f"The directory {outputdir} already exists. Are you sure you want to continue? The contents of this directory will be deleted", abort=True)
+        if not yes:
+            click.confirm(
+                f"The directory {outputdir} already exists. Are you sure you want to continue? The contents of this directory will be deleted", abort=True)
 
         # Delete existing directory
         shutil.rmtree(outputdir)
