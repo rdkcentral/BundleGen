@@ -23,6 +23,9 @@ Note the image URL should be in the form `docker://image-url`. If the image is o
 
 See the `docs` directory for more detailed documentation
 
+### Docker
+A dockerfile is included that can be used to run BundleGen. See the `docker` directory for instructions on how to use.
+
 ## Development
 *These steps only apply if you're not using the included Vagrantfile*
 
