@@ -20,6 +20,7 @@ import json
 import glob
 import humanfriendly
 import textwrap
+import hashlib
 from loguru import logger
 from pathlib import Path
 from bundlegen.core.utils import Utils
@@ -531,6 +532,30 @@ class BundleProcessor:
         return
 
     # ==========================================================================
+    def _substitute_same_library(self, desired_libraries, box_libraries):
+        to_delete = []
+
+        for desired_hash in desired_libraries:
+            path = box_libraries.get(desired_hash, None)
+            if path is not None:
+                # lib contains full path including roots, we need to strip this part
+                path_in_bundle = desired_libraries[desired_hash].replace(self.rootfs_path, "")
+                # add mount to path
+                self._add_bind_mount(path, path_in_bundle)
+                # remove old file
+                os.remove(desired_libraries[desired_hash])
+                # we cannot remove hash
+                to_delete.append(desired_hash)
+
+        # we couldn't delete items from dictionary while looping through it
+        for item in to_delete:
+            del desired_libraries[item]
+
+        logger.info("Found and replaced " + str(len(to_delete)) + " libraries with mounts")
+
+        return desired_libraries
+
+    # ==========================================================================
     def _process_lib_matching(self):
         """
         Mounts any libraries needed from the host into the container
@@ -551,8 +576,25 @@ class BundleProcessor:
                     f"Library that exists in rootfs is now bind mounted. Deleting lib from rootfs ({rootfs_filepath})")
                 os.remove(rootfs_filepath)
 
-        # TODO:: Add library matching to bind mount any libraries that are
+        # Finding and bind mounting any libraries that are
         # the same in the image as on the host to reduce bundle size
+        logger.info("Starting process of bind mounting matching libraries")
+        bundle_libs = {}
+
+        # TODO: we should somehow choose which file contains libraries
+        # on the box, should this be argument of bundlegen or part of
+        # platform config will yet to be decided
+        file_name = 'rdk_rpi_libraries.json'
+
+        with open(file_name, 'r') as file:
+            box_libs = json.load(file)
+
+        bundle_libs = get_libraries_hashes_in_dirs(self.rootfs_path)
+
+        bundle_libs = self._substitute_same_library(bundle_libs, box_libs)
+        # we can now use bundle_libs for future implementations of library
+        # matching algorythm
+
 
     # ==========================================================================
     def _cleanup_umoci_leftovers(self):
@@ -596,3 +638,47 @@ class BundleProcessor:
         # Create the directory if doesn't exist
         if not os.path.exists(fullPath):
             os.makedirs(fullPath, 0o755)
+
+# goes through directories and selects all libraries + calculates their SHA1
+# returns dictionary (SHA1 - library_path) for every library in directory
+# and all its subdirectories
+def get_libraries_hashes_in_dirs(directories):
+    # goes through directory and takes all file names with ".so" in it
+    def find_libs_in_path(search_path, found_libs):
+        for sub_path in os.walk(search_path):
+            for found_file in glob.glob(os.path.join(sub_path[0], '*.so*')):
+                # there could be directory containing .so in name
+                if os.path.isfile(found_file):
+                    found_libs.append(found_file)
+
+    # calculates file SHA1 hash
+    def get_file_hash(file_name):
+        BUF_SIZE = 65535
+
+        calculated_hash = hashlib.sha1()
+
+        with open(file_name, 'rb') as f:
+            data = f.read(BUF_SIZE)
+            while data:
+                calculated_hash.update(data)
+                data = f.read(BUF_SIZE)
+
+        #print("SHA1: {0}".format(calculated_hash.hexdigest()))
+        return calculated_hash
+
+
+
+    libraries_paths = []
+
+    # get all libraries paths in directory
+    for path in directories:
+        find_libs_in_path(path, libraries_paths)
+
+    libs = {}
+
+    # generate pair hash + filename for every library
+    for file_name in libraries_paths:
+        file_hash = get_file_hash(file_name)
+        libs[file_hash.hexdigest()] = file_name
+
+    return libs
