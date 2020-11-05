@@ -581,19 +581,18 @@ class BundleProcessor:
         logger.info("Starting process of bind mounting matching libraries")
         bundle_libs = {}
 
-        # TODO: we should somehow choose which file contains libraries
-        # on the box, should this be argument of bundlegen or part of
-        # platform config will yet to be decided
-        file_name = 'rdk_rpi_libraries.json'
+        if self.platform_cfg.get('libs_sha1sums'):
+            box_libs = self.platform_cfg['libs_sha1sums']
 
-        with open(file_name, 'r') as file:
-            box_libs = json.load(file)
+            bundle_libs = get_libraries_hashes_in_dirs(self.rootfs_path)
 
-        bundle_libs = get_libraries_hashes_in_dirs(self.rootfs_path)
-
-        bundle_libs = self._substitute_same_library(bundle_libs, box_libs)
-        # we can now use bundle_libs for future implementations of library
-        # matching algorythm
+            bundle_libs = self._substitute_same_library(bundle_libs, box_libs)
+            # we can now use bundle_libs for future implementations of library
+            # matching algorythm
+        else:
+            logger.warning("Cannot find libraries sha1sums, they can be generated"
+            " by /utils/get_files_from_box.py. This means library matching function"
+            "cannot be applied")
 
 
     # ==========================================================================

@@ -31,7 +31,11 @@ def save_box_libs_to_file(file_name, box_address):
 
     box_libraries = get_libraries_hashes_in_box_dirs(possible_paths, box_address)
     with open(file_name, 'w') as file:
-        json.dump(box_libraries, file)
+        # because all configs are squashed together this one should be "packaged"
+        # into some field so it is not overpopulating main level of config
+        new_dict = {}
+        new_dict["libs_sha1sums"] = box_libraries
+        json.dump(new_dict, file)
 
 
 if __name__ == '__main__':
