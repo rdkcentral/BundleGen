@@ -51,7 +51,7 @@ class STBPlatform:
 
         for subdir, dirs, files in os.walk(self.search_path):
             for file in files:
-                if self.name in file:
+                if (self.name + ".json" in file) or (self.name + "_libs.json" in file):
                     # Found a suitable config file
                     config_path = os.path.join(subdir, file)
                     config_files.append(config_path)
