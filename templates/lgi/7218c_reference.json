@@ -157,21 +157,14 @@
     "dobby": {
         "pluginDir": "/usr/lib/plugins/dobby",
         "pluginDependencies": [
-            "/lib/libc.so.6",
-            "/lib/libdl.so.2",
             "/lib/libcap.so.2",
-            "/lib/libgcc_s.so.1",
-            "/lib/libm.so.6",
-            "/lib/libpthread.so.0",
-            "/lib/libresolv.so.2",
-            "/lib/librt.so.1",
             "/lib/libsystemd.so.0",
             "/usr/lib/liblzma.so.5",
             "/usr/lib/libnl-3.so.200",
             "/usr/lib/libnl-route-3.so.200",
             "/usr/lib/libstdc++.so.6",
             "/usr/lib/libyajl.so.2",
-            "/lib/ld-linux-armhf.so.3"
+            "/usr/lib/libffi.so.6"
         ]
     }
 }
