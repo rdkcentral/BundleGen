@@ -242,6 +242,12 @@ class BundleProcessor:
             # Now mount in any GPU libraries - these will just have a src/dst
             for lib in self.platform_cfg.get('gpu').get('gfxLibs'):
                 self._add_bind_mount(lib['src'], lib['dst'])
+                # If the file existed in the rootfs, delete it
+                rootfs_filepath = os.path.join(self.rootfs_path, lib['src'].lstrip('/'))
+                if os.path.exists(rootfs_filepath):
+                    logger.debug(
+                        f"Library that exists in rootfs is now bind mounted. Deleting lib from rootfs ({rootfs_filepath})")
+                    os.remove(rootfs_filepath)
 
             # Add a mount for the westeros socket and set envvar in container
             # This is optional as can be set at container startup
