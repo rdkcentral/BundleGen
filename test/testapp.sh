@@ -10,7 +10,7 @@ BOXIP=$1
 PKG=$2
 
 echo "--> Copying bundle to box on lighttpd server location"
-scp $PKG root@$BOXIP:/opt/www/
+scp -C $PKG root@$BOXIP:/opt/www/
 
 echo "--> Killing app"
 curl -X POST http://$BOXIP:9998/jsonrpc -d '{"jsonrpc":"2.0","id":1,"method":"org.rdk.RDKShell.1.kill", "params":{ "client": "testclient" } }'
@@ -20,7 +20,18 @@ echo "--> Remove app"
 curl -X POST http://$BOXIP:9998/jsonrpc -d '{"jsonrpc":"2.0","id":1,"method":"Packager.1.remove", "params":{ "pkgId": "testpkg" } }'
 echo
 
-echo "--> Start installation of app"
+# loop until app removed
+INSTALLED="2"
+while [ "$INSTALLED" = "2" ];
+do
+  echo "--> Waiting until app removed..."
+  sleep 2
+
+  INSTALLED=`curl -s -X POST http://$BOXIP:9998/jsonrpc -d '{"jsonrpc":"2.0","id":1,"method":"Packager.1.getPackageInfo", "params":{ "pkgId": "testpkg" } }' | jq '.' | grep testpkg -c`
+done
+echo "--> App is removed!"
+
+echo "--> Start (re-)installation of app"
 curl -X POST http://$BOXIP:9998/jsonrpc -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"Packager.1.install\", \"params\":{ \"pkgId\": \"testpkg\", \"type\": \"DAC\", \"url\": \"http://127.0.0.1:50050/$PKG\" } }"
 echo
 

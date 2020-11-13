@@ -28,4 +28,4 @@ echo "--> Generating runtime bundle..."
 rm -rf ./rpi-${APP_NAME}
 bundlegen generate --platform rpi3_reference --appmetadata sample_app_metadata/wayland-egl-test.json oci:./oci-${APP_NAME}:latest rpi-${APP_NAME}
 
-./testapp.sh $BOXIP rpi-${APP_NAME}.tar.gz
+./test/testapp.sh $BOXIP rpi-${APP_NAME}.tar.gz
