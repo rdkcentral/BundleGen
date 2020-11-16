@@ -584,7 +584,7 @@ class BundleProcessor:
         if self.platform_cfg.get('libs_sha1sums'):
             box_libs = self.platform_cfg['libs_sha1sums']
 
-            bundle_libs = get_libraries_hashes_in_dirs(self.rootfs_path)
+            bundle_libs = get_libraries_hashes_in_dirs([self.rootfs_path])
 
             bundle_libs = self._substitute_same_library(bundle_libs, box_libs)
             # we can now use bundle_libs for future implementations of library
