@@ -41,26 +41,32 @@ Vagrant.configure("2") do |config|
     config.vm.provision "file", source: "~/.gitconfig", destination: ".gitconfig"
     config.vm.provision "file", source: "~/.ssh", destination: "$HOME/.ssh"
 
+    # Root tasks
     config.vm.provision "shell", inline: <<-SHELL
         dnf upgrade -y
         dnf install -y make vim jq git skopeo go go-md2man
+    SHELL
 
-        # Install Go
-        dnf install -y go
+    config.vm.provision "shell", privileged: false, inline: <<-SHELL
+        # Configure Go
         mkdir -p $HOME/go
         echo 'export GOPATH=$HOME/go' >> $HOME/.bashrc
         source $HOME/.bashrc
-    SHELL
-
-    # Configure Go
-    config.vm.provision "shell", privileged: false, inline: <<-SHELL
-        mkdir -p $HOME/go
-        echo 'export GOPATH=$HOME/go' >> $HOME/.bashrc
 
         # Install umoci
         go get -d github.com/opencontainers/umoci
         cd $GOPATH/src/github.com/opencontainers/umoci/
         make
         sudo make install
+
+        # Clone BundleGen repo and install bundlegen
+        cd ~
+        git clone git@github.com:rdkcentral/BundleGen.git bundlegen
+        cd bundlegen
+        python3 -m venv .venv
+        source .venv/bin/activate
+        pip install -r requirements.txt
+        pip install --editable .
     SHELL
+
 end

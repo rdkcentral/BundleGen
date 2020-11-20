@@ -1,30 +1,49 @@
-# OCI Bundle Generator
+# OCI Bundle Generator (BundleGen)
 RDK Component to generate extended OCI bundle*'s from OCI Images, ready to be run by Dobby
 
 ## Environment Setup
 You will need Python >=3.7 installed and configured. You will also require some project specific dependencies and OCI tools.
 
-A Fedora 32 `Vagrantfile` is included to provide a ready-to-use environment. Otherwise follow the steps later in this document
-to set up your own Fedora/Ubuntu environment.
-
-Once you have an environment setup, follow the below Quick Start instructions
+A Fedora 32 `Vagrantfile` is included to provide a ready-to-use environment. Otherwise follow the steps later in this document to set up your own Fedora/Ubuntu environment.
 
 ## Quick Start
+Start the Vagrant VM and SSH in.
 ```
-git clone git@github.com:rdkcentral/BundleGen.git
-cd bundlegen
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-pip install --editable .
-bundlegen generate --platform <platform-name> --appmetadata <path-to-app-metadata> <img-url> <output-dir>
+$ vagrant up
+$ vagrant ssh
 ```
+
+Activate the Python venv
+```
+$ cd ~/bundlegen
+$ source .venv/bin/activate
+```
+
+Run BundleGen
+```
+$ bundlegen generate --platform <platform-name> --appmetadata <path-to-app-metadata> <img-url> <output-dir>
+```
+
 Note the image URL should be in the form `docker://image-url`. If the image is on the Docker Hub, the full URL can be omitted - e.g `docker://hello-world`.
 
 See the `docs` directory for more detailed documentation
 
 ### Docker
-A dockerfile is included that can be used to run BundleGen. See the `docker` directory for instructions on how to use.
+A dockerfile is included that can be used to run BundleGen as an alternative to Vagrant. See the `docker` directory for instructions on how to use.
+
+## Test Scripts
+Test scripts are included for reference platforms to speed up the generation and installation process.
+
+Install and test already generated bundle:
+```
+./test/testapp.sh 192.168.1.124 rpi-dac-image-wayland-egl-test.tar.gz
+```
+
+Generate bundle for Raspberry Pi
+```
+./test/build_and_test_on_rpi.sh 192.168.1.124 dac-image-wayland-egl-test.tar
+```
+
 
 ## Development
 *These steps only apply if you're not using the included Vagrantfile*
