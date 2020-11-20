@@ -106,3 +106,52 @@ class Utils:
             tar.add(source, arcname=os.path.basename(source))
 
         return True
+
+    # ==========================================================================
+    @staticmethod
+    def create_ipk(source, dest):
+        """Create a .ipk file of the source directory. Contents of source directory
+        is at the root of the tar.gz file.
+
+        Args:
+            source (string): Path to directory to compress
+            dest (string): Where to save the tarball
+
+        Returns:
+            bool: True for success
+        """
+
+        # define const names
+        DATA_NAME = "data.tar.gz"
+        CONTROL_NAME = "control.tar.gz"
+        DEBIAN_BIN_NAME = "debian-binary"
+
+        if not dest.endswith(".ipk"):
+            output_filename = f'{dest}.ipk'
+        else:
+            output_filename = dest
+
+
+        # first create tarball with complete filesystem
+        Utils.create_tgz(source, DATA_NAME)
+
+        # create empty "control" directory
+        with tarfile.open(CONTROL_NAME, "w:gz") as tar:
+            pass
+
+        # create debian-binary file
+        with open(DEBIAN_BIN_NAME, "w") as file:
+            file.write("2.0")
+
+        # create ipk bundle
+        with tarfile.open(f'{output_filename}', "w:gz") as tar:
+            tar.add(DATA_NAME)
+            tar.add(CONTROL_NAME)
+            tar.add(DEBIAN_BIN_NAME)
+
+        # remove temp files
+        os.remove(DATA_NAME)
+        os.remove(CONTROL_NAME)
+        os.remove(DEBIAN_BIN_NAME)
+
+        return True
