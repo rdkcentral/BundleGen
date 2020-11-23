@@ -132,10 +132,10 @@ def generate(image, outputdir, platform, appmetadata, searchpath, creds, ipk, ye
         # create control file
         Utils.create_control_file(selected_platform.get_config(), app_metadata_dict)
         Utils.create_ipk(outputdir, outputdir)
+        logger.success(f"Successfully generated bundle at {outputdir}.ipk")
     else:
         Utils.create_tgz(outputdir, outputdir)
-
-    logger.success(f"Successfully generated bundle at {outputdir}.tar.gz")
+        logger.success(f"Successfully generated bundle at {outputdir}.tar.gz")
 
 
 cli.add_command(generate)

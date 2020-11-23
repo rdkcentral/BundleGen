@@ -74,12 +74,12 @@ class Utils:
     @staticmethod
     def create_control_file(platform, app_metadata):
 
-        package_name = app_metadata.get("id", "test_packet")
+        package_name = app_metadata.get("id", "test_package")
         version = app_metadata.get("version", "1.0.0")
         architecture = ""
         if platform.get('arch'):
             architecture = str(platform['arch'].get('arch')) + str(platform['arch'].get('variant'))
-        description = app_metadata.get("description", "some packet")
+        description = app_metadata.get("description", "some package")
         priority = app_metadata.get("priority", "optional")
         depends = "" # we never depend on anything
 
