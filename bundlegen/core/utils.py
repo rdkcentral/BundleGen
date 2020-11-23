@@ -72,6 +72,27 @@ class Utils:
 
     # ==========================================================================
     @staticmethod
+    def create_control_file(platform, app_metadata):
+
+        package_name = app_metadata.get("id", "test_packet")
+        version = app_metadata.get("version", "1.0.0")
+        architecture = ""
+        if platform.get('arch'):
+            architecture = str(platform['arch'].get('arch')) + str(platform['arch'].get('variant'))
+        description = app_metadata.get("description", "some packet")
+        priority = app_metadata.get("priority", "optional")
+        depends = "" # we never depend on anything
+
+        with open("control", "w") as file:
+            file.write(f"Package: {package_name}\n")
+            file.write(f"Version: {version}\n")
+            file.write(f"Architecture: {architecture}\n")
+            file.write(f"Description: {description}\n")
+            file.write(f"Priority: {priority}\n")
+            file.write(f"Depends: {depends}\n")
+
+    # ==========================================================================
+    @staticmethod
     def create_tgz(source, dest):
         """Create a .tar.gz file of the source directory. Contents of source directory
         is at the root of the tar.gz file.
@@ -137,7 +158,7 @@ class Utils:
 
         # create empty "control" directory
         with tarfile.open(CONTROL_NAME, "w:gz") as tar:
-            pass
+            tar.add("control")
 
         # create debian-binary file
         with open(DEBIAN_BIN_NAME, "w") as file:
@@ -150,6 +171,7 @@ class Utils:
             tar.add(DEBIAN_BIN_NAME)
 
         # remove temp files
+        os.remove("control")
         os.remove(DATA_NAME)
         os.remove(CONTROL_NAME)
         os.remove(DEBIAN_BIN_NAME)
