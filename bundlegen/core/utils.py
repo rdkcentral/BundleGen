@@ -156,8 +156,9 @@ class Utils:
         # first create tarball with complete filesystem
         Utils.create_tgz(source, DATA_NAME)
 
-        # create empty "control" directory
+        # create "control" directory
         with tarfile.open(CONTROL_NAME, "w:gz") as tar:
+            # control file should be created before by calling create_control_file
             tar.add("control")
 
         # create debian-binary file
