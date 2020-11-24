@@ -56,9 +56,10 @@ def cli(verbose):
 @click.option('-a', '--appmetadata', required=True, help='Path to metadata json for the app (will be embedded in the image itself in future)')
 @click.option('-s', '--searchpath', required=False, help='Where to search for platform templates', envvar="RDK_PLATFORM_SEARCHPATH", type=click.Path())
 @click.option('-c', '--creds', required=False, help='Credentials for the registry (username:password). Can be set using RDK_OCI_REGISTRY_CREDS environment variable for security', envvar="RDK_OCI_REGISTRY_CREDS")
+@click.option('-i', '--ipk', required=False, help='If set result file will be "*.ipk" instead of "*.tar.gz"', envvar="FILE_FORMAT_IPK", is_flag=True)
 @click.option('-y', '--yes', help='Automatic yes to prompt', is_flag=True)
 # @click.option('--disable-lib-mounts', required=False, help='Disable automatically bind mounting in libraries that exist on the STB. May increase bundle size', is_flag=True)
-def generate(image, outputdir, platform, appmetadata, searchpath, creds, yes):
+def generate(image, outputdir, platform, appmetadata, searchpath, creds, ipk, yes):
     """Generate an OCI Bundle for a specified platform
     """
 
@@ -126,10 +127,15 @@ def generate(image, outputdir, platform, appmetadata, searchpath, creds, yes):
         logger.warning("Failed to produce bundle")
         return
 
-    # Processing finished, now create a tarball of the output directory
-    Utils.create_tgz(outputdir, outputdir)
-
-    logger.success(f"Successfully generated bundle at {outputdir}.tar.gz")
+    # Processing finished, now create a tarball/ipk of the output directory
+    if ipk:
+        # create control file
+        Utils.create_control_file(selected_platform.get_config(), app_metadata_dict)
+        Utils.create_ipk(outputdir, outputdir)
+        logger.success(f"Successfully generated bundle at {outputdir}.ipk")
+    else:
+        Utils.create_tgz(outputdir, outputdir)
+        logger.success(f"Successfully generated bundle at {outputdir}.tar.gz")
 
 
 cli.add_command(generate)
