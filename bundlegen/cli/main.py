@@ -53,13 +53,12 @@ def cli(verbose):
 @click.argument('image')
 @click.argument('outputdir', type=click.Path())
 @click.option('-p', '--platform', required=True, help='Platform name to generate the bundle for', envvar='RDK_PLATFORM')
-@click.option('-a', '--appmetadata', required=True, help='Path to metadata json for the app (will be embedded in the image itself in future)')
 @click.option('-s', '--searchpath', required=False, help='Where to search for platform templates', envvar="RDK_PLATFORM_SEARCHPATH", type=click.Path())
 @click.option('-c', '--creds', required=False, help='Credentials for the registry (username:password). Can be set using RDK_OCI_REGISTRY_CREDS environment variable for security', envvar="RDK_OCI_REGISTRY_CREDS")
 @click.option('-i', '--ipk', required=False, help='If set result file will be "*.ipk" instead of "*.tar.gz"', envvar="FILE_FORMAT_IPK", is_flag=True)
 @click.option('-y', '--yes', help='Automatic yes to prompt', is_flag=True)
 # @click.option('--disable-lib-mounts', required=False, help='Disable automatically bind mounting in libraries that exist on the STB. May increase bundle size', is_flag=True)
-def generate(image, outputdir, platform, appmetadata, searchpath, creds, ipk, yes):
+def generate(image, outputdir, platform, searchpath, creds, ipk, yes):
     """Generate an OCI Bundle for a specified platform
     """
 
@@ -83,16 +82,6 @@ def generate(image, outputdir, platform, appmetadata, searchpath, creds, ipk, ye
         logger.error(f"Could not find config for platform {platform}")
         return
 
-    # Get the app metadata as a dictionary
-    # TODO:: Metadata will be embedded in the image moving forward
-    app_metadata_dict = {}
-    if os.path.exists(appmetadata):
-        with open(appmetadata) as metadata:
-            app_metadata_dict = json.load(metadata)
-    else:
-        logger.error(f"Cannot find app metadata file {appmetadata}")
-        return
-
     # Download the image to a temp directory
     img_downloader = ImageDownloader()
     img_path = img_downloader.download_image(
@@ -112,6 +101,18 @@ def generate(image, outputdir, platform, appmetadata, searchpath, creds, ipk, ye
     # Delete the downloaded image now we've unpacked it
     logger.info(f"Deleting {img_path}")
     shutil.rmtree(img_path)
+
+    # Get the app metadata as a dictionary
+    app_metadata_dict = {}
+    appmetadata = os.path.join(outputdir, "rootfs", "appmetadata.json")
+    if os.path.exists(appmetadata):
+        with open(appmetadata) as metadata:
+            app_metadata_dict = json.load(metadata)
+        # remove app metadata from image rootfs
+        os.remove(appmetadata)
+    else:
+        logger.error(f"Cannot find app metadata file {appmetadata}")
+        return
 
     # Begin processing. Work in the output dir where the img was unpacked to
     processor = BundleProcessor(
