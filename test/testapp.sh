@@ -52,3 +52,8 @@ echo "--> Starting app!"
 curl -X POST http://$BOXIP:9998/jsonrpc -d '{"jsonrpc":"2.0","id":1,"method":"org.rdk.RDKShell.1.launchApplication", "params":{ "client": "testclient", "mimeType": "application/dac.native", "uri": "testpkg" } }'
 echo
 
+## move to front and focus the app
+echo "--> Focus app!"
+curl -X POST http://$BOXIP:9998/jsonrpc -d '{"jsonrpc":"2.0","id":1,"method":"org.rdk.RDKShell.1.moveToFront", "params":{ "client": "testclient" } }'
+curl -X POST http://$BOXIP:9998/jsonrpc -d '{"jsonrpc":"2.0","id":1,"method":"org.rdk.RDKShell.1.setFocus", "params":{ "client": "testclient" } }'
+echo

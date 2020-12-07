@@ -26,6 +26,6 @@ tar -xvf $OCI_TAR -C ./oci-${APP_NAME}
 
 echo "--> Generating runtime bundle..."
 rm -rf ./7218c-${APP_NAME}
-bundlegen generate --platform 7218c_reference --appmetadata sample_app_metadata/wayland-egl-test.json oci:./oci-${APP_NAME}:latest 7218c-${APP_NAME}
+bundlegen -vv generate --platform 7218c_reference --appmetadata sample_app_metadata/wayland-egl-test.json oci:./oci-${APP_NAME}:latest 7218c-${APP_NAME}
 
 ./test/testapp.sh $BOXIP 7218c-${APP_NAME}.tar.gz
