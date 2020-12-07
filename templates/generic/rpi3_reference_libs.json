@@ -47,6 +47,8 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libiarmmgrs-ir-hal.so.0",
+                "/usr/lib/libdshalcli.so",
+                "/usr/lib/libds.so",
                 "/usr/lib/librfcapi.so.0",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
@@ -1281,6 +1283,7 @@
                 "/usr/lib/libicui18n.so.64",
                 "/usr/lib/libocdm.so.1",
                 "/usr/lib/libsqlite3.so.0",
+                "/usr/lib/libTTSClient.so",
                 "/usr/lib/libfontconfig.so.1",
                 "/usr/lib/libgcrypt.so.20",
                 "/usr/lib/libgstapp-1.0.so.0",
@@ -1338,7 +1341,11 @@
                 "/usr/lib/libexpat.so.1",
                 "/usr/lib/libfreetype.so.6",
                 "/usr/lib/libEGL.so.1",
+                "/usr/lib/libvchostif.so",
                 "/usr/lib/libGLESv2.so.2",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvcos.so",
+                "/usr/lib/libvchiq_arm.so",
                 "/lib/libdl.so.2",
                 "/usr/lib/libpng16.so.16",
                 "/lib/libz.so.1",
@@ -1399,9 +1406,11 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libaampjsbindings.so",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libjansson.so.4",
                 "/usr/lib/libWPEWebKit-0.1.so.2",
+                "/usr/lib/librdkat.so",
                 "/usr/lib/libIARMBus.so.0",
                 "/usr/lib/libcurl.so.4",
                 "/usr/lib/libWPEFrameworkCore.so.1",
@@ -1646,6 +1655,8 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libiarmmgrs-ir-hal.so.0",
+                "/usr/lib/libdshalcli.so",
+                "/usr/lib/libds.so",
                 "/usr/lib/librfcapi.so.0",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
@@ -1673,8 +1684,11 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libvcos.so",
+                "/usr/lib/libvchiq_arm.so",
                 "/usr/lib/libEGL.so.1",
                 "/usr/lib/libGLESv2.so.2",
+                "/usr/lib/libbcm_host.so",
                 "/usr/lib/libxkbcommon.so.0",
                 "/usr/lib/libwesteros_simpleshell_server.so.0",
                 "/lib/libpthread.so.0",
@@ -1684,6 +1698,7 @@
                 "/usr/lib/libwayland-server.so.0",
                 "/usr/lib/libffi.so.6",
                 "/lib/librt.so.1",
+                "/usr/lib/libvchostif.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -1823,10 +1838,12 @@
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libcurl.so.4",
+                "/usr/lib/libdash.so",
                 "/usr/lib/libxml2.so.2",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libcrypto.so.1.0.0",
                 "/lib/libdl.so.2",
+                "/usr/lib/libabr.so",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libocdm.so.1",
                 "/usr/lib/libstdc++.so.6",
@@ -1847,7 +1864,11 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libbcm_host.so",
                 "/lib/libm.so.6",
+                "/usr/lib/libvchostif.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -2014,9 +2035,13 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libbcm_host.so",
                 "/lib/libm.so.6",
                 "/usr/lib/libwayland-client.so.0",
                 "/usr/lib/libwayland-server.so.0",
+                "/usr/lib/libvchostif.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -2052,6 +2077,11 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libbrcmEGL.so",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvchostif.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libm.so.6",
@@ -2089,13 +2119,6 @@
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libglib-2.0.so.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6"
-            ],
-            "name": "/usr/lib/libsafec-3.5.so.3"
         },
         {
             "apiversions": [],
@@ -2527,13 +2550,6 @@
         {
             "apiversions": [],
             "deps": [
-                "/lib/libc.so.6"
-            ],
-            "name": "/usr/lib/libsafec-3.5.so.3.0.5"
-        },
-        {
-            "apiversions": [],
-            "deps": [
                 "/usr/lib/libgstaudio-1.0.so.0",
                 "/usr/lib/libgsttag-1.0.so.0",
                 "/lib/libz.so.1",
@@ -2598,6 +2614,7 @@
             "deps": [
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libatk-1.0.so.0",
+                "/usr/lib/libTTSClient.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -2738,7 +2755,13 @@
             "deps": [
                 "/lib/libpthread.so.0",
                 "/lib/libdl.so.2",
+                "/usr/lib/libbrcmGLESv2.so",
+                "/usr/lib/libbrcmEGL.so",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvchostif.so",
                 "/lib/libm.so.6",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
             ],
@@ -2762,6 +2785,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libdshalcli.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libgcc_s.so.1",
                 "/lib/libc.so.6"
@@ -2811,6 +2835,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -2832,6 +2857,7 @@
                 "/usr/lib/libpcre.so.1",
                 "/usr/lib/librmfosal.so.0",
                 "/usr/lib/librmfosalutils.so.0",
+                "/usr/lib/librtCore.so",
                 "/usr/lib/librfcapi.so.0",
                 "/usr/lib/libcurl.so.4",
                 "/usr/lib/libssl.so.1.0.0",
@@ -3286,9 +3312,13 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libbcm_host.so",
                 "/lib/libm.so.6",
                 "/usr/lib/libwayland-client.so.0",
                 "/usr/lib/libwayland-server.so.0",
+                "/usr/lib/libvchostif.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -3343,6 +3373,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -3434,6 +3465,9 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libvchostif.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -3447,6 +3481,8 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libcurl.so.4",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/librtCore.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -3469,7 +3505,10 @@
                 "/usr/lib/libBTMgr.so.0",
                 "/usr/lib/librdkstmgr.so.2",
                 "/usr/lib/libyajl.so.2",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/librtCore.so",
                 "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libds.so",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libtr181api.so.0",
                 "/usr/lib/libcrypto.so.1.0.0",
@@ -3490,6 +3529,10 @@
             "deps": [
                 "/lib/libpthread.so.0",
                 "/usr/lib/libEGL.so.1",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvchostif.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libm.so.6",
@@ -3503,6 +3546,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libvchostif.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -3638,6 +3682,9 @@
                 "/usr/lib/libEGL.so.1",
                 "/lib/libdl.so.2",
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvcos.so",
+                "/usr/lib/libvchiq_arm.so",
                 "/usr/lib/libxkbcommon.so.0",
                 "/usr/lib/libwesteros_gl.so.0",
                 "/lib/libpthread.so.0",
@@ -3645,6 +3692,7 @@
                 "/usr/lib/libwayland-client.so.0",
                 "/usr/lib/libffi.so.6",
                 "/lib/librt.so.1",
+                "/usr/lib/libvchostif.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -3658,7 +3706,10 @@
                 "/usr/lib/libBTMgr.so.0",
                 "/usr/lib/librdkstmgr.so.2",
                 "/usr/lib/libyajl.so.2",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/librtCore.so",
                 "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libds.so",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libtr181api.so.0",
                 "/usr/lib/libcrypto.so.1.0.0",
@@ -4197,6 +4248,11 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libbrcmEGL.so",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvchostif.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libm.so.6",
@@ -4353,6 +4409,8 @@
                 "/usr/lib/libxkbcommon.so.0",
                 "/usr/lib/libinput.so.10",
                 "/lib/libudev.so.1",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvchostif.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libc.so.6"
             ],
@@ -4772,6 +4830,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -4876,6 +4935,10 @@
             "deps": [
                 "/lib/libpthread.so.0",
                 "/usr/lib/libEGL.so.1",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvchostif.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libm.so.6",
@@ -5027,6 +5090,9 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcsm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -5082,6 +5148,7 @@
                 "/usr/lib/libwayland-server.so.0",
                 "/usr/lib/libffi.so.6",
                 "/lib/librt.so.1",
+                "/usr/lib/libvchostif.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -5146,6 +5213,13 @@
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libloggerutil.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6"
+            ],
+            "name": "/usr/lib/libsafec-3.5.1.so.3.0.6"
         },
         {
             "apiversions": [],
@@ -5354,6 +5428,10 @@
             "deps": [
                 "/lib/libpthread.so.0",
                 "/usr/lib/libEGL.so.1",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvchostif.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libm.so.6",
@@ -5527,6 +5605,14 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libmmal_vc_client.so",
+                "/usr/lib/libmmal_components.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcsm.so",
+                "/usr/lib/libmmal_core.so",
+                "/usr/lib/libmmal_util.so",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -5589,6 +5675,9 @@
                 "/usr/lib/libEGL.so.1",
                 "/lib/libdl.so.2",
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvcos.so",
+                "/usr/lib/libvchiq_arm.so",
                 "/usr/lib/libxkbcommon.so.0",
                 "/usr/lib/libwesteros_gl.so.0",
                 "/lib/libpthread.so.0",
@@ -5596,6 +5685,7 @@
                 "/usr/lib/libwayland-client.so.0",
                 "/usr/lib/libffi.so.6",
                 "/lib/librt.so.1",
+                "/usr/lib/libvchostif.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -5821,6 +5911,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libaamp.so",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libgcc_s.so.1",
@@ -6276,7 +6367,10 @@
                 "/usr/lib/libBTMgr.so.0",
                 "/usr/lib/librdkstmgr.so.2",
                 "/usr/lib/libyajl.so.2",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/librtCore.so",
                 "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libds.so",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libtr181api.so.0",
                 "/usr/lib/libcrypto.so.1.0.0",
@@ -6413,8 +6507,11 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libvcos.so",
+                "/usr/lib/libvchiq_arm.so",
                 "/usr/lib/libEGL.so.1",
                 "/usr/lib/libGLESv2.so.2",
+                "/usr/lib/libbcm_host.so",
                 "/usr/lib/libxkbcommon.so.0",
                 "/usr/lib/libwesteros_simpleshell_server.so.0",
                 "/lib/libpthread.so.0",
@@ -6424,6 +6521,7 @@
                 "/usr/lib/libwayland-server.so.0",
                 "/usr/lib/libffi.so.6",
                 "/lib/librt.so.1",
+                "/usr/lib/libvchostif.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -6494,6 +6592,8 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libiarmmgrs-ir-hal.so.0",
+                "/usr/lib/libdshalcli.so",
+                "/usr/lib/libds.so",
                 "/usr/lib/librfcapi.so.0",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
@@ -6538,6 +6638,7 @@
                 "/usr/lib/libwayland-server.so.0",
                 "/usr/lib/libffi.so.6",
                 "/lib/librt.so.1",
+                "/usr/lib/libvchostif.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -6698,6 +6799,11 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libbrcmEGL.so",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvchostif.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libm.so.6",
@@ -6825,6 +6931,7 @@
                 "/usr/lib/libwayland-server.so.0",
                 "/usr/lib/libffi.so.6",
                 "/lib/librt.so.1",
+                "/usr/lib/libvchostif.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -7117,6 +7224,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libvchostif.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -7262,6 +7370,7 @@
                 "/usr/lib/libicui18n.so.64",
                 "/usr/lib/libocdm.so.1",
                 "/usr/lib/libsqlite3.so.0",
+                "/usr/lib/libTTSClient.so",
                 "/usr/lib/libfontconfig.so.1",
                 "/usr/lib/libgcrypt.so.20",
                 "/usr/lib/libgstapp-1.0.so.0",
@@ -7311,6 +7420,7 @@
             "deps": [
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libatk-1.0.so.0",
+                "/usr/lib/libTTSClient.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -7529,9 +7639,13 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libbcm_host.so",
                 "/lib/libm.so.6",
                 "/usr/lib/libwayland-client.so.0",
                 "/usr/lib/libwayland-server.so.0",
+                "/usr/lib/libvchostif.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -7567,6 +7681,9 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libvchostif.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/usr/lib/libasound.so.2",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
@@ -7662,6 +7779,8 @@
                 "/usr/lib/libxkbcommon.so.0",
                 "/usr/lib/libinput.so.10",
                 "/lib/libudev.so.1",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvchostif.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libc.so.6"
             ],
@@ -7694,6 +7813,9 @@
                 "/usr/lib/libgstbase-1.0.so.0",
                 "/usr/lib/libGLESv2.so.2",
                 "/usr/lib/libEGL.so.1",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvcos.so",
+                "/usr/lib/libvchiq_arm.so",
                 "/usr/lib/libgstallocators-1.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0",
                 "/usr/lib/libgmodule-2.0.so.0",
@@ -7777,6 +7899,7 @@
             "deps": [
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libatk-1.0.so.0",
+                "/usr/lib/libTTSClient.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -7869,6 +7992,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libdshalcli.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libgcc_s.so.1",
                 "/lib/libc.so.6"
@@ -7900,6 +8024,7 @@
                 "/usr/lib/libwayland-server.so.0",
                 "/usr/lib/libffi.so.6",
                 "/lib/librt.so.1",
+                "/usr/lib/libvchostif.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -8044,6 +8169,8 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libcurl.so.4",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/librtCore.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -8063,6 +8190,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -8110,6 +8238,10 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libmmal_util.so",
+                "/usr/lib/libmmal_core.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -8152,6 +8284,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -8218,6 +8351,9 @@
                 "/usr/lib/libgstbase-1.0.so.0",
                 "/usr/lib/libGLESv2.so.2",
                 "/usr/lib/libEGL.so.1",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvcos.so",
+                "/usr/lib/libvchiq_arm.so",
                 "/usr/lib/libgstallocators-1.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0",
                 "/usr/lib/libgmodule-2.0.so.0",
@@ -8331,6 +8467,10 @@
             "deps": [
                 "/lib/libpthread.so.0",
                 "/usr/lib/libEGL.so.1",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvchostif.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libm.so.6",
@@ -8510,7 +8650,11 @@
                 "/usr/lib/libexpat.so.1",
                 "/usr/lib/libfreetype.so.6",
                 "/usr/lib/libEGL.so.1",
+                "/usr/lib/libvchostif.so",
                 "/usr/lib/libGLESv2.so.2",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvcos.so",
+                "/usr/lib/libvchiq_arm.so",
                 "/lib/libdl.so.2",
                 "/usr/lib/libpng16.so.16",
                 "/lib/libz.so.1",
@@ -8546,6 +8690,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -8993,6 +9139,8 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libcurl.so.4",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/librtCore.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -9157,6 +9305,7 @@
                 "/usr/lib/libpcre.so.1",
                 "/usr/lib/librmfosal.so.0",
                 "/usr/lib/librmfosalutils.so.0",
+                "/usr/lib/librtCore.so",
                 "/usr/lib/librfcapi.so.0",
                 "/usr/lib/libcurl.so.4",
                 "/usr/lib/libssl.so.1.0.0",
@@ -9242,6 +9391,13 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6"
+            ],
+            "name": "/usr/lib/libsafec-3.5.1.so.3"
+        },
+        {
+            "apiversions": [],
+            "deps": [
                 "/usr/lib/libQt5Core.so.5",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libc.so.6"
@@ -9253,6 +9409,10 @@
             "deps": [
                 "/lib/libpthread.so.0",
                 "/usr/lib/libEGL.so.1",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvchostif.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libm.so.6",
@@ -9323,6 +9483,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9333,6 +9495,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9343,6 +9507,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9353,6 +9519,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9363,6 +9531,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9373,6 +9543,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9383,6 +9555,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9393,6 +9567,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9403,6 +9579,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9413,6 +9591,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9423,6 +9603,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9433,6 +9615,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9443,6 +9627,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9453,6 +9639,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9463,6 +9651,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9473,6 +9663,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9483,6 +9675,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9493,6 +9687,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9503,6 +9699,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9513,6 +9711,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9523,6 +9723,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9533,6 +9735,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9543,6 +9747,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9553,6 +9759,8 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libcontainers.so",
+                "/usr/lib/libvcos.so",
                 "/lib/libdl.so.2",
                 "/lib/librt.so.1",
                 "/lib/libc.so.6"
@@ -9643,6 +9851,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/librdkshell.so",
                 "/usr/lib/libwesteros_compositor.so.0",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libstdc++.so.6",
@@ -11135,6 +11344,9 @@
                 "/usr/lib/libgstallocators-1.0.so.0",
                 "/usr/lib/libGLESv2.so.2",
                 "/usr/lib/libEGL.so.1",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvcos.so",
+                "/usr/lib/libvchiq_arm.so",
                 "/usr/lib/libgstpbutils-1.0.so.0",
                 "/usr/lib/libgstaudio-1.0.so.0",
                 "/usr/lib/libgsttag-1.0.so.0",
@@ -11214,11 +11426,15 @@
                 "/usr/lib/libpcre.so.1",
                 "/usr/lib/libessosrmgr.so.0",
                 "/usr/lib/libwesteros_compositor.so.0",
+                "/usr/lib/libvcos.so",
+                "/usr/lib/libvchiq_arm.so",
+                "/usr/lib/libbcm_host.so",
                 "/usr/lib/libxkbcommon.so.0",
                 "/usr/lib/libwesteros_simpleshell_server.so.0",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libwesteros_simplebuffer_server.so.0",
                 "/usr/lib/libwayland-server.so.0",
+                "/usr/lib/libvchostif.so",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libwesteros_simplebuffer_client.so.0",
                 "/usr/lib/libwesteros_simpleshell_client.so.0",
@@ -11694,6 +11910,9 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libGLESv2.so.2",
                 "/usr/lib/libEGL.so.1",
+                "/usr/lib/libbcm_host.so",
+                "/usr/lib/libvcos.so",
+                "/usr/lib/libvchiq_arm.so",
                 "/usr/lib/libpng16.so.16",
                 "/lib/libz.so.1",
                 "/usr/lib/libjpeg.so.62",
@@ -11749,10 +11968,12 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libaamp.so",
                 "/usr/lib/libgstbase-1.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libaampjsbindings.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libgcc_s.so.1",
                 "/lib/libc.so.6"
@@ -12067,22 +12288,6 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libWPEFrameworkPlugins.so.1",
-                "/usr/lib/libcurl.so.4",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libWPEFrameworkTracing.so.1",
-                "/usr/lib/libWPEFrameworkCore.so.1",
-                "/usr/lib/libstdc++.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libc.so.6"
-            ],
-            "name": "/usr/lib/libWPEFrameworkTextToSpeech.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/usr/lib/libWPEFrameworkPlugins.so.1",
                 "/usr/lib/libWPEFrameworkDefinitions.so.1",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
                 "/usr/lib/libWPEFrameworkCore.so.1",
@@ -12139,6 +12344,7 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libWPEFrameworkPlugins.so.1",
+                "/usr/lib/librdkshell.so",
                 "/usr/lib/libWPEFrameworkProtocols.so.1",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
                 "/usr/lib/libWPEFrameworkCore.so.1",

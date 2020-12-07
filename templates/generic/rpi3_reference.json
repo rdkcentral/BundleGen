@@ -102,26 +102,6 @@
                 "dst": "/usr/lib/libwayland-egl.so.1"
             },
             {
-                "src": "/usr/lib/libbcm_host.so",
-                "dst": "/usr/lib/libbcm_host.so"
-            },
-            {
-                "src": "/usr/lib/libvchostif.so",
-                "dst": "/usr/lib/libvchostif.so"
-            },
-            {
-                "src": "/usr/lib/libvcos.so",
-                "dst": "/usr/lib/libvcos.so"
-            },
-            {
-                "src": "/usr/lib/libvchiq_arm.so",
-                "dst": "/usr/lib/libvchiq_arm.so"
-            },
-            {
-                "src": "/usr/lib/libwesteros_simpleshell_client.so.0",
-                "dst": "/usr/lib/libwesteros_simpleshell_client.so.0"
-            },
-            {
                 "src": "/usr/lib/libessos.so.0",
                 "dst": "/usr/lib/libessos.so.0"
             }

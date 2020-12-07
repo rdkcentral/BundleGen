@@ -47,6 +47,8 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libiarmmgrs-ir-hal.so.0",
+                "/usr/lib/libdshalcli.so",
+                "/usr/lib/libds.so",
                 "/usr/lib/librfcapi.so.0",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
@@ -62,6 +64,10 @@
                 "/usr/lib/libcrypto.so.1.0.0",
                 "/usr/lib/libcurl.so.4",
                 "/usr/lib/libyajl.so.2",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/librtCore.so",
                 "/lib/libgcc_s.so.1",
                 "/lib/libc.so.6"
             ],
@@ -1187,6 +1193,7 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libb_secbuf.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbrcmsvpmeta.so"
@@ -1255,11 +1262,14 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libnxpl.so",
                 "/usr/lib/libwayland-server.so.0",
                 "/usr/lib/libffi.so.6",
                 "/usr/lib/libEGL.so.1",
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -1287,6 +1297,7 @@
                 "/usr/lib/libicui18n.so.64",
                 "/usr/lib/libocdm.so.1",
                 "/usr/lib/libsqlite3.so.0",
+                "/usr/lib/libTTSClient.so",
                 "/usr/lib/libfontconfig.so.1",
                 "/usr/lib/libgcrypt.so.20",
                 "/usr/lib/libgstapp-1.0.so.0",
@@ -1564,6 +1575,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libgmock_shared.so",
+                "/usr/lib/libwidevine_ce_cdm_shared.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -1631,7 +1644,10 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libcrypto.so.1.0.0",
+                "/usr/lib/libdrmrootfs.so",
+                "/usr/lib/libbcrypt.so",
                 "/usr/lib/libssl.so.1.0.0",
+                "/usr/lib/libsrai.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libcmndrm.so"
@@ -1689,6 +1705,8 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libiarmmgrs-ir-hal.so.0",
+                "/usr/lib/libdshalcli.so",
+                "/usr/lib/libds.so",
                 "/usr/lib/librfcapi.so.0",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
@@ -1704,6 +1722,10 @@
                 "/usr/lib/libcrypto.so.1.0.0",
                 "/usr/lib/libcurl.so.4",
                 "/usr/lib/libyajl.so.2",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/librtCore.so",
                 "/lib/libgcc_s.so.1",
                 "/lib/libc.so.6"
             ],
@@ -1713,6 +1735,9 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libnxpl.so",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libEGL.so.1",
                 "/usr/lib/libxkbcommon.so.0",
                 "/usr/lib/libwesteros_simpleshell_server.so.0",
@@ -1733,6 +1758,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librdkloggers.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/liblog4c.so.3",
@@ -1925,10 +1952,12 @@
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libcurl.so.4",
+                "/usr/lib/libdash.so",
                 "/usr/lib/libxml2.so.2",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libcrypto.so.1.0.0",
                 "/lib/libdl.so.2",
+                "/usr/lib/libabr.so",
                 "/lib/libuuid.so.1",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libocdm.so.1",
@@ -1975,6 +2004,8 @@
                 "/usr/lib/liblog4c.so.3",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -2075,6 +2106,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librdkloggers.so.0",
                 "/usr/lib/liblog4c.so.3",
                 "/lib/libpthread.so.0",
@@ -2121,7 +2154,10 @@
                 "/usr/lib/libEGL.so.1",
                 "/usr/lib/libwesteros_gl.so.0",
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libnxpl.so",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libwesteros_simplebuffer_server.so.0",
                 "/usr/lib/libwayland-client.so.0",
                 "/usr/lib/libwayland-server.so.0",
@@ -2175,13 +2211,6 @@
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libglib-2.0.so.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6"
-            ],
-            "name": "/usr/lib/libsafec-3.5.so.3"
         },
         {
             "apiversions": [],
@@ -2328,6 +2357,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librdkloggers.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/liblog4c.so.3",
@@ -2403,9 +2434,12 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxpl.so",
                 "/usr/lib/libwayland-server.so.0",
                 "/usr/lib/libffi.so.6",
                 "/lib/librt.so.1",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libEGL.so.1",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
@@ -2629,13 +2663,6 @@
         {
             "apiversions": [],
             "deps": [
-                "/lib/libc.so.6"
-            ],
-            "name": "/usr/lib/libsafec-3.5.so.3.0.5"
-        },
-        {
-            "apiversions": [],
-            "deps": [
                 "/usr/lib/libgstaudio-1.0.so.0",
                 "/usr/lib/libgsttag-1.0.so.0",
                 "/usr/lib/liborc-0.4.so.0",
@@ -2717,6 +2744,8 @@
                 "/lib/libz.so.1",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librmfosal.so.0",
                 "/usr/lib/librmfosalutils.so.0",
                 "/usr/lib/librdkloggers.so.0",
@@ -2908,6 +2937,8 @@
                 "/usr/lib/liblog4c.so.3",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -2933,6 +2964,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libdshalcli.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libgcc_s.so.1",
                 "/lib/libc.so.6"
@@ -3067,6 +3099,8 @@
                 "/usr/lib/libgstreamer-1.0.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libbrcmsvpmeta.so",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
                 "/usr/lib/libWPEFrameworkCore.so.1",
                 "/usr/lib/libstdc++.so.6",
@@ -3190,6 +3224,7 @@
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
                 "/lib/libdl.so.2",
+                "/usr/lib/libv3dplatform.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -3221,6 +3256,8 @@
                 "/usr/lib/liblog4c.so.3",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -3279,8 +3316,10 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
+                "/usr/lib/libnexus.so",
                 "/lib/libdl.so.2",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
@@ -3447,6 +3486,7 @@
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
                 "/lib/libdl.so.2",
+                "/usr/lib/libv3dplatform.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -3576,6 +3616,8 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libcurl.so.4",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/librtCore.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -3597,13 +3639,18 @@
             "deps": [
                 "/usr/lib/libBTMgr.so.0",
                 "/usr/lib/librdkstmgr.so.2",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/libcurl.so.4",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libsoundplayer.so.1",
                 "/usr/lib/libyajl.so.2",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/librtCore.so",
                 "/usr/lib/libIARMBus.so.0",
                 "/usr/lib/libRCEC.so.0",
                 "/usr/lib/libRCECIARMBusHal.so.0",
                 "/usr/lib/libRCECOSHal.so.0",
+                "/usr/lib/libds.so",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libtr181api.so.0",
                 "/usr/lib/libcrypto.so.1.0.0",
@@ -3626,6 +3673,7 @@
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
                 "/lib/libdl.so.2",
+                "/usr/lib/libv3dplatform.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -3720,6 +3768,8 @@
                 "/lib/libz.so.1",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librmfosal.so.0",
                 "/usr/lib/librmfosalutils.so.0",
                 "/usr/lib/librdkloggers.so.0",
@@ -3764,10 +3814,17 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libbcrypt.so",
+                "/usr/lib/libdrmrootfs.so",
                 "/usr/lib/libssl.so.1.0.0",
                 "/usr/lib/libcrypto.so.1.0.0",
+                "/usr/lib/libsrai.so",
+                "/usr/lib/libcmndrm.so",
+                "/usr/lib/libcmndrm_tl.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -3782,9 +3839,12 @@
                 "/usr/lib/libxkbcommon.so.0",
                 "/usr/lib/libwesteros_gl.so.0",
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libnxpl.so",
                 "/usr/lib/libwayland-server.so.0",
                 "/usr/lib/libEGL.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libwesteros_simpleshell_client.so.0",
                 "/usr/lib/libwayland-client.so.0",
                 "/usr/lib/libffi.so.6",
@@ -3801,13 +3861,18 @@
             "deps": [
                 "/usr/lib/libBTMgr.so.0",
                 "/usr/lib/librdkstmgr.so.2",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/libcurl.so.4",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libsoundplayer.so.1",
                 "/usr/lib/libyajl.so.2",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/librtCore.so",
                 "/usr/lib/libIARMBus.so.0",
                 "/usr/lib/libRCEC.so.0",
                 "/usr/lib/libRCECIARMBusHal.so.0",
                 "/usr/lib/libRCECOSHal.so.0",
+                "/usr/lib/libds.so",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libtr181api.so.0",
                 "/usr/lib/libcrypto.so.1.0.0",
@@ -3886,6 +3951,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librdkloggers.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/liblog4c.so.3",
@@ -4039,6 +4106,7 @@
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
                 "/lib/libdl.so.2",
+                "/usr/lib/libv3dplatform.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -4457,6 +4525,8 @@
                 "/lib/libz.so.1",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librmfosal.so.0",
                 "/usr/lib/librmfosalutils.so.0",
                 "/usr/lib/librdkloggers.so.0",
@@ -4712,6 +4782,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librdkloggers.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/liblog4c.so.3",
@@ -5084,6 +5156,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -5110,6 +5184,8 @@
                 "/lib/libz.so.1",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librmfosal.so.0",
                 "/usr/lib/librmfosalutils.so.0",
                 "/usr/lib/librdkloggers.so.0",
@@ -5144,6 +5220,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libsrai.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -5299,6 +5376,7 @@
             "deps": [
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
+                "/usr/lib/libnexus.so",
                 "/lib/libgcc_s.so.1",
                 "/lib/libc.so.6"
             ],
@@ -5386,7 +5464,10 @@
                 "/usr/lib/libEGL.so.1",
                 "/usr/lib/libwesteros_gl.so.0",
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libnxpl.so",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libwesteros_simplebuffer_server.so.0",
                 "/usr/lib/libwayland-client.so.0",
                 "/usr/lib/libwayland-server.so.0",
@@ -5406,9 +5487,12 @@
                 "/usr/lib/libxkbcommon.so.0",
                 "/usr/lib/libwesteros_gl.so.0",
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libnxpl.so",
                 "/usr/lib/libwayland-server.so.0",
                 "/usr/lib/libEGL.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libwesteros_simpleshell_client.so.0",
                 "/usr/lib/libwayland-client.so.0",
                 "/usr/lib/libffi.so.6",
@@ -5482,6 +5566,9 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libnxpl.so",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libEGL.so.1",
                 "/usr/lib/libxkbcommon.so.0",
                 "/usr/lib/libwesteros_simpleshell_server.so.0",
@@ -5498,6 +5585,13 @@
                 "/lib/libgcc_s.so.1"
             ],
             "name": "/usr/lib/libwesteros_compositor.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6"
+            ],
+            "name": "/usr/lib/libsafec-3.5.1.so.3.0.6"
         },
         {
             "apiversions": [],
@@ -5667,6 +5761,8 @@
                 "/usr/lib/liblog4c.so.3",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -5678,11 +5774,14 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libnxpl.so",
                 "/usr/lib/libwayland-server.so.0",
                 "/usr/lib/libffi.so.6",
                 "/usr/lib/libEGL.so.1",
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -5720,6 +5819,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librdkloggers.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/liblog4c.so.3",
@@ -5746,6 +5847,7 @@
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
                 "/lib/libdl.so.2",
+                "/usr/lib/libv3dplatform.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -5791,6 +5893,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librdkloggers.so.0",
                 "/usr/lib/liblog4c.so.3",
                 "/lib/libpthread.so.0",
@@ -5901,6 +6005,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librdkloggers.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/liblog4c.so.3",
@@ -5974,9 +6080,12 @@
                 "/usr/lib/libxkbcommon.so.0",
                 "/usr/lib/libwesteros_gl.so.0",
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libnxpl.so",
                 "/usr/lib/libwayland-server.so.0",
                 "/usr/lib/libEGL.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libwesteros_simpleshell_client.so.0",
                 "/usr/lib/libwayland-client.so.0",
                 "/usr/lib/libffi.so.6",
@@ -6029,6 +6138,8 @@
                 "/usr/lib/liblog4c.so.3",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -6158,6 +6269,9 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libgmock_shared.so",
+                "/usr/lib/libgtest_shared.so",
+                "/usr/lib/libwidevine_ce_cdm_shared.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -6194,6 +6308,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libaamp.so",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libgcc_s.so.1",
@@ -6349,6 +6464,8 @@
                 "/lib/libz.so.1",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librmfosal.so.0",
                 "/usr/lib/librmfosalutils.so.0",
                 "/usr/lib/librdkloggers.so.0",
@@ -6496,6 +6613,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -6651,13 +6770,18 @@
             "deps": [
                 "/usr/lib/libBTMgr.so.0",
                 "/usr/lib/librdkstmgr.so.2",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/libcurl.so.4",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libsoundplayer.so.1",
                 "/usr/lib/libyajl.so.2",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/librtCore.so",
                 "/usr/lib/libIARMBus.so.0",
                 "/usr/lib/libRCEC.so.0",
                 "/usr/lib/libRCECIARMBusHal.so.0",
                 "/usr/lib/libRCECOSHal.so.0",
+                "/usr/lib/libds.so",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libtr181api.so.0",
                 "/usr/lib/libcrypto.so.1.0.0",
@@ -6741,6 +6865,8 @@
                 "/usr/lib/liblog4c.so.3",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -6775,6 +6901,9 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libnxpl.so",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libEGL.so.1",
                 "/usr/lib/libxkbcommon.so.0",
                 "/usr/lib/libwesteros_simpleshell_server.so.0",
@@ -6802,9 +6931,12 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxpl.so",
                 "/usr/lib/libwayland-server.so.0",
                 "/usr/lib/libffi.so.6",
                 "/lib/librt.so.1",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libEGL.so.1",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
@@ -6861,6 +6993,8 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libiarmmgrs-ir-hal.so.0",
+                "/usr/lib/libdshalcli.so",
+                "/usr/lib/libds.so",
                 "/usr/lib/librfcapi.so.0",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
@@ -6876,6 +7010,10 @@
                 "/usr/lib/libcrypto.so.1.0.0",
                 "/usr/lib/libcurl.so.4",
                 "/usr/lib/libyajl.so.2",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/librtCore.so",
                 "/lib/libgcc_s.so.1",
                 "/lib/libc.so.6"
             ],
@@ -6895,7 +7033,10 @@
                 "/usr/lib/libEGL.so.1",
                 "/usr/lib/libwesteros_gl.so.0",
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libnxpl.so",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libwesteros_simplebuffer_server.so.0",
                 "/usr/lib/libwayland-client.so.0",
                 "/usr/lib/libwayland-server.so.0",
@@ -7133,7 +7274,10 @@
                 "/usr/lib/libEGL.so.1",
                 "/usr/lib/libwesteros_gl.so.0",
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libnxpl.so",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libwesteros_simplebuffer_server.so.0",
                 "/usr/lib/libwayland-client.so.0",
                 "/usr/lib/libwayland-server.so.0",
@@ -7161,6 +7305,7 @@
             "deps": [
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
+                "/usr/lib/libnexus.so",
                 "/lib/libgcc_s.so.1",
                 "/lib/libc.so.6"
             ],
@@ -7198,6 +7343,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libIARMBus.so.0",
                 "/usr/lib/libgthread-2.0.so.0",
                 "/usr/lib/libglib-2.0.so.0",
@@ -7242,6 +7389,8 @@
                 "/usr/lib/libgstreamer-1.0.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libbrcmsvpmeta.so",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
                 "/usr/lib/libWPEFrameworkCore.so.1",
                 "/usr/lib/libstdc++.so.6",
@@ -7396,6 +7545,8 @@
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libffi.so.6",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librmfosal.so.0",
                 "/usr/lib/librmfosalutils.so.0",
                 "/usr/lib/libIARMBus.so.0",
@@ -7532,6 +7683,8 @@
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libffi.so.6",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librmfosal.so.0",
                 "/usr/lib/librmfosalutils.so.0",
                 "/usr/lib/libIARMBus.so.0",
@@ -7576,6 +7729,8 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libds.so",
+                "/usr/lib/libdshalcli.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -7653,6 +7808,7 @@
                 "/usr/lib/libicui18n.so.64",
                 "/usr/lib/libocdm.so.1",
                 "/usr/lib/libsqlite3.so.0",
+                "/usr/lib/libTTSClient.so",
                 "/usr/lib/libfontconfig.so.1",
                 "/usr/lib/libgcrypt.so.20",
                 "/usr/lib/libgstapp-1.0.so.0",
@@ -7867,6 +8023,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libIARMBus.so.0",
                 "/usr/lib/libgthread-2.0.so.0",
                 "/usr/lib/libglib-2.0.so.0",
@@ -7931,6 +8089,7 @@
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
                 "/lib/libdl.so.2",
+                "/usr/lib/libv3dplatform.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -8312,6 +8471,7 @@
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
                 "/lib/libdl.so.2",
+                "/usr/lib/libv3dplatform.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -8345,6 +8505,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librdkloggers.so.0",
                 "/usr/lib/liblog4c.so.3",
                 "/lib/libpthread.so.0",
@@ -8359,6 +8521,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libpthread.so.0",
+                "/usr/lib/libdshalcli.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libgcc_s.so.1",
                 "/lib/libc.so.6"
@@ -8400,7 +8563,10 @@
                 "/usr/lib/libEGL.so.1",
                 "/usr/lib/libwesteros_gl.so.0",
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libnxpl.so",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libwesteros_simplebuffer_server.so.0",
                 "/usr/lib/libwayland-client.so.0",
                 "/usr/lib/libwayland-server.so.0",
@@ -8456,6 +8622,8 @@
                 "/lib/libz.so.1",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librmfosal.so.0",
                 "/usr/lib/librmfosalutils.so.0",
                 "/usr/lib/librdkloggers.so.0",
@@ -8546,7 +8714,10 @@
                 "/usr/lib/libEGL.so.1",
                 "/usr/lib/libwesteros_gl.so.0",
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libnxpl.so",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libwesteros_simplebuffer_server.so.0",
                 "/usr/lib/libwayland-client.so.0",
                 "/usr/lib/libwayland-server.so.0",
@@ -8566,6 +8737,8 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libcurl.so.4",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/librtCore.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -8621,6 +8794,8 @@
                 "/lib/libz.so.1",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librmfosal.so.0",
                 "/usr/lib/librmfosalutils.so.0",
                 "/usr/lib/librdkloggers.so.0",
@@ -8820,6 +8995,7 @@
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
                 "/lib/libdl.so.2",
+                "/usr/lib/libv3dplatform.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -8977,6 +9153,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libgtest_shared.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -9072,6 +9249,8 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libds.so",
+                "/usr/lib/libdshalcli.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libc.so.6",
@@ -9159,6 +9338,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librdkloggers.so.0",
                 "/usr/lib/liblog4c.so.3",
                 "/lib/libpthread.so.0",
@@ -9407,6 +9588,8 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libcurl.so.4",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/librtCore.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libm.so.6",
                 "/lib/libgcc_s.so.1",
@@ -9422,6 +9605,8 @@
                 "/usr/lib/libgstreamer-1.0.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libbrcmsvpmeta.so",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
                 "/usr/lib/libWPEFrameworkCore.so.1",
                 "/usr/lib/libstdc++.so.6",
@@ -9494,6 +9679,8 @@
                 "/lib/libz.so.1",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librmfosal.so.0",
                 "/usr/lib/librmfosalutils.so.0",
                 "/usr/lib/librdkloggers.so.0",
@@ -9616,6 +9803,13 @@
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libgstrmfmeta.so.0.0.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6"
+            ],
+            "name": "/usr/lib/libsafec-3.5.1.so.3"
         },
         {
             "apiversions": [],
@@ -9820,6 +10014,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/librdkshell.so",
                 "/usr/lib/libwesteros_compositor.so.0",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libstdc++.so.6",
@@ -10880,6 +11075,8 @@
                 "/usr/lib/libffi.so.6",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/librmfosal.so.0",
                 "/usr/lib/librmfosalutils.so.0",
                 "/usr/lib/librdkloggers.so.0",
@@ -10984,6 +11181,9 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libsrai.so",
+                "/usr/lib/libbrcmsvpmeta.so",
                 "/usr/lib/libgstbase-1.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0",
                 "/usr/lib/libgmodule-2.0.so.0",
@@ -10995,6 +11195,7 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libb_secbuf.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbrcmaudfilter.so"
@@ -11037,6 +11238,8 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libb_secbuf.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbrcmgfxsink.so"
@@ -11108,6 +11311,8 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libdvrmgrsoc.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librdkloggers.so.0",
                 "/usr/lib/liblog4c.so.3",
                 "/usr/lib/libstdc++.so.6",
@@ -11212,6 +11417,8 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libmpg123.so.0",
                 "/lib/libm.so.6",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libb_secbuf.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbrcmmp3decoder.so"
@@ -11431,11 +11638,14 @@
                 "/usr/lib/libessosrmgr.so.0",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libwayland-egl.so.0",
+                "/usr/lib/libnxpl.so",
                 "/usr/lib/libwayland-server.so.0",
                 "/usr/lib/libffi.so.6",
                 "/lib/librt.so.1",
                 "/usr/lib/libEGL.so.1",
                 "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libgstwesterossink.so"
@@ -11857,6 +12067,9 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libsrai.so",
+                "/usr/lib/libb_secbuf.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbrcmpcmsink.so"
@@ -11914,6 +12127,9 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libsrai.so",
+                "/usr/lib/libb_secbuf.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbrcmaudiodecoder.so"
@@ -12160,6 +12376,9 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libsrai.so",
+                "/usr/lib/libb_secbuf.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbrcmvideodecoder.so"
@@ -12324,6 +12543,9 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libsrai.so",
+                "/usr/lib/libbrcmsvpmeta.so",
                 "/usr/lib/libgstbase-1.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0",
                 "/usr/lib/libgmodule-2.0.so.0",
@@ -12335,6 +12557,7 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libb_secbuf.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbrcmvidfilter.so"
@@ -12384,6 +12607,8 @@
                 "/lib/libz.so.1",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librmfosal.so.0",
                 "/usr/lib/librmfosalutils.so.0",
                 "/usr/lib/librdkloggers.so.0",
@@ -13109,6 +13334,9 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libsrai.so",
+                "/usr/lib/libb_secbuf.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbrcmgstutil.so"
@@ -13190,6 +13418,7 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libb_secbuf.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libgstplayersinkbin.so"
@@ -13273,6 +13502,8 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libb_secbuf.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbrcmtranscode.so"
@@ -13361,6 +13592,8 @@
                 "/lib/libz.so.1",
                 "/usr/lib/libcjson.so.1",
                 "/usr/lib/libsocinit.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librmfosal.so.0",
                 "/usr/lib/librmfosalutils.so.0",
                 "/usr/lib/librdkloggers.so.0",
@@ -13696,10 +13929,12 @@
         {
             "apiversions": [],
             "deps": [
+                "/usr/lib/libaamp.so",
                 "/usr/lib/libgstbase-1.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libaampjsbindings.so",
                 "/usr/lib/libstdc++.so.6",
                 "/lib/libgcc_s.so.1",
                 "/lib/libc.so.6"
@@ -13724,6 +13959,9 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libsrai.so",
+                "/usr/lib/libb_secbuf.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbrcmaudiosink.so"
@@ -14281,6 +14519,8 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libdvrmgrsoc.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libnexus.so",
                 "/usr/lib/librdkloggers.so.0",
                 "/usr/lib/liblog4c.so.3",
                 "/usr/lib/libstdc++.so.6",
@@ -14591,6 +14831,7 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libgstbase-1.0.so.0",
+                "/usr/lib/libb_os.so",
                 "/usr/lib/libgstreamer-1.0.so.0",
                 "/usr/lib/libgmodule-2.0.so.0",
                 "/lib/libm.so.6",
@@ -14601,6 +14842,9 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libsrai.so",
+                "/usr/lib/libb_secbuf.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbrcmtsdemux.so"
@@ -14841,6 +15085,8 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libpcre.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libnxclient.so",
+                "/usr/lib/libb_secbuf.so",
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbrcmvideosink.so"
@@ -14958,6 +15204,7 @@
             "deps": [
                 "/usr/lib/libWPEFrameworkPlugins.so.1",
                 "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libds.so",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
                 "/usr/lib/libWPEFrameworkCore.so.1",
                 "/usr/lib/libstdc++.so.6",
@@ -14977,22 +15224,6 @@
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libWPEFrameworkMonitor.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/usr/lib/libWPEFrameworkPlugins.so.1",
-                "/usr/lib/libcurl.so.4",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libWPEFrameworkTracing.so.1",
-                "/usr/lib/libWPEFrameworkCore.so.1",
-                "/usr/lib/libstdc++.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libc.so.6"
-            ],
-            "name": "/usr/lib/libWPEFrameworkTextToSpeech.so"
         },
         {
             "apiversions": [],
@@ -15054,6 +15285,7 @@
             "apiversions": [],
             "deps": [
                 "/usr/lib/libWPEFrameworkPlugins.so.1",
+                "/usr/lib/librdkshell.so",
                 "/usr/lib/libWPEFrameworkProtocols.so.1",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
                 "/usr/lib/libWPEFrameworkCore.so.1",

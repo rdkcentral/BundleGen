@@ -99,10 +99,6 @@
                 "src": "/usr/lib/libGLESv2.so",
                 "dst": "/usr/lib/libGLESv2.so.2"
             },
-            {
-                "src": "/usr/lib/libv3dplatform.so",
-                "dst": "/usr/lib/libv3dplatform.so"
-            },
 	    {
                 "src": "/usr/lib/libwayland-egl.so.0",
                 "dst": "/usr/lib/libwayland-egl.so"
@@ -114,22 +110,6 @@
             {
                 "src": "/usr/lib/libwayland-egl.so.0",
                 "dst": "/usr/lib/libwayland-egl.so.1"
-            },
-            {
-                "src": "/usr/lib/libnxclient.so",
-                "dst": "/usr/lib/libnxclient.so"
-            },
-            {
-                "src": "/usr/lib/libnexus.so",
-                "dst": "/usr/lib/libnexus.so"
-            },
-            {
-                "src": "/usr/lib/libnxpl.so",
-                "dst": "/usr/lib/libnxpl.so"
-            },
-            {
-                "src": "/usr/lib/libwesteros_simpleshell_client.so.0",
-                "dst": "/usr/lib/libwesteros_simpleshell_client.so.0"
             },
             {
                 "src": "/usr/lib/libessos.so.0",
