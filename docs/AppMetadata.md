@@ -19,3 +19,75 @@ Some application options are defined within the OCI Image, such as the entrypoin
   * `ram` (string, REQUIRED). Amount of RAM required by the container
 * `features` (array of strings, OPTIONAL). Any rdkservices/Thunder NanoServices required by the container. If the platform does not support the necessary feature, a bundle cannot be generated
 * `mounts` (array of objects, OPTIONAL). Any additional mounts from the host the container requires. Note that these mounts must exist on the platform, otherwise the container will fail to start. Each object in the array should be an OCI `Mount` object as defined [here](https://github.com/opencontainers/runtime-spec/blob/master/config.md#mounts)
+* `priority` (string, OPTIONAL). **Only used for the IPK output format**. Sets the priority value of the IPK. Defaults to `optional` if not set. It's very unlikely you will ever need to set this.
+
+## Example
+```json
+{
+    "id": "com.rdk.sample-app",
+    "type": "application/vnd.rdk-app.dac.native",
+    "version": "1.0.0",
+    "description": "Sample application",
+    "graphics": true,
+    "network": {
+        "type": "nat",
+        "ipv4": true,
+        "ipv6": true,
+        "dnsmasq": "true",
+        "portForwarding": {
+            "hostToContainer": [
+                {
+                    "port": 1234,
+                    "protocol": "tcp"
+                }
+            ],
+            "containerToHost": [
+                {
+                    "port": 5678,
+                    "protocol": "udp"
+                }
+            ]
+        },
+        "multicastForwarding": [
+            {
+                "ip": "239.255.255.250",
+                "port": 1900
+            }
+        ]
+    },
+    "storage": {
+        "persistent": [
+            {
+                "size": "60M",
+                "path": "/home/private"
+            }
+        ],
+        "temp": [
+            {
+                "size": "100M",
+                "path": "/home/temp"
+            },
+            {
+                "size": "10M",
+                "path": "/var/volatile"
+            }
+        ]
+    },
+    "resources": {
+        "ram": "128M"
+    },
+    "features": [],
+    "mounts": [
+        {
+            "destination": "/data",
+            "type": "none",
+            "source": "/volumes/testing",
+            "options": [
+                "rbind",
+                "rw"
+            ]
+        }
+    ],
+    "priority": "optional"
+}
+```

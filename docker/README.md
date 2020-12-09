@@ -7,16 +7,15 @@ This directory contains a simple Dockerfile for BundleGen, designed to make it q
 $ docker-compose build
 ```
 2. Build a DAC OCI image using the meta-dac-sdk. It will produce a `.tar` file of the OCI image
-3. Create an app metadata file for your application. See `sample_app_metadata` for examples.
-4. Create a template file for your platform. See the `platform` directory for examples
-5. Run the following command:
+3. Create a template file for your platform. See the `platform` directory for examples
+4. Run the following command:
 ```console
-$ ./start.sh <path-to-image> <path-to-platform-template> <path-to-metadata-file>
+$ ./start.sh <path-to-image> <path-to-platform-template>
 ```
 
 Example:
 ```console
-$ ./start.sh ~/dac-image-wayland-egl-test.tar ./rpi3.json ./wayland-egl-test.json
+$ ./start.sh ~/dac-image-wayland-egl-test.tar ./rpi3.json
 
 Starting docker_web_1 ... done
 2020-10-23 15:04:33.702 | SUCCESS  | bundlegen.core.image_downloader:download_image:122 - Downloaded image from oci:/image:latest successfully to /tmp/bundlegen/20201023-150433_f161bec6b82546db9ad0710eac211dee
