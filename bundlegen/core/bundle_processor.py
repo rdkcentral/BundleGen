@@ -550,7 +550,7 @@ class BundleProcessor:
             and remove from image rootfs if present there.
             Also for any sublibs if present.
         """
-        logger.debug(f"HOST version choosen: {dstlib}")
+        logger.debug(f"HOST version choosen: {srclib}")
         self.handled_libs.add(dstlib)
         rootfs_filepath = os.path.join(self.rootfs_path, dstlib.lstrip('/'))
         self._add_bind_mount(srclib, dstlib)
@@ -616,7 +616,7 @@ class BundleProcessor:
             sublib['parentlib'] = libc['name']
             sublib['apiversions'] = []
 
-    def _take_rootfs_lib(self, srclib, dstlib, api_info):
+    def _take_rootfs_lib(self, dstlib, api_info):
         """ The lib version from image rootfs was choosen. Basically log here that it was choosen.
             Also for any sublibs if present.
         """
@@ -637,9 +637,10 @@ class BundleProcessor:
            If decision cannot be made because API versions disjunct, choose image rootfs version.
 
         Args:
-            lib (string): lib name like /lib/libc.so.6
-            mount_if_not_on_rootfs (bool): if lib doesn't exist inside rootfs
-                                           add a mount
+            srclib (string): libpath on host. For this lib, the api info will be looked up
+                             inside *_libs.json.
+            dstlib (string): libpath in rootfs image. In most cases the same as srclib. For this lib
+                             the api info will be read directly from the lib file via readelf.
         """
         if dstlib in self.handled_libs:
             #logger.debug(f"Already handled: {dstlib}")
@@ -647,7 +648,7 @@ class BundleProcessor:
 
         api_info = None
         if self.platform_cfg.get('libs'):
-            api_info = [x for x in self.platform_cfg['libs'] if x['name'] == dstlib]
+            api_info = [x for x in self.platform_cfg['libs'] if x['name'] == srclib]
         if not api_info:
             logger.debug(f"No api info found for {dstlib}")
             self._take_host_lib(srclib, dstlib, None)
@@ -683,12 +684,12 @@ class BundleProcessor:
             elif (version_defs_by_host_lib < version_defs_by_rootfs_lib):
                 ## Library on host has less API versions than the one from bundle rootfs. Keeping the one from bundle rootfs.
                 logger.debug(f"Image {dstlib} more: {version_defs_by_rootfs_lib - version_defs_by_host_lib}")
-                self._take_rootfs_lib(srclib, dstlib, api_info)
+                self._take_rootfs_lib(dstlib, api_info)
             else:
                 logger.error(f"Cannot decide which library to choose! {dstlib}... defaulting to image version.")
                 logger.error(f"Image {dstlib} more: {version_defs_by_rootfs_lib - version_defs_by_host_lib}")
                 logger.error(f"Host  {dstlib} more: {version_defs_by_host_lib - version_defs_by_rootfs_lib}")
-                self._take_rootfs_lib(srclib, dstlib, api_info)
+                self._take_rootfs_lib(dstlib, api_info)
         else:
             logger.debug(f"No apiversions info found for {dstlib}")
             self._take_host_lib(srclib, dstlib, api_info)
