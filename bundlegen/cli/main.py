@@ -28,6 +28,7 @@ from bundlegen.core.image_unpacker import ImageUnpackager
 from bundlegen.core.bundle_processor import BundleProcessor
 from bundlegen.core.utils import Utils
 
+
 @click.group()
 @click.option('-v', '--verbose', count=True, help='Set logging level')
 def cli(verbose):
@@ -56,9 +57,10 @@ def cli(verbose):
 @click.option('-s', '--searchpath', required=False, help='Where to search for platform templates', envvar="RDK_PLATFORM_SEARCHPATH", type=click.Path())
 @click.option('-c', '--creds', required=False, help='Credentials for the registry (username:password). Can be set using RDK_OCI_REGISTRY_CREDS environment variable for security', envvar="RDK_OCI_REGISTRY_CREDS")
 @click.option('-i', '--ipk', required=False, help='If set result file will be "*.ipk" instead of "*.tar.gz"', envvar="FILE_FORMAT_IPK", is_flag=True)
+@click.option('-a', '--appmetadata', required=False, help='Path to metadata json for the app (if not embedded inside OCI image)')
 @click.option('-y', '--yes', help='Automatic yes to prompt', is_flag=True)
 # @click.option('--disable-lib-mounts', required=False, help='Disable automatically bind mounting in libraries that exist on the STB. May increase bundle size', is_flag=True)
-def generate(image, outputdir, platform, searchpath, creds, ipk, yes):
+def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, yes):
     """Generate an OCI Bundle for a specified platform
     """
 
@@ -102,17 +104,43 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, yes):
     logger.info(f"Deleting {img_path}")
     shutil.rmtree(img_path)
 
-    # Get the app metadata as a dictionary
-    app_metadata_dict = {}
-    appmetadata = os.path.join(outputdir, "rootfs", "appmetadata.json")
-    if os.path.exists(appmetadata):
-        with open(appmetadata) as metadata:
-            app_metadata_dict = json.load(metadata)
-        # remove app metadata from image rootfs
-        os.remove(appmetadata)
-    else:
-        logger.error(f"Cannot find app metadata file {appmetadata}")
+    # Load app metadata
+    app_metadata_file = ""
+    app_metadata_image_path = os.path.join(
+        outputdir, "rootfs", "appmetadata.json")
+
+    image_metadata_exists = os.path.exists(app_metadata_image_path)
+
+    if not image_metadata_exists and not appmetadata:
+        # No metadata at all
+        logger.error(
+            f"Cannot find app metadata file in OCI image and none provided to BundleGen")
         return
+    elif not image_metadata_exists and appmetadata:
+        # No metadata in image, but custom file provided
+        if not os.path.exists(appmetadata):
+            logger.error(f'App metadata file {appmetadata} does not exist')
+            return
+        app_metadata_file = appmetadata
+    elif image_metadata_exists and appmetadata:
+        # Got two options for metadata, which one do we want?
+        if click.confirm("Metadata found in image, but custom metadata provided. Use custom metadata?"):
+           app_metadata_file = appmetadata
+        else:
+            app_metadata_file = app_metadata_image_path
+    else:
+        app_metadata_file = app_metadata_image_path
+
+    logger.debug(f"Loading metadata from {app_metadata_file}")
+
+    # Load the metadata
+    app_metadata_dict = {}
+    with open(app_metadata_file) as metadata:
+        app_metadata_dict = json.load(metadata)
+
+    # remove app metadata from image rootfs
+    if image_metadata_exists:
+        os.remove(app_metadata_image_path)
 
     # Begin processing. Work in the output dir where the img was unpacked to
     processor = BundleProcessor(
@@ -131,7 +159,8 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, yes):
     # Processing finished, now create a tarball/ipk of the output directory
     if ipk:
         # create control file
-        Utils.create_control_file(selected_platform.get_config(), app_metadata_dict)
+        Utils.create_control_file(
+            selected_platform.get_config(), app_metadata_dict)
         Utils.create_ipk(outputdir, outputdir)
         logger.success(f"Successfully generated bundle at {outputdir}.ipk")
     else:

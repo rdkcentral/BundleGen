@@ -13,9 +13,6 @@ services:
         source: ${TEMPLATE_DIR}
         target: /templates
       - type: bind
-        source: ${METADATA_FILE}
-        target: /home/bundlegenuser/metadata.json
-      - type: bind
         source: ${EXTRACTED_IMG_DIR}
         target: /image
     depends_on:
