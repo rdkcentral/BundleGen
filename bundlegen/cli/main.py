@@ -140,7 +140,7 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
 
     # remove app metadata from image rootfs
     if image_metadata_exists:
-        os.remove(app_metadata_file)
+        os.remove(app_metadata_image_path)
 
     # Begin processing. Work in the output dir where the img was unpacked to
     processor = BundleProcessor(
