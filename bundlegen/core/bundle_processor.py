@@ -16,7 +16,6 @@
 # limitations under the License.
 
 import os
-import re
 import json
 import glob
 import humanfriendly
@@ -24,11 +23,11 @@ import textwrap
 from loguru import logger
 from pathlib import Path
 from bundlegen.core.utils import Utils
-from bundlegen.core.readelf import ReadElf
+from bundlegen.core.library_matching import LibraryMatching
 
 
 class BundleProcessor:
-    def __init__(self, platform_cfg, bundle_path, app_metadata):
+    def __init__(self, platform_cfg, bundle_path, app_metadata, nodepwalking, libmatchingmode):
         self.platform_cfg: dict = platform_cfg
         self.bundle_path = bundle_path
         self.rootfs_path = os.path.join(self.bundle_path, "rootfs")
@@ -36,7 +35,8 @@ class BundleProcessor:
         self.handled_libs = set()
 
         self.oci_config: dict = self.load_config()
-        self._determine_sublibs()
+        self.libmatcher = LibraryMatching(
+            self.platform_cfg, self.bundle_path, self._add_bind_mount, nodepwalking, libmatchingmode)
 
     # Umoci will produce a config based on a "good, sane default" configuration
     # as defined here: https://github.com/opencontainers/umoci/blob/master/oci/config/convert/default.go
@@ -63,7 +63,7 @@ class BundleProcessor:
         self._process_mounts()
         self._process_resources()
         self._process_gpu()
-        self._process_lib_matching()
+        self._process_dobby_plugin_dependencies()
         self._process_users_and_groups()
 
         # RDK Plugins section
@@ -245,9 +245,7 @@ class BundleProcessor:
 
             # Now mount in any GPU libraries - these will just have a src/dst
             for lib in self.platform_cfg.get('gpu').get('gfxLibs'):
-                if lib['dst'] in self.handled_libs:
-                    logger.debug(f"No need to add explicitely: {lib['dst']}")
-                self._mount_or_use_rootfs(lib['src'], lib['dst'])
+                self.libmatcher.mount_or_use_rootfs(lib['src'], lib['dst'])
 
             # Add a mount for the westeros socket and set envvar in container
             # This is optional as can be set at container startup
@@ -537,165 +535,8 @@ class BundleProcessor:
         self.oci_config['rdkPlugins']['logging'] = logging_plugin
         return
 
-    def _remove_from_rootfs(self, rootfs_filepath):
-        """Remove from rootfs. If it is a link, also remove linked file.
-        """
-        link = os.path.realpath(rootfs_filepath)
-        os.remove(rootfs_filepath)
-        if (link != rootfs_filepath):
-            os.remove(link)
-
-    def _take_host_lib(self, srclib, dstlib, api_info):
-        """ The lib version from the host was choosen. Log it, create mount bind
-            and remove from image rootfs if present there.
-            Also for any sublibs if present.
-        """
-        logger.debug(f"HOST version choosen: {srclib}")
-        self.handled_libs.add(dstlib)
-        rootfs_filepath = os.path.join(self.rootfs_path, dstlib.lstrip('/'))
-        self._add_bind_mount(srclib, dstlib)
-        if os.path.exists(rootfs_filepath):
-            logger.debug(f"Removing from rootfs: {dstlib}")
-            self._remove_from_rootfs(rootfs_filepath)
-        if api_info and api_info.get('sublibs'):
-            for sublib in api_info['sublibs']:
-                logger.debug(f"HOST version choosen: {sublib}")
-                self.handled_libs.add(sublib)
-                self._add_bind_mount(sublib, sublib)
-                sublib_rootfs_filepath = os.path.join(self.rootfs_path, sublib.lstrip('/'))
-                if os.path.exists(sublib_rootfs_filepath):
-                    logger.debug(f"Removing from rootfs: {sublib}")
-                    self._remove_from_rootfs(sublib_rootfs_filepath)
-        if api_info and api_info.get('deps'):
-            for neededlib in api_info['deps']:
-                self._mount_or_use_rootfs(neededlib, neededlib)
-
-    def _determine_sublibs(self):
-        """
-        Determine sublibs inside libs info.
-        Specific processing for libc and its sublibs like libresolv.
-        First it determines the actual libc lib by finding the one
-        with the most GLIBC* versions inside its "Version definition section".
-        It also looks for other libs that only contain GLIBC* entries on their
-        "Version definition section". These are then assumed to be "sublibraries"
-        of libc.so
-        """
-        if not self.platform_cfg.get('libs'):
-            return
-
-        libs = self.platform_cfg['libs']
-        max = 0
-        libc = None
-        sublibs = []
-        for lib in libs:
-            m1 = re.match(r"^/lib/lib\S+\.so\.\d+$", lib['name'])
-            m2 = re.match(r"^/lib/ld-linux\S+\.so\.\d+$", lib['name'])
-            if not m1 and not m2:
-                continue
-
-            cnt = 0
-            for apiversion in lib['apiversions']:
-                if (apiversion.startswith('GLIBC_')):
-                    cnt += 1
-            if cnt == 0 or (cnt != len(lib['apiversions'])):
-                continue
-
-            sublibs.append(lib)
-            if (cnt > max):
-                libc = lib
-                max = cnt
-
-        if (libc is None):
-            return
-
-        logger.debug(f"Found libc: {libc['name']}")
-        sublibs.remove(libc)
-        libc['sublibs'] = []
-        for sublib in sublibs:
-            libc['sublibs'].append(sublib['name'])
-            sublib['parentlib'] = libc['name']
-            sublib['apiversions'] = []
-
-    def _take_rootfs_lib(self, dstlib, api_info):
-        """ The lib version from image rootfs was choosen. Basically log here that it was choosen.
-            Also for any sublibs if present.
-        """
-        logger.debug(f"IMAGE version choosen: {dstlib}")
-        self.handled_libs.add(dstlib)
-        if api_info and api_info.get('sublibs'):
-            for sublib in api_info['sublibs']:
-                logger.debug(f"IMAGE version choosen: {sublib}")
-                self.handled_libs.add(sublib)
-
     # ==========================================================================
-    def _mount_or_use_rootfs(self, srclib, dstlib):
-        """Determine to mount lib from host OR use the one inside bundle rootfs.
-           If lib exists in rootfs and apiversions info exists for it inside *_libs.json config
-           then we try to use that version of the lib that has most API versions defined inside.
-           If lib does not exist inside image rootfs then create mount bind.
-           If no API versions info exists then create mount bind.
-           If decision cannot be made because API versions disjunct, choose image rootfs version.
-
-        Args:
-            srclib (string): libpath on host. For this lib, the api info will be looked up
-                             inside *_libs.json.
-            dstlib (string): libpath in rootfs image. In most cases the same as srclib. For this lib
-                             the api info will be read directly from the lib file via readelf.
-        """
-        if dstlib in self.handled_libs:
-            #logger.debug(f"Already handled: {dstlib}")
-            return
-
-        api_info = None
-        if self.platform_cfg.get('libs'):
-            api_info = [x for x in self.platform_cfg['libs'] if x['name'] == srclib]
-        if not api_info:
-            logger.debug(f"No api info found for {dstlib}")
-            self._take_host_lib(srclib, dstlib, None)
-            return
-
-        api_info = api_info[0]
-
-        # if this is a sublib then switch to logic of parentlib instead
-        if api_info.get('parentlib'):
-            self._mount_or_use_rootfs(api_info['parentlib'], api_info['parentlib'])
-            return
-
-        rootfs_filepath = os.path.join(self.rootfs_path, dstlib.lstrip('/'))
-        if not os.path.exists(rootfs_filepath):
-            logger.debug(f"Lib not inside image rootfs {dstlib}")
-            self._take_host_lib(srclib, dstlib, api_info)
-            return
-
-        if len(api_info['apiversions']) > 0:
-            version_defs_by_host_lib = set(api_info['apiversions'])
-            version_defs_by_rootfs_lib = set(ReadElf.retrieve_apiversions(rootfs_filepath))
-
-            # remove from rootfs and mount lib from host if
-            # host lib contains more or same version definitions
-            if (version_defs_by_host_lib >= version_defs_by_rootfs_lib):
-                ## Library on host has more or same API versions as the one from bundle rootfs. Removing from rootfs and adding mount bind.
-                diff = version_defs_by_host_lib - version_defs_by_rootfs_lib
-                if (len(diff) == 0):
-                    logger.debug(f"Host {dstlib} has same set of apiversions")
-                else:
-                    logger.debug(f"Host {dstlib} more: {diff}")
-                self._take_host_lib(srclib, dstlib, api_info)
-            elif (version_defs_by_host_lib < version_defs_by_rootfs_lib):
-                ## Library on host has less API versions than the one from bundle rootfs. Keeping the one from bundle rootfs.
-                logger.debug(f"Image {dstlib} more: {version_defs_by_rootfs_lib - version_defs_by_host_lib}")
-                self._take_rootfs_lib(dstlib, api_info)
-            else:
-                logger.error(f"Cannot decide which library to choose! {dstlib}... defaulting to image version.")
-                logger.error(f"Image {dstlib} more: {version_defs_by_rootfs_lib - version_defs_by_host_lib}")
-                logger.error(f"Host  {dstlib} more: {version_defs_by_host_lib - version_defs_by_rootfs_lib}")
-                self._take_rootfs_lib(dstlib, api_info)
-        else:
-            logger.debug(f"No apiversions info found for {dstlib}")
-            self._take_host_lib(srclib, dstlib, api_info)
-
-    # ==========================================================================
-    def _process_lib_matching(self):
+    def _process_dobby_plugin_dependencies(self):
         """
         Mounts any libraries needed from the host into the container
 
@@ -705,7 +546,7 @@ class BundleProcessor:
             logger.debug("Adding library mounts for Dobby plugins")
             logger.debug("rootfs path is " + self.rootfs_path)
             for lib in self.platform_cfg['dobby']['pluginDependencies']:
-                self._mount_or_use_rootfs(lib, lib)
+                self.libmatcher.mount_or_use_rootfs(lib, lib)
 
     # ==========================================================================
     def _cleanup_umoci_leftovers(self):
