@@ -94,6 +94,27 @@ class Utils:
 
     # ==========================================================================
     @staticmethod
+    def create_control_file(platform, app_metadata):
+
+        package_name = app_metadata.get("id", "test_package")
+        version = app_metadata.get("version", "1.0.0")
+        architecture = ""
+        if platform.get('arch'):
+            architecture = str(platform['arch'].get('arch')) + str(platform['arch'].get('variant'))
+        description = app_metadata.get("description", "some package")
+        priority = app_metadata.get("priority", "optional")
+        depends = "" # we never depend on anything
+
+        with open("control", "w") as file:
+            file.write(f"Package: {package_name}\n")
+            file.write(f"Version: {version}\n")
+            file.write(f"Architecture: {architecture}\n")
+            file.write(f"Description: {description}\n")
+            file.write(f"Priority: {priority}\n")
+            file.write(f"Depends: {depends}\n")
+
+    # ==========================================================================
+    @staticmethod
     def create_tgz(source, dest):
         """Create a .tar.gz file of the source directory. Contents of source directory
         is at the root of the tar.gz file.
@@ -126,5 +147,56 @@ class Utils:
 
         with tarfile.open(f'{output_filename}', "w:gz") as tar:
             tar.add(source, arcname=os.path.basename(source))
+
+        return True
+
+    # ==========================================================================
+    @staticmethod
+    def create_ipk(source, dest):
+        """Create a .ipk file of the source directory. Contents of source directory
+        is at the root of the tar.gz file.
+
+        Args:
+            source (string): Path to directory to compress
+            dest (string): Where to save the tarball
+
+        Returns:
+            bool: True for success
+        """
+
+        # define const names
+        DATA_NAME = "data.tar.gz"
+        CONTROL_NAME = "control.tar.gz"
+        DEBIAN_BIN_NAME = "debian-binary"
+
+        if not dest.endswith(".ipk"):
+            output_filename = f'{dest}.ipk'
+        else:
+            output_filename = dest
+
+
+        # first create tarball with complete filesystem
+        Utils.create_tgz(source, DATA_NAME)
+
+        # create "control" directory
+        with tarfile.open(CONTROL_NAME, "w:gz") as tar:
+            # control file should be created before by calling create_control_file
+            tar.add("control")
+
+        # create debian-binary file
+        with open(DEBIAN_BIN_NAME, "w") as file:
+            file.write("2.0")
+
+        # create ipk bundle
+        with tarfile.open(f'{output_filename}', "w:gz") as tar:
+            tar.add(DATA_NAME)
+            tar.add(CONTROL_NAME)
+            tar.add(DEBIAN_BIN_NAME)
+
+        # remove temp files
+        os.remove("control")
+        os.remove(DATA_NAME)
+        os.remove(CONTROL_NAME)
+        os.remove(DEBIAN_BIN_NAME)
 
         return True

@@ -28,6 +28,7 @@ from bundlegen.core.image_unpacker import ImageUnpackager
 from bundlegen.core.bundle_processor import BundleProcessor
 from bundlegen.core.utils import Utils
 
+
 @click.group()
 @click.option('-v', '--verbose', count=True, help='Set logging level')
 def cli(verbose):
@@ -53,9 +54,10 @@ def cli(verbose):
 @click.argument('image')
 @click.argument('outputdir', type=click.Path())
 @click.option('-p', '--platform', required=True, help='Platform name to generate the bundle for', envvar='RDK_PLATFORM')
-@click.option('-a', '--appmetadata', required=True, help='Path to metadata json for the app (will be embedded in the image itself in future)')
 @click.option('-s', '--searchpath', required=False, help='Where to search for platform templates', envvar="RDK_PLATFORM_SEARCHPATH", type=click.Path())
 @click.option('-c', '--creds', required=False, help='Credentials for the registry (username:password). Can be set using RDK_OCI_REGISTRY_CREDS environment variable for security', envvar="RDK_OCI_REGISTRY_CREDS")
+@click.option('-i', '--ipk', required=False, help='If set result file will be "*.ipk" instead of "*.tar.gz"', envvar="FILE_FORMAT_IPK", is_flag=True)
+@click.option('-a', '--appmetadata', required=False, help='Path to metadata json for the app (if not embedded inside OCI image)')
 @click.option('-y', '--yes', help='Automatic yes to prompt', is_flag=True)
 @click.option('-n', '--nodepwalking', 
                         help="""Dependency walking and library matching is active by default. Use this flag to disable it.
@@ -68,7 +70,7 @@ def cli(verbose):
                                   host: always take host lib and create mount bind. Skips the library from image rootfs if it was there.\n
                                   Default mode is 'normal'. When apiversion info not available the effect is the same as mode 'host'""")
 # @click.option('--disable-lib-mounts', required=False, help='Disable automatically bind mounting in libraries that exist on the STB. May increase bundle size', is_flag=True)
-def generate(image, outputdir, platform, appmetadata, searchpath, creds, yes, nodepwalking, libmatchingmode):
+def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, yes, nodepwalking, libmatchingmode):
     """Generate an OCI Bundle for a specified platform
     """
 
@@ -92,16 +94,6 @@ def generate(image, outputdir, platform, appmetadata, searchpath, creds, yes, no
         logger.error(f"Could not find config for platform {platform}")
         return
 
-    # Get the app metadata as a dictionary
-    # TODO:: Metadata will be embedded in the image moving forward
-    app_metadata_dict = {}
-    if os.path.exists(appmetadata):
-        with open(appmetadata) as metadata:
-            app_metadata_dict = json.load(metadata)
-    else:
-        logger.error(f"Cannot find app metadata file {appmetadata}")
-        return
-
     # Download the image to a temp directory
     img_downloader = ImageDownloader()
     img_path = img_downloader.download_image(
@@ -122,6 +114,44 @@ def generate(image, outputdir, platform, appmetadata, searchpath, creds, yes, no
     logger.info(f"Deleting {img_path}")
     shutil.rmtree(img_path)
 
+    # Load app metadata
+    app_metadata_file = ""
+    app_metadata_image_path = os.path.join(
+        outputdir, "rootfs", "appmetadata.json")
+
+    image_metadata_exists = os.path.exists(app_metadata_image_path)
+
+    if not image_metadata_exists and not appmetadata:
+        # No metadata at all
+        logger.error(
+            f"Cannot find app metadata file in OCI image and none provided to BundleGen")
+        return
+    elif not image_metadata_exists and appmetadata:
+        # No metadata in image, but custom file provided
+        if not os.path.exists(appmetadata):
+            logger.error(f'App metadata file {appmetadata} does not exist')
+            return
+        app_metadata_file = appmetadata
+    elif image_metadata_exists and appmetadata:
+        # Got two options for metadata, which one do we want?
+        if click.confirm("Metadata found in image, but custom metadata provided. Use custom metadata?"):
+           app_metadata_file = appmetadata
+        else:
+            app_metadata_file = app_metadata_image_path
+    else:
+        app_metadata_file = app_metadata_image_path
+
+    logger.debug(f"Loading metadata from {app_metadata_file}")
+
+    # Load the metadata
+    app_metadata_dict = {}
+    with open(app_metadata_file) as metadata:
+        app_metadata_dict = json.load(metadata)
+
+    # remove app metadata from image rootfs
+    if image_metadata_exists:
+        os.remove(app_metadata_image_path)
+
     # Begin processing. Work in the output dir where the img was unpacked to
     processor = BundleProcessor(
         selected_platform.get_config(), outputdir, app_metadata_dict, nodepwalking, libmatchingmode)
@@ -136,10 +166,16 @@ def generate(image, outputdir, platform, appmetadata, searchpath, creds, yes, no
         logger.warning("Failed to produce bundle")
         return
 
-    # Processing finished, now create a tarball of the output directory
-    Utils.create_tgz(outputdir, outputdir)
-
-    logger.success(f"Successfully generated bundle at {outputdir}.tar.gz")
+    # Processing finished, now create a tarball/ipk of the output directory
+    if ipk:
+        # create control file
+        Utils.create_control_file(
+            selected_platform.get_config(), app_metadata_dict)
+        Utils.create_ipk(outputdir, outputdir)
+        logger.success(f"Successfully generated bundle at {outputdir}.ipk")
+    else:
+        Utils.create_tgz(outputdir, outputdir)
+        logger.success(f"Successfully generated bundle at {outputdir}.tar.gz")
 
 
 cli.add_command(generate)
