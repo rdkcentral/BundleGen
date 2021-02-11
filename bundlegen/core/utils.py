@@ -54,6 +54,28 @@ class Utils:
 
     # ==========================================================================
     @staticmethod
+    def run_process_and_return_output(command):
+        """Runs the process with the specified command
+        Will return the stdout of the process
+        Args:
+            command (string): Command with args to run
+        Returns:
+            int: Return code from the process
+            string: stdout from the process
+        """
+        # Run the process
+        process = subprocess.Popen(shlex.split(
+            command), shell=False, stdout=subprocess.PIPE)
+
+        out, err = process.communicate()
+
+        # Process has finished, clean up and get the return code
+        process.stdout.close()
+        return_code = process.wait()
+        return return_code, out.decode()
+
+    # ==========================================================================
+    @staticmethod
     def get_random_string(length=32):
         """Creates a string of random characters
 

@@ -59,8 +59,18 @@ def cli(verbose):
 @click.option('-i', '--ipk', required=False, help='If set result file will be "*.ipk" instead of "*.tar.gz"', envvar="FILE_FORMAT_IPK", is_flag=True)
 @click.option('-a', '--appmetadata', required=False, help='Path to metadata json for the app (if not embedded inside OCI image)')
 @click.option('-y', '--yes', help='Automatic yes to prompt', is_flag=True)
+@click.option('-n', '--nodepwalking', 
+                        help="""Dependency walking and library matching is active by default. Use this flag to disable it.
+                                When enabled, the dependencies of all libs indicated in gfxLibs and pluginDependencies config,
+                                will automatically also be added to the bundle. Host or image version of library is decided by libmatchingmode
+                                parameter below. This logic can only work if a _libs.json file is present with libs and apiversions info.""", is_flag=True)
+@click.option('-m', '--libmatchingmode', type=click.Choice(['normal', 'image', 'host'], case_sensitive=True), default='normal', 
+                        help= """ normal: take most recent library i.e. with most api tags like 'GLIBC_2.4'.\n
+                                  image: always take lib from image rootfs, if available in there.\n
+                                  host: always take host lib and create mount bind. Skips the library from image rootfs if it was there.\n
+                                  Default mode is 'normal'. When apiversion info not available the effect is the same as mode 'host'""")
 # @click.option('--disable-lib-mounts', required=False, help='Disable automatically bind mounting in libraries that exist on the STB. May increase bundle size', is_flag=True)
-def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, yes):
+def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, yes, nodepwalking, libmatchingmode):
     """Generate an OCI Bundle for a specified platform
     """
 
@@ -144,7 +154,7 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
 
     # Begin processing. Work in the output dir where the img was unpacked to
     processor = BundleProcessor(
-        selected_platform.get_config(), outputdir, app_metadata_dict)
+        selected_platform.get_config(), outputdir, app_metadata_dict, nodepwalking, libmatchingmode)
     if not processor.check_compatibility():
         # Not compatible - delete any work done so far
         shutil.rmtree(outputdir)

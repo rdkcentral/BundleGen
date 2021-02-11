@@ -23,16 +23,20 @@ import textwrap
 from loguru import logger
 from pathlib import Path
 from bundlegen.core.utils import Utils
+from bundlegen.core.library_matching import LibraryMatching
 
 
 class BundleProcessor:
-    def __init__(self, platform_cfg, bundle_path, app_metadata):
+    def __init__(self, platform_cfg, bundle_path, app_metadata, nodepwalking, libmatchingmode):
         self.platform_cfg: dict = platform_cfg
         self.bundle_path = bundle_path
         self.rootfs_path = os.path.join(self.bundle_path, "rootfs")
         self.app_metadata = app_metadata
+        self.handled_libs = set()
 
         self.oci_config: dict = self.load_config()
+        self.libmatcher = LibraryMatching(
+            self.platform_cfg, self.bundle_path, self._add_bind_mount, nodepwalking, libmatchingmode)
 
     # Umoci will produce a config based on a "good, sane default" configuration
     # as defined here: https://github.com/opencontainers/umoci/blob/master/oci/config/convert/default.go
@@ -59,7 +63,7 @@ class BundleProcessor:
         self._process_mounts()
         self._process_resources()
         self._process_gpu()
-        self._process_lib_matching()
+        self._process_dobby_plugin_dependencies()
         self._process_users_and_groups()
 
         # RDK Plugins section
@@ -241,13 +245,7 @@ class BundleProcessor:
 
             # Now mount in any GPU libraries - these will just have a src/dst
             for lib in self.platform_cfg.get('gpu').get('gfxLibs'):
-                self._add_bind_mount(lib['src'], lib['dst'])
-                # If the file existed in the rootfs, delete it
-                rootfs_filepath = os.path.join(self.rootfs_path, lib['src'].lstrip('/'))
-                if os.path.exists(rootfs_filepath):
-                    logger.debug(
-                        f"Library that exists in rootfs is now bind mounted. Deleting lib from rootfs ({rootfs_filepath})")
-                    os.remove(rootfs_filepath)
+                self.libmatcher.mount_or_use_rootfs(lib['src'], lib['dst'])
 
             # Add a mount for the westeros socket and set envvar in container
             # This is optional as can be set at container startup
@@ -392,8 +390,9 @@ class BundleProcessor:
         """
         self.oci_config['rdkPlugins'] = {}
 
-        plugin_dir = self.platform_cfg['dobby']['pluginDir']
-        self._add_bind_mount(plugin_dir, plugin_dir)
+        if self.platform_cfg.get('dobby') and self.platform_cfg['dobby'].get('pluginDir'):
+            plugin_dir = self.platform_cfg['dobby']['pluginDir']
+            self._add_bind_mount(plugin_dir, plugin_dir)
 
     # ==========================================================================
     def _process_network(self):
@@ -537,28 +536,17 @@ class BundleProcessor:
         return
 
     # ==========================================================================
-    def _process_lib_matching(self):
+    def _process_dobby_plugin_dependencies(self):
         """
         Mounts any libraries needed from the host into the container
 
         GPU library mounts are handled in the GPU section
         """
-        logger.debug("Adding library mounts for Dobby plugins")
-        logger.debug("rootfs path is " + self.rootfs_path)
-
-        for lib in self.platform_cfg['dobby']['pluginDependencies']:
-            # Add bind mount
-            self._add_bind_mount(lib, lib)
-
-            # If the file existed in the rootfs, delete it
-            rootfs_filepath = os.path.join(self.rootfs_path, lib.lstrip('/'))
-            if os.path.exists(rootfs_filepath):
-                logger.debug(
-                    f"Library that exists in rootfs is now bind mounted. Deleting lib from rootfs ({rootfs_filepath})")
-                os.remove(rootfs_filepath)
-
-        # TODO:: Add library matching to bind mount any libraries that are
-        # the same in the image as on the host to reduce bundle size
+        if self.platform_cfg.get('dobby') and self.platform_cfg['dobby'].get('pluginDependencies'):
+            logger.debug("Adding library mounts for Dobby plugins")
+            logger.debug("rootfs path is " + self.rootfs_path)
+            for lib in self.platform_cfg['dobby']['pluginDependencies']:
+                self.libmatcher.mount_or_use_rootfs(lib, lib)
 
     # ==========================================================================
     def _cleanup_umoci_leftovers(self):
