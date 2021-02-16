@@ -24,6 +24,7 @@ from pathlib import Path
 from bundlegen.core.utils import Utils
 from bundlegen.core.library_matching import LibraryMatching
 from bundlegen.core.capabilities import *
+from bundlegen.core.seccomp import Seccomp
 
 
 class BundleProcessor:
@@ -38,6 +39,8 @@ class BundleProcessor:
         self.oci_config: dict = self.load_config()
         self.libmatcher = LibraryMatching(
             self.platform_cfg, self.bundle_path, self._add_bind_mount, nodepwalking, libmatchingmode, createmountpoints)
+
+        self.seccomp = Seccomp(self.platform_cfg, self.oci_config)
 
     # Umoci will produce a config based on a "good, sane default" configuration
     # as defined here: https://github.com/opencontainers/umoci/blob/master/oci/config/convert/default.go
@@ -71,6 +74,7 @@ class BundleProcessor:
         self._process_users_and_groups()
         self._process_capabilities()
         self._process_hostname()
+        self._process_seccomp()
 
         # RDK Plugins section
         self._add_rdk_plugins()
@@ -601,6 +605,16 @@ class BundleProcessor:
         cfg_caps['effective'] = list(app_capabilities)
         cfg_caps['inheritable'] = list(app_capabilities)
         cfg_caps['ambient'] = list(app_capabilities)
+
+    # ==========================================================================
+    def _process_seccomp(self):
+        """Just adds the rdkplugins section ready to be populated
+
+        Also adds a mount for the Dobby plugin directory so the startContainer
+        hook can load them
+        """
+        self.seccomp.enable_seccomp()
+
 
     # ==========================================================================
     def _add_rdk_plugins(self):
