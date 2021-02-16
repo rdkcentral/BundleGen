@@ -1,6 +1,7 @@
 {
     "platformName": "vagrant",
     "os": "linux",
+    "kernel": "4.4.0-201-generic",
     "arch": {
         "arch": "amd64"
     },
