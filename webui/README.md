@@ -8,7 +8,4 @@ for developers. It is provided as an example of how BundleGen could be integrate
 
 ## Usage
 ### Docker
-```
-docker build -t bundlegen-webui .
-docker run bundlegen-webui
-```
+To build and start the container, execute the `./run.sh` script. Browse to `http://localhost:5000/` to load the UI

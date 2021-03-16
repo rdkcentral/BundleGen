@@ -11,8 +11,6 @@ RUN adduser bundlegenuser && \
     echo "bundlegenuser ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user && \
     chmod 0440 /etc/sudoers.d/user
 
-RUN mkdir /bundles && chmod 777 /bundles
-
 USER bundlegenuser
 WORKDIR /home/bundlegenuser
 
@@ -27,9 +25,14 @@ RUN mkdir -p $HOME/go && \
 
 # Install BundleGen
 RUN git clone https://github.com/rdkcentral/BundleGen.git && \
-    cd ./BundleGen/webui && \
-    sudo pip3 install -r requirements.txt
+    cd BundleGen/webui && \
+    pip3 install --user -r requirements.txt && \
+    cd .. && \
+    pip3 install --user --editable .
 
-WORKDIR /home/bundlegenuser/bundlegen
+COPY --chown=bundlegenuser:bundlegenuser ./entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT [ "python3", "app.py" ]
+WORKDIR /home/bundlegenuser/BundleGen/webui
+
+ENTRYPOINT [ "/entrypoint.sh" ]
