@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bulma.min.css"/>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+    <title>RDK BundleGen</title>
+</head>
+
+<body>
+    <section class="section">
+        <div class="container is-widescreen is-fluid">
+            <h1 class="title is-2">
+                RDK OCI Bundle Generator (BundleGen)
+            </h1>
+            <hr />
+            <div class="columns">
+                <div class="column is-three-fifths">
+                    <h2 class="title is-3">Image Source</h2>
+                    <form id="generateForm" enctype="multipart/form-data">
+                        {{ form.csrf_token }}
+                        <div class="field">
+                            <label class="label title is-4">Image URL (OCI Registry)</label>
+                            <div class="control">
+                                <input id="image_url" name="image_url" class="input" type="text"
+                                    placeholder="docker://nginx">
+                            </div>
+                        </div>
+
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label class="label is-normal">Username:</label>
+                                    <p class="control is-expanded has-icons-left">
+                                        <input name="registry_uname" id="registry_uname" class="input" type="text"
+                                            placeholder="Username">
+                                        <span class="icon is-small is-left">
+                                            <ion-icon name="person-circle-outline"></ion-icon>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="field">
+                                    <label class="label is-normal">Password:</label>
+                                    <p class="control is-expanded has-icons-left">
+                                        <input name="registry_password" id="registry_password" class="input"
+                                            type="password" placeholder="Password">
+                                        <span class="icon is-small is-left">
+                                            <ion-icon name="key-outline"></ion-icon>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field mt-5">
+                            <label class="label title is-4">Local File (.tar.gz)</label>
+                            <div class="file is-boxed" id="image_file_upload">
+                                <label class="file-label">
+                                    <input name="uploaded_img" id="uploaded_img" class="file-input" type="file"
+                                        accept=".tar, .tar.gz">
+                                    <span class="file-cta">
+                                        <span class="file-icon">
+                                            <ion-icon name="cloud-upload-outline"></ion-icon>
+                                        </span>
+                                        <span class="file-label">
+                                            Choose a file…
+                                        </span>
+                                    </span>
+                                    <span class="file-name has-text-centered">
+                                        ...
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <h2 class="title is-3">BundleGen Options</h2>
+                        <div class="field">
+                            <label class="label">Platform</label>
+                            <div class="control">
+                                <div class="select">
+                                    {{ form.platform }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">App Metadata (optional - only needed if not using DAC SDK)</label>
+                            <div class="control">
+                                <textarea name="app_metadata" id="app_metadata" rows="7"
+                                    class="textarea is-family-monospace is-expanded" placeholder="Textarea"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <label class="label">Library Matching</label>
+                                <label class="checkbox">
+                                    <input name="lib_match" id="lib_match" type="checkbox" checked="checked">
+                                    Enable library matching?
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <button type="submit" id="generateBtn" class="button is-link">Generate Bundle</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="column">
+                    <h1 class="title is-3">
+                        Console Output
+                    </h1>
+                    <div class="field">
+                        <textarea style="white-space: pre;" id="consolelog" class="textarea is-family-monospace"
+                            rows="10" disabled></textarea>
+                    </div>
+
+                    <h1 class="title is-3">
+                        Previously created Bundles
+                    </h1>
+                    <table id="bundles-table" class="table is-striped is-fullwidth">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Download URL</th>
+                                <th>Size (MB)</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js"
+        integrity="sha512-2RDFHqfLZW8IhPRvQYmK9bTLfj/hddxGXQAred2wNZGkrKQkLGj8RCkXfRJPHlDerdHHIzTFaahq4s/P4V6Qig=="
+        crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/dataTables.bulma.min.js"></script>
+
+    <script src={{ url_for('static', filename='index.js' ) }}></script>
+</body>
+
+</html>
