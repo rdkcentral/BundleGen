@@ -29,6 +29,7 @@ function loadBundles() {
                     dataTable.row.add([
                         value["date"],
                         `<a href="/bundle/${value["name"]}">${value["name"]}</a>`,
+                        `<code>${value["command"]}</code>`,
                         value["size"]]
                     ).draw();
                 });

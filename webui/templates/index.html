@@ -21,7 +21,7 @@
             </h1>
             <hr />
             <div class="columns">
-                <div class="column is-three-fifths">
+                <div class="column is-half">
                     <h2 class="title is-3">Image Source</h2>
                     <form id="generateForm" enctype="multipart/form-data">
                         {{ form.csrf_token }}
@@ -125,6 +125,8 @@
                             rows="10" disabled></textarea>
                     </div>
 
+                    <hr />
+
                     <h1 class="title is-3">
                         Previously created Bundles
                     </h1>
@@ -132,7 +134,8 @@
                         <thead>
                             <tr>
                                 <th>Date</th>
-                                <th>Download URL</th>
+                                <th>Download</th>
+                                <th>wget command</th>
                                 <th>Size (MB)</th>
                             </tr>
                         </thead>

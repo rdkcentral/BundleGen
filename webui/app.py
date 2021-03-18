@@ -14,6 +14,9 @@ import shutil
 import json
 import tarfile
 import tempfile
+import socket
+
+
 
 from loguru import logger
 from bundlegen.core.stb_platform import STBPlatform
@@ -93,6 +96,18 @@ def get_templates():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {"tar", "tar.gz"}
 
+def get_ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # doesn't even have to be reachable
+        s.connect(('10.255.255.255', 1))
+        IP = s.getsockname()[0]
+    except Exception:
+        IP = '127.0.0.1'
+    finally:
+        s.close()
+    return IP
+
 
 @app.errorhandler(AppError)
 def handle_app_error(error):
@@ -103,6 +118,8 @@ def handle_app_error(error):
 
 @app.route('/', methods=["GET", "POST"])
 def index():
+    print(get_ip())
+
     get_templates()
     form = GenerateForm()
     form.platform.choices = get_templates()
@@ -232,8 +249,16 @@ def get_bundles():
     bundles = glob.glob(f'{BUNDLE_STORE_DIR}/*.tar.gz')
     bundles.sort(key=os.path.getmtime)
 
-    filenames = [dict(zip(("name", "date", "size"), (os.path.basename(
-        x), datetime.fromtimestamp(os.path.getmtime(x)), round(os.path.getsize(x) / 1024 / 1024, 2)))) for x in bundles]
+    filenames = [dict(
+        zip(
+            ("name", "date", "command", "size"),
+            (
+                os.path.basename(x),
+                datetime.fromtimestamp(os.path.getmtime(x)),
+                "wget http://{}:{}/bundle/{}".format(get_ip(), request.host.split(':')[1], os.path.basename(x)),
+                round(os.path.getsize(x) / 1024 / 1024, 2)
+            )
+        )) for x in bundles]
 
     return jsonify(
         bundles=filenames
