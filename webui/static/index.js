@@ -12,9 +12,26 @@ socket.on('consolelog', function (msg) {
 });
 
 var dataTable = $('#bundles-table').DataTable({
-    "columnDefs": [{"type": "date", "targets": 0}],
-    "order": [[ 0, "desc" ]]
+    "columnDefs": [{ "type": "date", "targets": 0 }],
+    "order": [[0, "desc"]]
 });
+
+function deleteBundle(name) {
+    console.log("Delete " + name);
+    $.ajax(
+        {
+            "url": `/bundle/${name}`,
+            "type": "DELETE",
+            "success": function (data) {
+                loadBundles();
+            },
+            "error": function (xhr, status, error) {
+                var err = JSON.parse(xhr.responseText);
+                console.log(err);
+            }
+        }
+    );
+}
 
 function loadBundles() {
     dataTable.clear();
@@ -26,14 +43,19 @@ function loadBundles() {
             "dataType": "json",
             "success": function (data) {
                 $.each(data["bundles"], function (index, value) {
+                    console.log(value);
                     dataTable.row.add([
                         value["date"],
-                        `<a href="/bundle/${value["name"]}">${value["name"]}</a>`,
                         `<code>${value["command"]}</code>`,
-                        value["size"]]
-                    ).draw();
+                        value["size"],
+                        `
+                        <a href="/bundle/${value["name"]}" class="button is-small is-info"><ion-icon name="cloud-download"></ion-icon></a>
+                        <button class="button is-small is-danger delete-btn" data-name=${value["name"]}><ion-icon name="trash"></ion-icon></button>
+                        `
+                    ]
+                    );
                 });
-
+                dataTable.draw();
             },
             "error": function (xhr, status, error) {
                 var err = JSON.parse(xhr.responseText);
@@ -47,6 +69,10 @@ $(document).ready(function () {
     $('#consolelog').val("");
 
     loadBundles();
+
+    $('body').on('click', 'button.delete-btn', function () {
+        deleteBundle($(this).data("name"));
+    })
 
     $('#generateForm').on('submit', function (e) {
         $('#consolelog').val("");

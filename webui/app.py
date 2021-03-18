@@ -1,29 +1,25 @@
+from bundlegen.core.utils import Utils
+from bundlegen.core.bundle_processor import BundleProcessor
+from bundlegen.core.image_unpacker import ImageUnpackager
+from bundlegen.core.image_downloader import ImageDownloader
+from bundlegen.core.stb_platform import STBPlatform
+from loguru import logger
+import socket
+import tempfile
+import tarfile
+import json
+import shutil
+import os
+import glob
+from werkzeug.utils import secure_filename
+from wtforms import BooleanField, FileField, SelectField, StringField, TextAreaField
+from datetime import datetime
+from flask_socketio import SocketIO
+from flask_wtf import FlaskForm
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from gevent import monkey
 monkey.patch_all()
 
-from flask import Flask, render_template, request, jsonify, send_from_directory
-from flask_wtf import FlaskForm
-from flask_socketio import SocketIO
-from datetime import datetime
-from wtforms import BooleanField, FileField, SelectField, StringField, TextAreaField
-from werkzeug.utils import secure_filename
-
-import glob
-import os
-import shutil
-import json
-import tarfile
-import tempfile
-import socket
-
-
-
-from loguru import logger
-from bundlegen.core.stb_platform import STBPlatform
-from bundlegen.core.image_downloader import ImageDownloader
-from bundlegen.core.image_unpacker import ImageUnpackager
-from bundlegen.core.bundle_processor import BundleProcessor
-from bundlegen.core.utils import Utils
 
 TMP_DIR = '/tmp/bundlegen'
 UPLOAD_FOLDER = '/tmp/uploads'
@@ -36,6 +32,7 @@ SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
 
 socketio = SocketIO(app)
+
 
 class AppError(Exception):
     # Generic exception handler
@@ -53,6 +50,7 @@ class AppError(Exception):
         rv['message'] = self.message
         return rv
 
+
 class GenerateForm(FlaskForm):
     image_url = StringField()
     registry_uname = StringField()
@@ -67,6 +65,7 @@ def log_msg(msg):
     """Forward log messages over socketio
     """
     socketio.emit('consolelog', msg)
+
 
 logger.add(log_msg, level='DEBUG', format="{level: <8}| {name} - {message}")
 
@@ -96,6 +95,7 @@ def get_templates():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {"tar", "tar.gz"}
 
+
 def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
@@ -118,8 +118,6 @@ def handle_app_error(error):
 
 @app.route('/', methods=["GET", "POST"])
 def index():
-    print(get_ip())
-
     get_templates()
     form = GenerateForm()
     form.platform.choices = get_templates()
@@ -131,7 +129,8 @@ def index():
         print("Valid form submission")
 
         # Do BundleGen work
-        outputdir = os.path.abspath(os.path.join(TMP_DIR, Utils.get_random_string(5)))
+        outputdir = os.path.abspath(os.path.join(
+            TMP_DIR, Utils.get_random_string(5)))
         selected_platform = STBPlatform(form.platform.data)
 
         if not selected_platform.found_config():
@@ -255,7 +254,8 @@ def get_bundles():
             (
                 os.path.basename(x),
                 datetime.fromtimestamp(os.path.getmtime(x)),
-                "wget http://{}:{}/bundle/{}".format(get_ip(), request.host.split(':')[1], os.path.basename(x)),
+                "wget http://{}:{}/bundle/{}".format(
+                    get_ip(), request.host.split(':')[1], os.path.basename(x)),
                 round(os.path.getsize(x) / 1024 / 1024, 2)
             )
         )) for x in bundles]
@@ -268,6 +268,16 @@ def get_bundles():
 @app.route('/bundle/<path:filename>', methods=["GET"])
 def get_bundle(filename):
     return send_from_directory(BUNDLE_STORE_DIR, filename=filename)
+
+
+@app.route('/bundle/<path:filename>', methods=["DELETE"])
+def delete_bundle(filename):
+    to_delete = os.path.join(BUNDLE_STORE_DIR, filename)
+
+    if os.path.exists(to_delete):
+        os.remove(to_delete)
+
+    return jsonify(success=True)
 
 
 if __name__ == '__main__':
