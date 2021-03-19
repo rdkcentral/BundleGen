@@ -58,7 +58,7 @@ class GenerateForm(FlaskForm):
     uploaded_img = FileField()
     platform = SelectField()
     app_metadata = TextAreaField()
-    lib_match = BooleanField()
+    lib_match = SelectField(choices=[("normal", "Normal (recommended)"), ("image", "Image"), ("host", "Host")])
 
 
 def log_msg(msg):
@@ -217,7 +217,7 @@ def index():
 
         # Begin processing. Work in the output dir where the img was unpacked to
         processor = BundleProcessor(
-            selected_platform.get_config(), outputdir, app_metadata_dict, form.lib_match.data, "normal")
+            selected_platform.get_config(), outputdir, app_metadata_dict, False, form.lib_match.data)
         if not processor.check_compatibility():
             # Not compatible - delete any work done so far
             shutil.rmtree(outputdir)
