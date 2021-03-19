@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bulma.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bulma.min.css" />
 
     <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
 
     <style>
-        ion-icon  {
+        ion-icon {
             font-size: 24px;
         }
     </style>
@@ -21,18 +21,18 @@
 
 <body>
     <section class="section">
-        <div class="container is-widescreen is-fluid">
-            <h1 class="title is-2">
+        <div class="container is-fluid">
+            <h1 class="title is-3">
                 RDK OCI Bundle Generator (BundleGen)
             </h1>
             <hr />
             <div class="columns">
                 <div class="column is-half">
-                    <h2 class="title is-3">Image Source</h2>
+                    <h2 class="title is-4">Image Source</h2>
                     <form id="generateForm" enctype="multipart/form-data">
                         {{ form.csrf_token }}
                         <div class="field">
-                            <label class="label title is-4">Image URL (OCI Registry)</label>
+                            <label class="label title is-5">Image URL (OCI Registry)</label>
                             <div class="control">
                                 <input id="image_url" name="image_url" class="input" type="text"
                                     placeholder="docker://nginx">
@@ -65,29 +65,39 @@
                         </div>
 
                         <div class="field mt-5">
-                            <label class="label title is-4">Local File (.tar.gz)</label>
-                            <div class="file is-boxed" id="image_file_upload">
-                                <label class="file-label">
-                                    <input name="uploaded_img" id="uploaded_img" class="file-input" type="file"
-                                        accept=".tar, .tar.gz">
-                                    <span class="file-cta">
-                                        <span class="file-icon">
-                                            <ion-icon name="cloud-upload-outline"></ion-icon>
+                            <label class="label title is-5">Local File (.tar.gz)</label>
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
+
+
+                                <div class="file has-name is-fullwidth" id="image_file_upload">
+                                    <label class="file-label">
+                                        <input name="uploaded_img" id="uploaded_img" class="file-input" type="file" accept=".tar, .tar.gz">
+                                        <span class="file-cta">
+                                            <span class="file-icon">
+                                                <ion-icon name="cloud-upload-outline"></ion-icon>
+                                            </span>
+                                            <span class="file-label">
+                                                Choose a file…
+                                            </span>
                                         </span>
-                                        <span class="file-label">
-                                            Choose a file…
+                                        <span class="file-name">
+                                            ...
                                         </span>
-                                    </span>
-                                    <span class="file-name has-text-centered">
-                                        ...
-                                    </span>
-                                </label>
+                                    </label>
+                                </div>
+                            </div>
+                                <div class="control">
+                                    <a class="button is-secondary" id="clear-file-btn">
+                                        Clear
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
                         <hr />
 
-                        <h2 class="title is-3">BundleGen Options</h2>
+                        <h2 class="title is-4">BundleGen Options</h2>
                         <div class="field">
                             <label class="label">Platform</label>
                             <div class="control">
@@ -100,7 +110,7 @@
                         <div class="field">
                             <label class="label">App Metadata (optional - only needed if not using DAC SDK)</label>
                             <div class="control">
-                                <textarea name="app_metadata" id="app_metadata" rows="7"
+                                <textarea name="app_metadata" id="app_metadata" rows="9"
                                     class="textarea is-family-monospace is-expanded" placeholder="Textarea"></textarea>
                             </div>
                         </div>
@@ -122,7 +132,7 @@
                     </form>
                 </div>
                 <div class="column">
-                    <h1 class="title is-3">
+                    <h1 class="title is-4">
                         Console Output
                     </h1>
                     <div class="field">
@@ -132,15 +142,16 @@
 
                     <hr />
 
-                    <h1 class="title is-3">
+                    <h1 class="title is-4">
                         Previously created Bundles
                     </h1>
                     <table id="bundles-table" class="table is-striped is-fullwidth">
                         <thead>
                             <tr>
                                 <th>Date</th>
+                                <th>Name</th>
                                 <th>wget command</th>
-                                <th>Size (MB)</th>
+                                <th>Size</th>
                                 <th>Options</th>
                             </tr>
                         </thead>

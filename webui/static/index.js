@@ -46,8 +46,9 @@ function loadBundles() {
                     console.log(value);
                     dataTable.row.add([
                         value["date"],
+                        `<code>${value["name"]}</code>`,
                         `<code>${value["command"]}</code>`,
-                        value["size"],
+                        `${value["size"]}M`,
                         `
                         <a href="/bundle/${value["name"]}" class="button is-small is-info"><ion-icon name="cloud-download"></ion-icon></a>
                         <button class="button is-small is-danger delete-btn" data-name=${value["name"]}><ion-icon name="trash"></ion-icon></button>
@@ -65,6 +66,29 @@ function loadBundles() {
     );
 }
 
+function setFilename(fileInput) {
+    const fileName = document.querySelector('#image_file_upload .file-name');
+    if (fileInput.files.length > 0) {
+        if (fileInput.files[0].name.length > 70)
+        {
+            fileName.textContent = fileInput.files[0].name.substring(0, 70) + "...";
+        }
+        else
+        {
+            fileName.textContent = fileInput.files[0].name;
+        }
+
+        $('#image_url').val("");
+        $('#image_url').prop("disabled", true);
+    }
+    else
+    {
+        fileName.textContent = "...";
+        $('#image_url').val("");
+        $('#image_url').prop("disabled", false);
+    }
+}
+
 $(document).ready(function () {
     $('#consolelog').val("");
 
@@ -72,7 +96,7 @@ $(document).ready(function () {
 
     $('body').on('click', 'button.delete-btn', function () {
         deleteBundle($(this).data("name"));
-    })
+    });
 
     $('#generateForm').on('submit', function (e) {
         $('#consolelog').val("");
@@ -115,13 +139,14 @@ $(document).ready(function () {
     });
 
     const fileInput = document.querySelector('#image_file_upload input[type=file]');
-    fileInput.onchange = () => {
-        if (fileInput.files.length > 0) {
-            const fileName = document.querySelector('#image_file_upload .file-name');
-            fileName.textContent = fileInput.files[0].name;
+    setFilename(fileInput);
 
-            $('#image_url').val("");
-            $('#image_url').prop("disabled", true);
-        }
+    fileInput.onchange = () => {
+        setFilename(fileInput);
     }
+
+    $('#clear-file-btn').on('click', function () {
+        fileInput.value = "";
+        setFilename(fileInput);
+    });
 });
