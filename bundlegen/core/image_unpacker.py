@@ -29,6 +29,8 @@ class ImageUnpackager():
 
         if os.path.isfile('/usr/bin/umoci'):
             self.umoci_path = '/usr/bin/umoci'
+        elif os.path.isfile('/usr/local/bin/umoci'):
+            self.umoci_path = '/usr/local/bin/umoci'
         elif os.path.isfile('/bin/umoci'):
             self.umoci_path = '/bin/umoci'
         else:
