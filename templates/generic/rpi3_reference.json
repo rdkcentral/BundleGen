@@ -44,7 +44,7 @@
     },
     "storage": {
         "persistent": {
-            "storageDir": "/tmp/data",
+            "storageDir": "/opt/data",
             "maxSize": "100M"
         }
     },
@@ -69,6 +69,41 @@
                 "path": "/dev/vchiq",
                 "major": 245,
                 "minor": 0,
+                "access": "rw"
+            },
+            {
+                "type": "c",
+                "path": "/dev/snd/controlC0",
+                "major": 116,
+                "minor": 0,
+                "access": "rw"
+            },
+            {
+                "type": "c",
+                "path": "/dev/snd/seq",
+                "major": 116,
+                "minor": 1,
+                "access": "rw"
+            },
+            {
+                "type": "c",
+                "path": "/dev/snd/pcmC0D0p",
+                "major": 116,
+                "minor": 16,
+                "access": "rw"
+            },
+            {
+                "type": "c",
+                "path": "/dev/snd/pcmC0D1p",
+                "major": 116,
+                "minor": 17,
+                "access": "rw"
+            },
+            {
+                "type": "c",
+                "path": "/dev/snd/timer",
+                "major": 116,
+                "minor": 33,
                 "access": "rw"
             }
         ],
