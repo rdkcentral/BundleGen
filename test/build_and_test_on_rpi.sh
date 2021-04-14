@@ -26,6 +26,6 @@ tar -xvf $OCI_TAR -C ./oci-${APP_NAME}
 
 echo "--> Generating runtime bundle..."
 rm -rf ./rpi-${APP_NAME}
-bundlegen -vvv generate --searchpath templates --platform rpi3_reference oci:./oci-${APP_NAME}:latest rpi-${APP_NAME}
+bundlegen -vvv generate --searchpath templates --platform rpi3_reference -m image oci:./oci-${APP_NAME}:latest rpi-${APP_NAME}
 
 ./test/testapp.sh $BOXIP rpi-${APP_NAME}.tar.gz
