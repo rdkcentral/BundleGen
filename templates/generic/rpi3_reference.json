@@ -62,7 +62,9 @@
                 ]
             }
         ],
-        "envvar": [],
+        "envvar": [
+            "LD_PRELOAD=/usr/lib/libGLESv2.so.2:/usr/lib/libwayland-egl.so.1"
+        ],
         "devs": [
             {
                 "type": "c",
