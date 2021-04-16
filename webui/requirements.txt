@@ -1,7 +1,6 @@
 autoflake==1.4
 autopep8==1.5.3
 bidict==0.21.2
--e git+https://github.com/TeknoVenus/BundleGen.git@1d6d5d9166b8237499d5b78e312f3fe66fb4605f#egg=bundlegen
 click==7.1.2
 dnspython==1.16.0
 Flask==1.1.2
