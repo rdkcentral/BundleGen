@@ -17,6 +17,7 @@ WORKDIR /home/bundlegenuser
 # Configure Go and setup Umoci
 RUN mkdir -p $HOME/go && \
     echo 'export GOPATH=$HOME/go' >> $HOME/.bashrc && \
+    echo 'export GO111MODULE=off' >> $HOME/.bashrc && \
     source $HOME/.bashrc && \
     go get -d github.com/opencontainers/umoci && \
     cd $GOPATH/src/github.com/opencontainers/umoci && \
