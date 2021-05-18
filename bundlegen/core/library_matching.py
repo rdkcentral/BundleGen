@@ -55,7 +55,7 @@ class LibraryMatching:
     # ==========================================================================
     def _take_host_lib(self, srclib, dstlib, api_info):
         """ The lib version from the host was choosen. Log it, create mount bind
-            and remove from image rootfs if present there.
+            and remove from OCI image rootfs if present there.
             Also for any sublibs if present.
         """
         logger.trace(f"HOST version choosen: {srclib}")
@@ -126,18 +126,31 @@ class LibraryMatching:
             sublib['apiversions'] = []
 
     def _take_rootfs_lib(self, dstlib, api_info):
-        """ The lib version from image rootfs was choosen. Basically log here that it was choosen.
+        """ The lib version from OCI image rootfs was choosen. Basically log here that it was choosen.
             Also for any sublibs if present.
         """
-        logger.trace(f"IMAGE version choosen: {dstlib}")
+        logger.trace(f"OCI IMAGE version choosen: {dstlib}")
         self.handled_libs.add(dstlib)
         if api_info and api_info.get('sublibs'):
             for sublib in api_info['sublibs']:
-                logger.trace(f"IMAGE version choosen: {sublib}")
+                logger.trace(f"OCI IMAGE version choosen: {sublib}")
                 self.handled_libs.add(sublib)
 
     # ==========================================================================
     def _mount_or_use_rootfs(self, srclib, dstlib):
+        """Determine to mount lib from host OR use the one inside bundle/OCI rootfs.
+           If lib exists in rootfs and apiversions info exists for it inside *_libs.json config
+           then we try to use that version of the lib that has most API versions defined inside.
+           If lib does not exist inside image rootfs then create mount bind.
+           If no API versions info exists then create mount bind.
+           If decision cannot be made because API versions disjunct, choose image rootfs version.
+
+        Args:
+            srclib (string): libpath on host. For this lib, the api info will be looked up
+                             inside *_libs.json.
+            dstlib (string): libpath in rootfs image. In most cases the same as srclib. For this lib
+                             the api info will be read directly from the lib file via readelf.
+        """
         if dstlib in self.handled_libs:
             #logger.trace(f"Already handled: {dstlib}")
             return
@@ -153,10 +166,10 @@ class LibraryMatching:
             if (self.libmatchingmode == 'image'):
                 rootfs_filepath = os.path.join(self.rootfs_path, dstlib.lstrip('/'))
                 if not os.path.exists(rootfs_filepath):
-                    logger.trace(f"Lib not inside image rootfs {dstlib}")
+                    logger.trace(f"Lib not inside OCI image rootfs {dstlib}")
                     self._take_host_lib(srclib, dstlib, None)
                 else:
-                    logger.trace(f"Image {dstlib} forcibly choosen.")
+                    logger.trace(f"OCI Image {dstlib} forcibly choosen.")
                     self._take_rootfs_lib(dstlib, None)
             else: # normal and host modes
                 self._take_host_lib(srclib, dstlib, None)
@@ -171,12 +184,12 @@ class LibraryMatching:
 
         rootfs_filepath = os.path.join(self.rootfs_path, dstlib.lstrip('/'))
         if not os.path.exists(rootfs_filepath):
-            logger.trace(f"Lib not inside image rootfs {dstlib}")
+            logger.trace(f"Lib not inside OCI image rootfs {dstlib}")
             self._take_host_lib(srclib, dstlib, api_info)
             return
 
         if (self.libmatchingmode == 'image'):
-            logger.trace(f"Image {dstlib} forcibly choosen.")
+            logger.trace(f"OCI Image {dstlib} forcibly choosen.")
             self._take_rootfs_lib(dstlib, api_info)
             return
         elif (self.libmatchingmode == 'host'):
@@ -201,31 +214,50 @@ class LibraryMatching:
                 self._take_host_lib(srclib, dstlib, api_info)
             elif (version_defs_by_host_lib < version_defs_by_rootfs_lib):
                 ## Library on host has less API versions than the one from bundle rootfs. Keeping the one from bundle rootfs.
-                logger.trace(f"Image {dstlib} more: {version_defs_by_rootfs_lib - version_defs_by_host_lib}")
+                logger.trace(f"OCI Image {dstlib} more: {version_defs_by_rootfs_lib - version_defs_by_host_lib}")
                 self._take_rootfs_lib(dstlib, api_info)
             else:
-                logger.error(f"Cannot decide which library to choose! {dstlib}... defaulting to image version.")
-                logger.error(f"Image {dstlib} more: {version_defs_by_rootfs_lib - version_defs_by_host_lib}")
-                logger.error(f"Host  {dstlib} more: {version_defs_by_host_lib - version_defs_by_rootfs_lib}")
+                logger.error(f"Cannot decide which library to choose! {dstlib}... defaulting to OCI image version.")
+                logger.error(f"OCI Image {dstlib} more: {version_defs_by_rootfs_lib - version_defs_by_host_lib}")
+                logger.error(f"Host      {dstlib} more: {version_defs_by_host_lib - version_defs_by_rootfs_lib}")
                 self._take_rootfs_lib(dstlib, api_info)
         else:
                 self._take_host_lib(srclib, dstlib, api_info)
 
     # ==========================================================================
-    def mount_or_use_rootfs(self, srclib, dstlib):
-        """Determine to mount lib from host OR use the one inside bundle rootfs.
-           If lib exists in rootfs and apiversions info exists for it inside *_libs.json config
-           then we try to use that version of the lib that has most API versions defined inside.
-           If lib does not exist inside image rootfs then create mount bind.
-           If no API versions info exists then create mount bind.
-           If decision cannot be made because API versions disjunct, choose image rootfs version.
+    def mount(self, srclib, dstlib):
+        """Mount lib from host. Its dependencies will be added automatically, mounted from
+           host or taken from OCI image. See _mount_or_use_rootfs().
 
         Args:
             srclib (string): libpath on host. For this lib, the api info will be looked up
                              inside *_libs.json.
-            dstlib (string): libpath in rootfs image. In most cases the same as srclib. For this lib
-                             the api info will be read directly from the lib file via readelf.
+            dstlib (string): libpath in rootfs image. In most cases the same as srclib.
         """
+        logger.trace(f"Explicitely adding for host mount: {dstlib}")
         if dstlib in self.handled_libs:
-            logger.debug(f"No need to add explicitely: {dstlib}")
+            logger.trace(f"No need to add explicitely: {dstlib}")
+        api_info = None
+        if not self.nodepwalking:
+            if self.platform_cfg.get('libs'):
+                api_info = [x for x in self.platform_cfg['libs'] if x['name'] == srclib]
+                if not api_info:
+                    logger.trace(f"No api info found for {dstlib}")
+                else:
+                    api_info = api_info[0]
+        self._take_host_lib(srclib, dstlib, api_info)
+
+    # ==========================================================================
+    def mount_or_use_rootfs(self, srclib, dstlib):
+        """ See _mount_or_use_rootfs().
+
+        Args:
+            srclib (string): libpath on host. For this lib, the api info will be looked up
+                             inside *_libs.json.
+            dstlib (string): libpath in rootfs image. In most cases the same as srclib.
+        """
+        logger.trace(f"Explicitely adding for host mount or from OCI: {dstlib}")
+        if dstlib in self.handled_libs:
+            logger.trace(f"No need to add explicitely: {dstlib}")
         self._mount_or_use_rootfs(srclib, dstlib)
+

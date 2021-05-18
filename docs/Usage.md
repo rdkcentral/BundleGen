@@ -75,7 +75,7 @@ Options:
                                   libs indicated in gfxLibs and
                                   pluginDependencies config, will
                                   automatically also be added to the bundle.
-                                  Host or image version of library is decided
+                                  Host or OCI image version of library is decided
                                   by libmatchingmode parameter below. This
                                   logic can only work if a _libs.json file is
                                   present with libs and apiversions info.
@@ -84,11 +84,11 @@ Options:
                                   normal: take most recent library i.e. with
                                   most api tags like 'GLIBC_2.4'.
 
-                                  image: always take lib from image rootfs, if
+                                  image: always take lib from OCI image rootfs, if
                                   available in there.
 
                                   host: always take host lib and create mount
-                                  bind. Skips the library from image rootfs if
+                                  bind. Skips the library from OCI image rootfs if
                                   it was there.
 
                                   Default mode is 'normal'. When apiversion

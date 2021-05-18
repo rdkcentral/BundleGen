@@ -247,7 +247,7 @@ class BundleProcessor:
 
             # Now mount in any GPU libraries - these will just have a src/dst
             for lib in self.platform_cfg.get('gpu').get('gfxLibs'):
-                self.libmatcher.mount_or_use_rootfs(lib['src'], lib['dst'])
+                self.libmatcher.mount(lib['src'], lib['dst'])
 
             # Add a mount for the westeros socket and set envvar in container
             # This is optional as can be set at container startup

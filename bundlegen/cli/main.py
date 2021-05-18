@@ -62,12 +62,12 @@ def cli(verbose):
 @click.option('-n', '--nodepwalking', 
                         help="""Dependency walking and library matching is active by default. Use this flag to disable it.
                                 When enabled, the dependencies of all libs indicated in gfxLibs and pluginDependencies config,
-                                will automatically also be added to the bundle. Host or image version of library is decided by libmatchingmode
+                                will automatically also be added to the bundle. Host or OCI image version of library is decided by libmatchingmode
                                 parameter below. This logic can only work if a _libs.json file is present with libs and apiversions info.""", is_flag=True)
 @click.option('-m', '--libmatchingmode', type=click.Choice(['normal', 'image', 'host'], case_sensitive=True), default='normal', 
                         help= """ normal: take most recent library i.e. with most api tags like 'GLIBC_2.4'.\n
-                                  image: always take lib from image rootfs, if available in there.\n
-                                  host: always take host lib and create mount bind. Skips the library from image rootfs if it was there.\n
+                                  image: always take lib from OCI image rootfs, if available in there.\n
+                                  host: always take host lib and create mount bind. Skips the library from OCI image rootfs if it was there.\n
                                   Default mode is 'normal'. When apiversion info not available the effect is the same as mode 'host'""")
 # @click.option('--disable-lib-mounts', required=False, help='Disable automatically bind mounting in libraries that exist on the STB. May increase bundle size', is_flag=True)
 def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, yes, nodepwalking, libmatchingmode):
