@@ -30,6 +30,8 @@ setuptools.setup(
     entry_points='''
         [console_scripts]
         bundlegen=bundlegen.cli.main:cli
+        bundlegen-cli=bundlegen.cli.main:cli
+        bundlegen-rabbitmq=bundlegen.rabbitmq.main:cli
     ''',
     python_requires='>=3.7',
 )

@@ -1,0 +1,41 @@
+version: '3.2'
+
+services:
+  bundlegen:
+    image: bundlegen-rabbit:latest
+    environment:
+        - BUNDLE_STORE_DIR=/bundles
+        - RABBITMQ_BROKER=bundlegen-rabbit
+        - TMP_DIR=/tmp/
+    volumes:
+        - generated_bundles:/bundles
+    depends_on:
+        rabbitmq:
+            condition: service_healthy
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: bundlegen-rabbit
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - rabbitmq_data:/var/lib/rabbitmq/mnesia/
+    healthcheck:
+        test: rabbitmq-diagnostics -q ping
+        interval: 30s
+        timeout: 30s
+        retries: 3
+
+#   web:
+#     image: nginx
+#     ports:
+#         - '8080:80'
+#     volumes:
+#         - generated_bundles:/usr/share/nginx/html
+#     depends_on:
+#         - bundlegen
+
+volumes:
+    generated_bundles:
+    rabbitmq_data:
