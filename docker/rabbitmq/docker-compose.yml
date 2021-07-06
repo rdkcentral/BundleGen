@@ -27,15 +27,6 @@ services:
         timeout: 30s
         retries: 3
 
-#   web:
-#     image: nginx
-#     ports:
-#         - '8080:80'
-#     volumes:
-#         - generated_bundles:/usr/share/nginx/html
-#     depends_on:
-#         - bundlegen
-
 volumes:
     generated_bundles:
     rabbitmq_data:
