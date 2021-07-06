@@ -15,29 +15,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import click
 import sys
 import os
-import pika
-import msgpack
-import shutil
-import json
-from typing import Tuple
-from dotenv import load_dotenv, find_dotenv
 import signal
+import click
+import pika
 
+from time import sleep
+from dotenv import load_dotenv, find_dotenv
 from loguru import logger
+from bundlegen.rabbitmq.message_handler import msg_received
 
-from bundlegen.rabbitmq import message
-from bundlegen.rabbitmq.result import Result
 
-from bundlegen.core.utils import Utils
-from bundlegen.core.bundle_processor import BundleProcessor
-from bundlegen.core.image_unpacker import ImageUnpackager
-from bundlegen.core.image_downloader import ImageDownloader
-from bundlegen.core.stb_platform import STBPlatform
-
-def signal_handler(signal, frame):
+def signal_handler(s, frame):
+    """
+    Disconnect from rabbitmq and quit when we receive a signal
+    """
+    logger.debug(f"Received signal {s}")
     logger.info("Shutting down. . .")
     try:
         sys.exit(0)
@@ -66,184 +60,20 @@ def cli(verbose):
     logger.add(sys.stderr, level=log_levels.get(verbose))
 
 
-
-def message_decoder(obj):
-    unpacked_obj = msgpack.unpackb(obj)
-    msg = message.Message(unpacked_obj["uuid"],
-                          unpacked_obj["platform"],
-                          unpacked_obj["image_url"],
-                          unpacked_obj["app_metadata"],
-                          message.LibMatchMode(unpacked_obj["lib_match_mode"]))
-    return msg
-
-
-def msg_received(ch, method, properties, body):
+def create_directory_from_env_var(env_var_name):
     """
-    Callback when we receive a message from the broker. Messages are encoded
-    in msgpack format
+    Create any directories we need to work if they don't exist
     """
-    logger.debug(f"Received new message - {body}")
-    msg = message_decoder(body)
+    dir_path = os.environ.get(env_var_name)
 
-    try:
-        result = generate_bundle(msg)
+    if not dir_path:
+        logger.error(f"Required setting {env_var_name} not set")
+        return False
 
-        if result[0] == Result.SUCCESS:
-            logger.success(f"Successfully generated bundle at {result[1]}")
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)
 
-            response = {
-                'success': True,
-                'uuid': msg.uuid,
-                'bundle_path': result[1]
-            }
-
-            # Send a message on the reply-to exclusive queue to say we've successfully
-            # generated a bundle
-            ch.basic_publish('', routing_key=properties.reply_to,
-                            body=msgpack.packb(response))
-
-            logger.success(f"Request UUID: {msg.uuid} Completed")
-
-            # ack so rabbit clears it from the queue
-            ch.basic_ack(delivery_tag=method.delivery_tag)
-        else:
-            response = {
-                'success': False,
-                'uuid': msg.uuid,
-            }
-
-            if method.redelivered:
-                # If this is re-delivered message, don't bother requeuing it again and
-                # just admit defeat
-                logger.error(
-                    "Could not generate bundle. Giving up as this was already redelivered")
-                # Send a message on the reply-to exclusive queue to say we've failed
-                ch.basic_publish('', routing_key=properties.reply_to,
-                                body=msgpack.packb(response))
-                ch.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
-            elif result[0] == Result.TRANSIENT_ERROR:
-                logger.error(
-                    "Could not generate bundle with transient error. Requeuing to try again later")
-                # Don't send anything on the reply-to queue here as it'll be retried again
-                # by another bundlegen instance
-                ch.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
-            elif result[0] == Result.FATAL_ERROR:
-                logger.error(
-                    "Could not generate bundle with fatal error. Not requeuing")
-                ch.basic_publish('', routing_key=properties.reply_to,
-                                body=msgpack.packb(response))
-                ch.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
-    except Exception:
-        logger.exception("Failed to generate Bundle - exception occured. Not requeuing")
-        response = {
-            'success': False,
-            'uuid': msg.uuid,
-        }
-        ch.basic_publish('', routing_key=properties.reply_to,
-                                body=msgpack.packb(response))
-        ch.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
-
-
-def generate_bundle(options: message.Message) -> Tuple[Result, str]:
-    """
-    Actually do the work to generate the bundle
-    """
-
-    # Create a random dir to save the generated bundle, before copying to output directory
-    outputdir = os.path.abspath(os.path.join(
-        os.environ.get('TMP_DIR'), Utils.get_random_string(5)))
-
-    selected_platform = STBPlatform(
-        options.platform, os.environ.get('RDK_PLATFORM_SEARCHPATH'))
-
-    if not selected_platform.found_config():
-        logger.error(f"Could not find config for platform {options.platform}")
-        return (Result.FATAL_ERROR, "")
-
-    if not options.image_url:
-        logger.error("Image URL is not set - cannot generate bundle")
-        return (Result.FATAL_ERROR, "")
-
-    logger.success(
-        f"Starting Bundle Generation from image '{options.image_url}' for platform {options.platform} (UUID: {options.uuid})")
-
-    creds = os.environ.get("RDK_OCI_REGISTRY_CREDS")
-    img_downloader = ImageDownloader()
-    img_path = img_downloader.download_image(
-        options.image_url, creds, selected_platform.get_config())
-
-    if not img_path:
-        logger.error("Failed to download image")
-        return (Result.TRANSIENT_ERROR, "")
-
-    # Unpack the image with umoci
-    tag = ImageDownloader().get_image_tag(options.image_url)
-    img_unpacker = ImageUnpackager()
-    img_unpacker.unpack_image(img_path, tag, outputdir)
-
-    # Delete the downloaded image now we've unpacked it
-    logger.info(f"Deleting {img_path}")
-    shutil.rmtree(img_path)
-
-    # Load app metadata
-    app_metadata_image_path = os.path.join(
-        outputdir, "rootfs", "appmetadata.json")
-    image_metadata_exists = os.path.exists(app_metadata_image_path)
-
-    app_metadata_dict = {}
-
-    custom_app_metadata = options.app_metadata
-
-    if not image_metadata_exists and not custom_app_metadata:
-        # No metadata at all
-        logger.error(
-            f"Cannot find app metadata file in OCI image and none provided to BundleGen")
-        return (Result.FATAL_ERROR, "")
-    elif (not image_metadata_exists and custom_app_metadata) or (image_metadata_exists and custom_app_metadata):
-        # Use custom metadata
-        app_metadata_dict = custom_app_metadata
-    else:
-        # Load metadata from image
-        with open(app_metadata_image_path) as metadata:
-            app_metadata_dict = json.load(metadata)
-
-    # remove app metadata from image rootfs
-    if image_metadata_exists:
-        os.remove(app_metadata_image_path)
-
-    # Begin processing. Work in the output dir where the img was unpacked to
-    processor = BundleProcessor(
-        selected_platform.get_config(), outputdir, app_metadata_dict, False, options.lib_match_mode.value)
-    if not processor.check_compatibility():
-        # Not compatible - delete any work done so far
-        shutil.rmtree(outputdir)
-        logger.error(
-            f"App is not compatible with platform {options.platform}, cannot generate bundle")
-        return (Result.FATAL_ERROR, "")
-
-    success = processor.begin_processing()
-    if not success:
-        logger.error("Failed to generate bundle")
-        # This might have been some weird issue, so re-queue to try again later
-        return (Result.TRANSIENT_ERROR, "")
-
-    tarball_name = app_metadata_dict["id"] + Utils.get_random_string(6)
-
-    tmp_path = os.path.join(
-        os.environ.get('TMP_DIR'), f"{tarball_name}.tar.gz")
-    persistent_path = os.path.join(
-        os.environ.get('BUNDLE_STORE_DIR'), f"{tarball_name}.tar.gz")
-
-    Utils.create_tgz(outputdir, tmp_path)
-    logger.success(f"Successfully generated bundle at {tmp_path}")
-
-    # Move to persistent storage
-    logger.debug(
-        f"Moving '{tmp_path}' to {os.environ.get('BUNDLE_STORE_DIR')}")
-    shutil.move(tmp_path, os.environ.get('BUNDLE_STORE_DIR'))
-
-
-    return (Result.SUCCESS, persistent_path)
+    return True
 
 
 @click.command()
@@ -259,36 +89,69 @@ def start():
     # Read settings from a .env file for development
     load_dotenv(find_dotenv())
 
+    # Set up our directories
+    if not create_directory_from_env_var("BUNDLE_STORE_DIR"):
+        sys.exit(1)
+    if not create_directory_from_env_var("BUNDLEGEN_TMP_DIR"):
+        sys.exit(1)
+
     logger.info("Starting RabbitMQ BundleGen consumer. . .")
 
-    # Setup any directories we need
-    if not os.path.exists(os.environ.get('BUNDLE_STORE_DIR')):
-        os.makedirs(os.environ.get('BUNDLE_STORE_DIR'))
+    successful_connection = False
+    max_retry_count = 5
+    retry_count = 0
 
-    if not os.path.exists(os.environ.get('TMP_DIR')):
-        os.makedirs(os.environ.get('TMP_DIR'))
+    # Connect to RabbitMQ
+    while True:
+        try:
+            if os.environ.get('RABBITMQ_PORT'):
+                connection = pika.BlockingConnection(
+                    pika.ConnectionParameters(host=os.environ.get('RABBITMQ_HOST'),
+                                              port=os.environ.get('RABBITMQ_PORT'),
+                                              connection_attempts=3, retry_delay=1))
+            else:
+                connection = pika.BlockingConnection(
+                    pika.ConnectionParameters(host=os.environ.get('RABBITMQ_HOST'),
+                                              connection_attempts=3, retry_delay=1))
 
-    # Connect to broker (todo:: move this to config/envvar)
-    try:
-        if os.environ.get('RABBITMQ_PORT'):
-            connection = pika.BlockingConnection(
-                pika.ConnectionParameters(host=os.environ.get('RABBITMQ_BROKER'), port=os.environ.get('RABBITMQ_PORT')))
-        else:
-            connection = pika.BlockingConnection(
-                pika.ConnectionParameters(host=os.environ.get('RABBITMQ_BROKER')))
+            channel = connection.channel()
 
-        channel = connection.channel()
+            # will only create if queue doesn't exist
+            channel.queue_declare(queue="bundlegen-requests")
+            channel.basic_consume(queue='bundlegen-requests',
+                                  on_message_callback=msg_received)
 
-        # will only create if queue doesn't exist
-        channel.queue_declare(queue="bundlegen-requests")
-        channel.basic_consume(queue='bundlegen-requests',
-                            on_message_callback=msg_received)
+            successful_connection = True
 
-        logger.info(f"Connected to RabbitMQ broker. Waiting for messages. . .")
+            logger.info(
+                "Connected to RabbitMQ broker. Waiting for messages. . .")
 
-        channel.start_consuming()
-    except pika.exceptions.AMQPConnectionError as e:
-        logger.error(f"Failed to connect to RabbitMQ at {os.environ.get('RABBITMQ_BROKER')} - is it running?")
-        sys.exit(1)
+            channel.start_consuming()
+        except pika.exceptions.ConnectionClosedByBroker:
+            # Don't recover if connection was closed by broker
+            logger.error("Connection was closed by broker")
+            sys.exit(1)
+        except pika.exceptions.AMQPChannelError:
+            # Don't recover on channel errors
+            logger.error("AMPQ Channel error, cannot recover")
+            sys.exit(1)
+        except pika.exceptions.AMQPConnectionError:
+            # Recover on all other connection errors (assuming we've managed to connect at least once before)
+            if successful_connection:
+                if retry_count < max_retry_count:
+                    logger.warning(
+                        f"Lost connection to rabbitmq - attempting to reconnect... ({retry_count}/{max_retry_count})")
+                    retry_count += 1
+                    sleep(2)
+                    continue
+                else:
+                    logger.error(
+                        "Lost connection to rabbitmq - max retries hit, giving up")
+                    sys.exit(1)
+            else:
+                logger.error(
+                    f"Cannot connect to rabbitmq at {os.environ.get('RABBITMQ_HOST')}")
+                sys.exit(1)
+
 
 cli.add_command(start)

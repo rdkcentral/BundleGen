@@ -19,12 +19,16 @@ from enum import Enum
 
 
 class LibMatchMode(str, Enum):
+    """
+    Defines which strategy to use for selecting which libraries to bind-mount
+    into the container
+    """
     NORMAL = "normal"
     IMAGE = "image"
     HOST = "host"
 
 
-class Message(object):
+class Message():
     """
     Message to be send/received over rabbitmq
     """
