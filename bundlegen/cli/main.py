@@ -59,13 +59,13 @@ def cli(verbose):
 @click.option('-i', '--ipk', required=False, help='If set result file will be "*.ipk" instead of "*.tar.gz"', envvar="FILE_FORMAT_IPK", is_flag=True)
 @click.option('-a', '--appmetadata', required=False, help='Path to metadata json for the app (if not embedded inside OCI image)')
 @click.option('-y', '--yes', help='Automatic yes to prompt', is_flag=True)
-@click.option('-n', '--nodepwalking', 
-                        help="""Dependency walking and library matching is active by default. Use this flag to disable it.
+@click.option('-n', '--nodepwalking',
+              help="""Dependency walking and library matching is active by default. Use this flag to disable it.
                                 When enabled, the dependencies of all libs indicated in gfxLibs and pluginDependencies config,
                                 will automatically also be added to the bundle. Host or OCI image version of library is decided by libmatchingmode
                                 parameter below. This logic can only work if a _libs.json file is present with libs and apiversions info.""", is_flag=True)
-@click.option('-m', '--libmatchingmode', type=click.Choice(['normal', 'image', 'host'], case_sensitive=True), default='normal', 
-                        help= """ normal: take most recent library i.e. with most api tags like 'GLIBC_2.4'.\n
+@click.option('-m', '--libmatchingmode', type=click.Choice(['normal', 'image', 'host'], case_sensitive=True), default='normal',
+              help=""" normal: take most recent library i.e. with most api tags like 'GLIBC_2.4'.\n
                                   image: always take lib from OCI image rootfs, if available in there.\n
                                   host: always take host lib and create mount bind. Skips the library from OCI image rootfs if it was there.\n
                                   Default mode is 'normal'. When apiversion info not available the effect is the same as mode 'host'""")
@@ -104,53 +104,45 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
 
     # Unpack the image with umoci
     tag = ImageDownloader().get_image_tag(image)
-    img_unpacker = ImageUnpackager()
-    unpack_success = img_unpacker.unpack_image(img_path, tag, outputdir)
+    img_unpacker = ImageUnpackager(src=img_path, dst=outputdir)
+    unpack_success = img_unpacker.unpack_image(tag, delete=True)
 
     if not unpack_success:
         return
 
-    # Delete the downloaded image now we've unpacked it
-    logger.info(f"Deleting {img_path}")
-    shutil.rmtree(img_path)
-
     # Load app metadata
-    app_metadata_file = ""
-    app_metadata_image_path = os.path.join(
-        outputdir, "rootfs", "appmetadata.json")
+    metadata_from_image = img_unpacker.get_app_metadata_from_img()
+    appmetadata = os.path.abspath(appmetadata)
 
-    image_metadata_exists = os.path.exists(app_metadata_image_path)
-
-    if not image_metadata_exists and not appmetadata:
+    app_metadata_dict = {}
+    if not metadata_from_image and not appmetadata:
         # No metadata at all
         logger.error(
             f"Cannot find app metadata file in OCI image and none provided to BundleGen")
         return
-    elif not image_metadata_exists and appmetadata:
+
+    if not metadata_from_image and appmetadata:
         # No metadata in image, but custom file provided
         if not os.path.exists(appmetadata):
             logger.error(f'App metadata file {appmetadata} does not exist')
             return
-        app_metadata_file = appmetadata
-    elif image_metadata_exists and appmetadata:
+        with open(appmetadata) as metadata:
+            logger.debug(f"Loading metadata from {appmetadata}")
+            app_metadata_dict = json.load(metadata)
+    elif metadata_from_image and appmetadata:
         # Got two options for metadata, which one do we want?
         if click.confirm("Metadata found in image, but custom metadata provided. Use custom metadata?"):
-           app_metadata_file = appmetadata
+            with open(appmetadata) as metadata:
+                logger.debug(f"Loading metadata from {appmetadata}")
+                app_metadata_dict = json.load(metadata)
         else:
-            app_metadata_file = app_metadata_image_path
+            app_metadata_dict = metadata_from_image
+
+        img_unpacker.delete_img_app_metadata()
     else:
-        app_metadata_file = app_metadata_image_path
-
-    logger.debug(f"Loading metadata from {app_metadata_file}")
-
-    # Load the metadata
-    app_metadata_dict = {}
-    with open(app_metadata_file) as metadata:
-        app_metadata_dict = json.load(metadata)
-
-    # remove app metadata from image rootfs
-    if image_metadata_exists:
-        os.remove(app_metadata_image_path)
+        # Take metadata from image
+        app_metadata_dict = metadata_from_image
+        img_unpacker.delete_img_app_metadata()
 
     # Begin processing. Work in the output dir where the img was unpacked to
     processor = BundleProcessor(

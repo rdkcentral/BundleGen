@@ -71,7 +71,7 @@ def msg_received(ch, method, properties, body):
             ch.basic_publish('', routing_key=properties.reply_to,
                              body=msgpack.packb(response))
 
-            logger.success(f"Request UUID: {msg.uuid} Completed")
+            logger.success(f"Request {msg.uuid} completed")
 
             # ack so rabbit clears it from the queue
             ch.basic_ack(delivery_tag=method.delivery_tag)
@@ -148,43 +148,36 @@ def generate_bundle(options: message.Message) -> Tuple[Result, str]:
 
     # Unpack the image with umoci
     tag = ImageDownloader().get_image_tag(options.image_url)
-    img_unpacker = ImageUnpackager()
-    img_unpacker.unpack_image(img_path, tag, outputdir)
-
-    # Delete the downloaded image now we've unpacked it
-    logger.info(f"Deleting {img_path}")
-    shutil.rmtree(img_path)
+    img_unpacker = ImageUnpackager(img_path, outputdir)
+    img_unpacker.unpack_image(tag, delete=True)
 
     # Load app metadata
-    app_metadata_image_path = os.path.join(
-        outputdir, "rootfs", "appmetadata.json")
-    image_metadata_exists = os.path.exists(app_metadata_image_path)
-
-    app_metadata_dict = {}
-
+    metadata_from_image = img_unpacker.get_app_metadata_from_img()
     custom_app_metadata = options.app_metadata
 
-    if not image_metadata_exists and not custom_app_metadata:
+    app_metadata_dict = {}
+    if not metadata_from_image and not custom_app_metadata:
         # No metadata at all
         logger.error(
             f"Cannot find app metadata file in OCI image and none provided to BundleGen")
         return (Result.FATAL_ERROR, "")
 
-    if (not image_metadata_exists and custom_app_metadata) or (image_metadata_exists and custom_app_metadata):
+    if not metadata_from_image and custom_app_metadata:
         # Use custom metadata
         app_metadata_dict = custom_app_metadata
+    elif metadata_from_image and custom_app_metadata:
+        logger.warning("Image contains app metadata and custom metadata provided. Using custom metadata")
+        app_metadata_dict = custom_app_metadata
+        img_unpacker.delete_img_app_metadata()
     else:
-        # Load metadata from image
-        with open(app_metadata_image_path) as metadata:
-            app_metadata_dict = json.load(metadata)
+        app_metadata_dict = metadata_from_image
+        img_unpacker.delete_img_app_metadata()
 
-    # remove app metadata from image rootfs
-    if image_metadata_exists:
-        os.remove(app_metadata_image_path)
 
     # Begin processing. Work in the output dir where the img was unpacked to
     processor = BundleProcessor(
         selected_platform.get_config(), outputdir, app_metadata_dict, False, options.lib_match_mode.value)
+
     if not processor.check_compatibility():
         # Not compatible - delete any work done so far
         shutil.rmtree(outputdir)
@@ -206,7 +199,6 @@ def generate_bundle(options: message.Message) -> Tuple[Result, str]:
         os.environ.get('BUNDLE_STORE_DIR'), f"{tarball_name}.tar.gz")
 
     Utils.create_tgz(outputdir, tmp_path)
-    logger.success(f"Successfully generated bundle at {tmp_path}")
 
     # Move to persistent storage
     logger.debug(

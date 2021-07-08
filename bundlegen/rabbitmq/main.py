@@ -123,7 +123,7 @@ def start():
 
             successful_connection = True
 
-            logger.info(
+            logger.success(
                 "Connected to RabbitMQ broker. Waiting for messages. . .")
 
             channel.start_consuming()

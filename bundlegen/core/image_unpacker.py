@@ -16,14 +16,15 @@
 # limitations under the License.
 
 import os
-import click
-import uuid
+import shutil
+import json
 from loguru import logger
+from werkzeug.utils import append_slash_redirect
 from bundlegen.core.utils import Utils
 
 
 class ImageUnpackager():
-    def __init__(self):
+    def __init__(self, src, dst):
         # Optimism
         self.umoci_found = True
 
@@ -38,8 +39,13 @@ class ImageUnpackager():
                 "Failed to find umoci binary to unpack images", err=True)
             self.umoci_found = False
 
+        self.src = src
+        self.dest = dst
+
+        self.app_metadata_image_path = os.path.join(self.dest, "rootfs", "appmetadata.json")
+
     # ==========================================================================
-    def unpack_image(self, src, tag, dest):
+    def unpack_image(self, tag, delete=False):
         """Attempt to unpack an OCI image in a given directory to an OCI bundle
         without any modifications
 
@@ -50,14 +56,35 @@ class ImageUnpackager():
             logger.error("Cannot unpack image as cannot find umoci")
             return
 
-        umoci_command = f'{self.umoci_path} unpack --rootless --image {src}:{tag} {dest}'
+        umoci_command = f'{self.umoci_path} unpack --rootless --image {self.src}:{tag} {self.dest}'
 
         logger.debug(umoci_command)
 
         success = Utils().run_process(umoci_command)
         if success == 0:
-            logger.info(f"Unpacked image successfully to {dest}")
+            logger.info(f"Unpacked image successfully to {self.dest}")
+
+            if delete:
+                logger.debug("Deleting downloaded image")
+                shutil.rmtree(self.src)
+
             return True
         else:
             logger.warning("Umoci failed to unpack the image")
             return False
+
+    def image_contains_metadata(self):
+        return os.path.exists(self.app_metadata_image_path)
+
+    def delete_img_app_metadata(self):
+        if self.image_contains_metadata():
+            logger.debug("Deleting app metadata file from unpacked image")
+            os.remove(self.app_metadata_image_path)
+
+    def get_app_metadata_from_img(self):
+        if self.image_contains_metadata():
+            with open(self.app_metadata_image_path) as metadata:
+                app_metadata_dict = json.load(metadata)
+
+            return app_metadata_dict
+        return None
