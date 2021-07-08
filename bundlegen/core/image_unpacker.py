@@ -19,7 +19,6 @@ import os
 import shutil
 import json
 from loguru import logger
-from werkzeug.utils import append_slash_redirect
 from bundlegen.core.utils import Utils
 
 

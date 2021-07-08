@@ -17,7 +17,6 @@
 
 import os
 import shutil
-import json
 from typing import Tuple
 import msgpack
 
