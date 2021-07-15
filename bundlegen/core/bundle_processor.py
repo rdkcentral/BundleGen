@@ -17,7 +17,6 @@
 
 import os
 import json
-import glob
 import humanfriendly
 import textwrap
 from loguru import logger
@@ -197,9 +196,6 @@ class BundleProcessor:
         # Add platform envvars
         for envvar in self.platform_cfg.get('envvar'):
             self.oci_config['process']['env'].append(envvar)
-
-        # Add capabilities
-        # TODO:: Where will these come from? Not a core part of the image spec
 
         # Set resource limits on the process
         resource_limits = self.platform_cfg.get('resourceLimits')

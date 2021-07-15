@@ -16,8 +16,6 @@
 # limitations under the License.
 
 import os
-import click
-import uuid
 import time
 
 from loguru import logger

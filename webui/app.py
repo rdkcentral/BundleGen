@@ -194,43 +194,36 @@ def index():
             img_url, creds, selected_platform.get_config())
 
         if not img_path:
-            logger.error("Failed to donwload image")
+            logger.error("Failed to download image")
             raise AppError("Image download failed")
 
         # Unpack the image with umoci
         tag = ImageDownloader().get_image_tag(img_url)
-        img_unpacker = ImageUnpackager()
-        img_unpacker.unpack_image(img_path, tag, outputdir)
-
-        # Delete the downloaded image now we've unpacked it
-        logger.info(f"Deleting {img_path}")
-        shutil.rmtree(img_path)
+        img_unpacker = ImageUnpackager(img_path, outputdir)
+        img_unpacker.unpack_image(tag, delete=True)
 
         # Load app metadata
-        app_metadata_image_path = os.path.join(
-            outputdir, "rootfs", "appmetadata.json")
-        image_metadata_exists = os.path.exists(app_metadata_image_path)
-
-        app_metadata_dict = {}
-
+        metadata_from_image = img_unpacker.get_app_metadata_from_img()
         custom_app_metadata = form.app_metadata.data
 
-        if not image_metadata_exists and not custom_app_metadata:
+        app_metadata_dict = {}
+        if not metadata_from_image and not custom_app_metadata:
             # No metadata at all
             logger.error(
                 f"Cannot find app metadata file in OCI image and none provided to BundleGen")
             raise AppError("No Metadata provided")
-        elif (not image_metadata_exists and custom_app_metadata) or (image_metadata_exists and custom_app_metadata):
+
+        if not metadata_from_image and custom_app_metadata:
             # Use custom metadata
             app_metadata_dict = json.loads(custom_app_metadata)
+        elif metadata_from_image and custom_app_metadata:
+            logger.warning("Image contains app metadata and custom metadata provided. Using custom metadata")
+            app_metadata_dict = json.loads(custom_app_metadata)
+            img_unpacker.delete_img_app_metadata()
         else:
-            # Load metadata from image
-            with open(app_metadata_image_path) as metadata:
-                app_metadata_dict = json.load(metadata)
+            app_metadata_dict = metadata_from_image
+            img_unpacker.delete_img_app_metadata()
 
-        # remove app metadata from image rootfs
-        if image_metadata_exists:
-            os.remove(app_metadata_image_path)
 
         # Begin processing. Work in the output dir where the img was unpacked to
         processor = BundleProcessor(
