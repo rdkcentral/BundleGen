@@ -1,0 +1,173 @@
+{
+    "platformName": "eos2008c-debug",
+    "os": "linux",
+    "arch": {
+        "arch": "arm",
+        "variant": "v7"
+    },
+    "rdk": {
+        "version": "2020Q4",
+        "supportedFeatures": [
+            "Controller",
+            "DeviceInfo",
+            "Monitor",
+            "OCDM",
+            "TraceControl",
+            "WifiManager",
+            "com.comcast.CoPilot",
+            "com.comcast.DeviceProvisioning",
+            "com.comcast.FrameRate",
+            "com.comcast.HdcpProfile",
+            "com.comcast.HdmiInput",
+            "com.comcast.StateObserver",
+            "com.comcast.StorageManager",
+            "org.rdk.ActivityMonitor",
+            "org.rdk.DeviceDiagnostics",
+            "org.rdk.DisplaySettings",
+            "org.rdk.FrontPanel",
+            "org.rdk.HomeNetworking",
+            "org.rdk.LoggingPreferences",
+            "org.rdk.Network",
+            "org.rdk.OCIContainer",
+            "org.rdk.Proxies",
+            "org.rdk.SleepTimer",
+            "org.rdk.TTSResource",
+            "org.rdk.TTSSettings",
+            "org.rdk.Timer",
+            "org.rdk.UserPreferences",
+            "org.rdk.Warehouse"
+        ]
+    },
+    "hardware": {
+        "graphics": true
+    },
+    "storage": {
+        "persistent": {
+            "storageDir": "/tmp",
+            "maxSize": "100M"
+        }
+    },
+    "gpu": {
+        "extraMounts": [
+            {
+                "source": "/usr/share/X11/xkb",
+                "destination": "/usr/share/X11/xkb",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "nosuid",
+                    "nodev",
+                    "ro"
+                ]
+            },
+            {
+                "source": "/var/run/nxserver/nxserver_ipc",
+                "destination": "/var/run/nxserver/nxserver_ipc",
+                "type": "bind",
+                "options": [
+                    "bind",
+                    "rw"
+                ]
+            },
+            {
+                "source": "/var/run/weston",
+                "destination": "/var/run/weston",
+                "type": "bind",
+                "options": [
+                    "bind",
+                    "nosuid",
+                    "nodev",
+                    "ro"
+                ]
+            }
+        ],
+        "envvar": [
+            "LD_PRELOAD=/usr/lib/libnexus.so:/usr/lib/libnxpl-weston.so.1.13.1:/usr/lib/libnxclient.so:/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.1:/usr/lib/libGLESv2.so",
+            "nexus_ipc_dir=/var/run/nxserver"
+        ],
+        "devs": [
+            {
+                "type": "c",
+                "path": "/dev/nexus",
+                "major": 33,
+                "minor": 0,
+                "access": "rw"
+            }
+        ],
+        "gfxLibs": [
+            {
+                "src": "/usr/lib/libEGL.so.1",
+                "dst": "/usr/lib/libEGL.so"
+            },
+            {
+                "src": "/usr/lib/libEGL.so.1",
+                "dst": "/usr/lib/libEGL.so.1"
+            },
+            {
+                "src": "/usr/lib/libGLESv2.so.2",
+                "dst": "/usr/lib/libGLESv2.so"
+            },
+            {
+                "src": "/usr/lib/libGLESv2.so.2",
+                "dst": "/usr/lib/libGLESv2.so.2"
+            },
+            {
+                "src": "/usr/lib/libwayland-egl.so.1",
+                "dst": "/usr/lib/libwayland-egl.so"
+            },
+            {
+                "src": "/usr/lib/libwayland-egl.so.1",
+                "dst": "/usr/lib/libwayland-egl.so.0"
+            },
+            {
+                "src": "/usr/lib/libwayland-egl.so.1",
+                "dst": "/usr/lib/libwayland-egl.so.1"
+            },
+            {
+                "src": "/usr/lib/libessos.so.0",
+                "dst": "/usr/lib/libessos.so.0"
+            },
+            {
+                "src": "/usr/lib/libnxpl-weston.so.1",
+                "dst": "/usr/lib/libnxpl-weston.so.1"
+            },
+            {
+                "src": "/usr/lib/libnxpl-weston.so.1",
+                "dst": "/usr/lib/libnxpl-weston.so.1.13.1"
+            },
+            {
+                "src": "/usr/lib/libnxclient.so",
+                "dst": "/usr/lib/libnxclient.so"
+            }
+
+        ]
+    },
+    "mounts": [],
+    "network": {
+        "options": [
+            "nat",
+            "open",
+            "private"
+        ]
+    },
+    "envvar": [
+        "XDG_RUNTIME_DIR=/var/run/weston"
+    ],
+    "resourceLimits": [
+        {
+            "type": "RLIMIT_NPROC",
+            "hard": 300,
+            "soft": 300
+        },
+        {
+            "type": "RLIMIT_RTPRIO",
+            "hard": 6,
+            "soft": 6
+        }
+    ],
+    "disableUserNamespacing": true,
+    "logging": {
+        "mode": "file",
+        "logDir": "/var/log"
+    }
+}
