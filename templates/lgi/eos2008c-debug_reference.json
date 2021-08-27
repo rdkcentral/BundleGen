@@ -134,10 +134,6 @@
             {
                 "src": "/usr/lib/libnxpl-weston.so.1",
                 "dst": "/usr/lib/libnxpl-weston.so.1.13.1"
-            },
-            {
-                "src": "/usr/lib/libnxclient.so",
-                "dst": "/usr/lib/libnxclient.so"
             }
 
         ]
