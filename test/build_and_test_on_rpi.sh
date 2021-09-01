@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright 2021 Liberty Global Service B.V.
+# Copyright 2021 Liberty Global Services B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
