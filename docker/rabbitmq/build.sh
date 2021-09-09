@@ -1,7 +1,9 @@
+#!/bin/bash
+
 # If not stated otherwise in this file or this component's license file the
 # following copyright and licenses apply:
 #
-# Copyright 2020 Consult Red
+# Copyright 2021 Consult Red
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,23 +17,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import setuptools
+IMAGE_NAME=bundlegen-rabbit:latest
 
-setuptools.setup(
-    name="bundlegen",
-    version='0.1',
-    long_description="RDK Component to generate extended OCI bundle*'s from OCI Images, ready to be run by Dobby",
-    packages=setuptools.find_packages(),
-    install_requires=[
-        'click',
-        'loguru',
-        'humanfriendly'
-    ],
-    entry_points='''
-        [console_scripts]
-        bundlegen=bundlegen.cli.main:cli
-        bundlegen-cli=bundlegen.cli.main:cli
-        bundlegen-rabbitmq=bundlegen.rabbitmq.main:cli
-    ''',
-    python_requires='>=3.7',
+(
+    cd ../../;
+    docker build -t $IMAGE_NAME -f docker/rabbitmq/Dockerfile .;
 )
