@@ -41,7 +41,11 @@ def message_decoder(obj):
                           unpacked_obj["platform"],
                           unpacked_obj["image_url"],
                           unpacked_obj["app_metadata"],
-                          message.LibMatchMode(unpacked_obj["lib_match_mode"]))
+                          message.LibMatchMode(unpacked_obj["lib_match_mode"]),
+                          unpacked_obj["output_filename"],
+                          unpacked_obj["searchpath"],
+                          unpacked_obj["outputdir"],
+                          unpacked_obj["createmountpoints"])
     return msg
 
 
@@ -123,7 +127,7 @@ def generate_bundle(options: message.Message) -> Tuple[Result, str]:
         os.environ.get('BUNDLEGEN_TMP_DIR'), Utils.get_random_string(5)))
 
     selected_platform = STBPlatform(
-        options.platform, os.environ.get('RDK_PLATFORM_SEARCHPATH'))
+        options.platform, options.searchpath or os.environ.get('RDK_PLATFORM_SEARCHPATH'))
 
     if not selected_platform.found_config():
         logger.error(f"Could not find config for platform {options.platform}")
@@ -175,7 +179,13 @@ def generate_bundle(options: message.Message) -> Tuple[Result, str]:
 
     # Begin processing. Work in the output dir where the img was unpacked to
     processor = BundleProcessor(
-        selected_platform.get_config(), outputdir, app_metadata_dict, False, options.lib_match_mode.value, False)
+        selected_platform.get_config(),
+        outputdir,
+        app_metadata_dict,
+        False,
+        options.lib_match_mode.value,
+        options.createmountpoints,
+    )
 
     if not processor.check_compatibility():
         # Not compatible - delete any work done so far
@@ -190,18 +200,21 @@ def generate_bundle(options: message.Message) -> Tuple[Result, str]:
         # This might have been some weird issue, so re-queue to try again later
         return (Result.TRANSIENT_ERROR, "")
 
-    tarball_name = app_metadata_dict["id"] + Utils.get_random_string(6)
+    if options.output_filename:
+        tarball_name = options.output_filename
+    else:
+        tarball_name = app_metadata_dict["id"] + Utils.get_random_string(6)
 
     tmp_path = os.path.join(
         os.environ.get('BUNDLEGEN_TMP_DIR'), f"{tarball_name}.tar.gz")
     persistent_path = os.path.join(
-        os.environ.get('BUNDLE_STORE_DIR'), f"{tarball_name}.tar.gz")
+        options.outputdir or os.environ.get('BUNDLE_STORE_DIR'), f"{tarball_name}.tar.gz")
 
     Utils.create_tgz(outputdir, tmp_path)
 
     # Move to persistent storage
     logger.debug(
-        f"Moving '{tmp_path}' to {os.environ.get('BUNDLE_STORE_DIR')}")
-    shutil.move(tmp_path, os.environ.get('BUNDLE_STORE_DIR'))
+        f"Moving '{tmp_path}' to {options.outputdir or os.environ.get('BUNDLE_STORE_DIR')}")
+    shutil.move(tmp_path, options.outputdir or os.environ.get('BUNDLE_STORE_DIR'))
 
     return (Result.SUCCESS, persistent_path)

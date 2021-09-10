@@ -38,10 +38,18 @@ class Message():
                  platform: str,
                  image_url: str,
                  app_metadata: dict,
-                 lib_match_mode: LibMatchMode):
+                 lib_match_mode: LibMatchMode,
+                 output_filename: str,
+                 searchpath: str,
+                 outputdir: str,
+                 createmountpoints: bool):
         self.uuid = uuid
         self.platform = platform
         self.image_url = image_url
+        self.output_filename = output_filename
+        self.searchpath = searchpath
+        self.outputdir = outputdir
+        self.createmountpoints = createmountpoints
 
         if app_metadata is None:
             self.app_metadata = {}
