@@ -41,8 +41,8 @@ class LibraryMatching:
         logger.debug(f"Libmatching mode: {libmatchingmode}")
 
     # ==========================================================================
-    def _add_bind_mount(self, src, dst):
-        self.add_mount_func(src, dst)
+    def _add_bind_mount(self, src, dst, createmountpoint):
+        self.add_mount_func(src, dst, createmountpoint)
 
     # ==========================================================================
     def _remove_from_rootfs(self, rootfs_filepath):
@@ -53,16 +53,6 @@ class LibraryMatching:
         if (link != rootfs_filepath):
             os.remove(link)
     # ==========================================================================
-    def _create_mount_point(self, fullPath):
-        """Create mount point (empty file) in provided path.
-        """
-        # Create the directory if doesn't exist
-        directory = os.path.dirname(fullPath)
-        if not os.path.exists(directory):
-            os.makedirs(directory, 0o755)
-        open(fullPath, mode = 'x')
-        os.chmod(fullPath, 0o777)
-    # ==========================================================================
     def _take_host_lib(self, srclib, dstlib, api_info):
         """ The lib version from the host was choosen. Log it, create mount bind
             and remove from OCI image rootfs if present there.
@@ -71,23 +61,19 @@ class LibraryMatching:
         logger.trace(f"HOST version choosen: {srclib}")
         self.handled_libs.add(dstlib)
         rootfs_filepath = os.path.join(self.rootfs_path, dstlib.lstrip('/'))
-        self._add_bind_mount(srclib, dstlib)
         if os.path.exists(rootfs_filepath):
             logger.trace(f"Removing from rootfs: {dstlib}")
             self._remove_from_rootfs(rootfs_filepath)
-        if self.createmountpoints:
-            self._create_mount_point(rootfs_filepath)
+        self._add_bind_mount(srclib, dstlib, self.createmountpoints)
         if api_info and api_info.get('sublibs'):
             for sublib in api_info['sublibs']:
                 logger.trace(f"HOST version choosen: {sublib}")
                 self.handled_libs.add(sublib)
-                self._add_bind_mount(sublib, sublib)
                 sublib_rootfs_filepath = os.path.join(self.rootfs_path, sublib.lstrip('/'))
                 if os.path.exists(sublib_rootfs_filepath):
                     logger.trace(f"Removing from rootfs: {sublib}")
                     self._remove_from_rootfs(sublib_rootfs_filepath)
-                    if self.createmountpoints:
-                        self._create_mount_point(rootfs_filepath)
+                self._add_bind_mount(sublib, sublib, self.createmountpoints)
         if api_info and api_info.get('deps'):
             for neededlib in api_info['deps']:
                 self._mount_or_use_rootfs(neededlib, neededlib)

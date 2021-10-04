@@ -175,7 +175,7 @@ def generate_bundle(options: message.Message) -> Tuple[Result, str]:
 
     # Begin processing. Work in the output dir where the img was unpacked to
     processor = BundleProcessor(
-        selected_platform.get_config(), outputdir, app_metadata_dict, False, options.lib_match_mode.value)
+        selected_platform.get_config(), outputdir, app_metadata_dict, False, options.lib_match_mode.value, False)
 
     if not processor.check_compatibility():
         # Not compatible - delete any work done so far
