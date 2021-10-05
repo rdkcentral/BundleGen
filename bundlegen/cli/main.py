@@ -69,8 +69,9 @@ def cli(verbose):
                                   image: always take lib from OCI image rootfs, if available in there.\n
                                   host: always take host lib and create mount bind. Skips the library from OCI image rootfs if it was there.\n
                                   Default mode is 'normal'. When apiversion info not available the effect is the same as mode 'host'""")
+@click.option('-r', '--createmountpoints', required=False, help='Create mount points in rootfs. Main usage for platforms with RO filesystem.', is_flag=True)
 # @click.option('--disable-lib-mounts', required=False, help='Disable automatically bind mounting in libraries that exist on the STB. May increase bundle size', is_flag=True)
-def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, yes, nodepwalking, libmatchingmode):
+def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, yes, nodepwalking, libmatchingmode, createmountpoints):
     """Generate an OCI Bundle for a specified platform
     """
 
@@ -146,7 +147,7 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
 
     # Begin processing. Work in the output dir where the img was unpacked to
     processor = BundleProcessor(
-        selected_platform.get_config(), outputdir, app_metadata_dict, nodepwalking, libmatchingmode)
+        selected_platform.get_config(), outputdir, app_metadata_dict, nodepwalking, libmatchingmode, createmountpoints)
     if not processor.check_compatibility():
         # Not compatible - delete any work done so far
         shutil.rmtree(outputdir)

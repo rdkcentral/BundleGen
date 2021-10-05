@@ -24,12 +24,13 @@ from bundlegen.core.readelf import ReadElf
 
 
 class LibraryMatching:
-    def __init__(self, platform_cfg, bundle_path, add_mount_func, nodepwalking, libmatchingmode):
+    def __init__(self, platform_cfg, bundle_path, add_mount_func, nodepwalking, libmatchingmode, createmountpoints):
         self.platform_cfg = platform_cfg
         self.bundle_path = bundle_path
         self.rootfs_path = os.path.join(self.bundle_path, "rootfs")
         self.libmatchingmode = libmatchingmode
         self.nodepwalking = nodepwalking
+        self.createmountpoints = createmountpoints
         self.handled_libs = set()
         self.add_mount_func = add_mount_func
         self._determine_sublibs()
@@ -40,8 +41,8 @@ class LibraryMatching:
         logger.debug(f"Libmatching mode: {libmatchingmode}")
 
     # ==========================================================================
-    def _add_bind_mount(self, src, dst):
-        self.add_mount_func(src, dst)
+    def _add_bind_mount(self, src, dst, createmountpoint):
+        self.add_mount_func(src, dst, createmountpoint)
 
     # ==========================================================================
     def _remove_from_rootfs(self, rootfs_filepath):
@@ -51,7 +52,6 @@ class LibraryMatching:
         os.remove(rootfs_filepath)
         if (link != rootfs_filepath):
             os.remove(link)
-
     # ==========================================================================
     def _take_host_lib(self, srclib, dstlib, api_info):
         """ The lib version from the host was choosen. Log it, create mount bind
@@ -61,19 +61,19 @@ class LibraryMatching:
         logger.trace(f"HOST version choosen: {srclib}")
         self.handled_libs.add(dstlib)
         rootfs_filepath = os.path.join(self.rootfs_path, dstlib.lstrip('/'))
-        self._add_bind_mount(srclib, dstlib)
         if os.path.exists(rootfs_filepath):
             logger.trace(f"Removing from rootfs: {dstlib}")
             self._remove_from_rootfs(rootfs_filepath)
+        self._add_bind_mount(srclib, dstlib, self.createmountpoints)
         if api_info and api_info.get('sublibs'):
             for sublib in api_info['sublibs']:
                 logger.trace(f"HOST version choosen: {sublib}")
                 self.handled_libs.add(sublib)
-                self._add_bind_mount(sublib, sublib)
                 sublib_rootfs_filepath = os.path.join(self.rootfs_path, sublib.lstrip('/'))
                 if os.path.exists(sublib_rootfs_filepath):
                     logger.trace(f"Removing from rootfs: {sublib}")
                     self._remove_from_rootfs(sublib_rootfs_filepath)
+                self._add_bind_mount(sublib, sublib, self.createmountpoints)
         if api_info and api_info.get('deps'):
             for neededlib in api_info['deps']:
                 self._mount_or_use_rootfs(neededlib, neededlib)
@@ -260,4 +260,6 @@ class LibraryMatching:
         if dstlib in self.handled_libs:
             logger.trace(f"No need to add explicitely: {dstlib}")
         self._mount_or_use_rootfs(srclib, dstlib)
+
+
 

@@ -95,5 +95,12 @@ Options:
                                   info not available the effect is the same as
                                   mode 'host'
 
+  -r, --createmountpoints         Disabled by default, when enabled mount points
+                                  are being created in destination paths inside
+                                  rootfs. It is mainly used for platforms with
+                                  read only filesystem which does not allow to
+                                  create mount points by crun during container
+                                  creation.
+
   --help                  Show this message and exit.
 ```
