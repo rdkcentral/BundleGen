@@ -75,6 +75,7 @@ class BundleProcessor:
         self._process_network()
         self._process_storage()
         self._process_logging()
+        self._process_dynamic_devices()
 
         self.write_config_json()
         self._cleanup_umoci_leftovers()
@@ -590,6 +591,31 @@ class BundleProcessor:
             }
 
         self.oci_config['rdkPlugins']['logging'] = logging_plugin
+        return
+
+    # ==========================================================================
+    def _process_dynamic_devices(self):
+        """Adds the devicemapper plugin to the config to set up dynamic devices:
+           devices that do not have a fixed major/minor after boot
+        """
+        logger.debug("Configuring devicemapper")
+
+        dynamic_devices = []
+        for dev in self.platform_cfg.get('gpu').get('devs'):
+            if 'dynamic' in dev and dev['dynamic']:
+                dynamic_devices.append(dev['path'])
+
+        if len(dynamic_devices) == 0:
+            return
+
+        devicemapper_plugin = {
+            'required': True,
+            'data' : {
+                'devices': dynamic_devices
+            }
+        }
+
+        self.oci_config['rdkPlugins']['devicemapper'] = devicemapper_plugin
         return
 
     # ==========================================================================
