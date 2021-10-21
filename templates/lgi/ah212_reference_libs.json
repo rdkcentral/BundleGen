@@ -1160,6 +1160,15 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libDeviceMapperPlugin.so.1"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
                 "/lib/libm.so.6",
                 "/usr/lib/libstdc++.so.6"
             ],
@@ -1222,16 +1231,6 @@
                 "/usr/lib/libwayland-server.so.0"
             ],
             "name": "/usr/lib/libEGL.so.1.4.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libsystemd.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libEthanLogPlugin.so"
         },
         {
             "apiversions": [],
@@ -1350,6 +1349,24 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/ld-linux-armhf.so.3",
+                "/lib/libc.so.6",
+                "/usr/lib/libcutils.so"
+            ],
+            "name": "/usr/lib/libHwAudio_dcvdec.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/ld-linux-armhf.so.3",
+                "/lib/libc.so.6",
+                "/usr/lib/libcutils.so"
+            ],
+            "name": "/usr/lib/libHwAudio_dtshd.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
                 "/lib/libsystemd.so.0",
@@ -1378,17 +1395,20 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
-                "/lib/libpthread.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libIpcPlugin.so.1"
         },
         {
             "apiversions": [],
+            "deps": [],
+            "name": "/usr/lib/libLISAAuthModule.so"
+        },
+        {
+            "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
-                "/lib/libpthread.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libLoggingPlugin.so.1"
@@ -1416,7 +1436,7 @@
                 "/lib/libgcc_s.so.1",
                 "/usr/lib/libstdc++.so.6"
             ],
-            "name": "/usr/lib/libMulticastSocketsPlugin.so"
+            "name": "/usr/lib/libMinidumpPlugin.so.1"
         },
         {
             "apiversions": [],
@@ -1430,24 +1450,6 @@
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libNetworkingPlugin.so.1"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libOpenCDMPlugin.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libPerfettoPlugin.so"
         },
         {
             "apiversions": [],
@@ -1563,10 +1565,9 @@
                 "/lib/ld-linux-armhf.so.3",
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
-                "/lib/libpthread.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
-            "name": "/usr/lib/libStorage.so.1"
+            "name": "/usr/lib/libStoragePlugin.so.1"
         },
         {
             "apiversions": [],
@@ -1628,7 +1629,6 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
-                "/lib/libpthread.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libThunderPlugin.so.1"
@@ -1786,7 +1786,8 @@
                 "/usr/lib/libWPEFrameworkPlugins.so.1",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
                 "/usr/lib/libaml_mp_sdk.so",
-                "/usr/lib/libstdc++.so.6"
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/libWPEFrameworkDTV.so"
         },
@@ -1826,7 +1827,8 @@
                 "/usr/lib/libWPEFrameworkPlugins.so.1",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
                 "/usr/lib/libfwupgrade.so",
-                "/usr/lib/libstdc++.so.6"
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/libWPEFrameworkDeviceIdentification.so"
         },
@@ -1838,7 +1840,8 @@
                 "/usr/lib/libWPEFrameworkCore.so.1",
                 "/usr/lib/libWPEFrameworkPlugins.so.1",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
-                "/usr/lib/libstdc++.so.6"
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/libWPEFrameworkDeviceInfo.so"
         },
@@ -1855,7 +1858,8 @@
                 "/usr/lib/libWPEFrameworkSecurityUtil.so.1",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
                 "/usr/lib/libds.so",
-                "/usr/lib/libstdc++.so.6"
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/libWPEFrameworkDisplayInfo.so"
         },
@@ -1871,7 +1875,8 @@
                 "/usr/lib/libaamp.so",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libstdc++.so.6"
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/libWPEFrameworkFireboltMediaPlayer.so"
         },
@@ -1886,7 +1891,8 @@
                 "/usr/lib/libWPEFrameworkProtocols.so.1",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
                 "/usr/lib/libds.so",
-                "/usr/lib/libstdc++.so.6"
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/libWPEFrameworkFrontPanel.so"
         },
@@ -1904,9 +1910,27 @@
                 "/usr/lib/libWPEFrameworkProtocols.so.1",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
                 "/usr/lib/libds.so",
-                "/usr/lib/libstdc++.so.6"
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/libWPEFrameworkHdmiCec_2.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libLISAAuthModule.so",
+                "/usr/lib/libWPEFrameworkCore.so.1",
+                "/usr/lib/libWPEFrameworkPlugins.so.1",
+                "/usr/lib/libWPEFrameworkTracing.so.1",
+                "/usr/lib/libarchive.so.13",
+                "/usr/lib/libboost_filesystem.so.1.72.0",
+                "/usr/lib/libcurl.so.4",
+                "/usr/lib/libsqlite3.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libWPEFrameworkLISA.so"
         },
         {
             "apiversions": [],
@@ -1917,7 +1941,8 @@
                 "/usr/lib/libWPEFrameworkPlugins.so.1",
                 "/usr/lib/libWPEFrameworkProtocols.so.1",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
-                "/usr/lib/libstdc++.so.6"
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/libWPEFrameworkLocationSync.so"
         },
@@ -1965,26 +1990,10 @@
                 "/usr/lib/libWPEFrameworkCore.so.1",
                 "/usr/lib/libWPEFrameworkPlugins.so.1",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
-                "/usr/lib/libstdc++.so.6"
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/libWPEFrameworkMonitor.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libWPEFrameworkCore.so.1",
-                "/usr/lib/libWPEFrameworkCryptalgo.so.1",
-                "/usr/lib/libWPEFrameworkPlugins.so.1",
-                "/usr/lib/libWPEFrameworkProtocols.so.1",
-                "/usr/lib/libWPEFrameworkTracing.so.1",
-                "/usr/lib/libWPEFrameworkWarningReporting.so.1",
-                "/usr/lib/libocdm.so.1",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libWPEFrameworkOCDM.so"
         },
         {
             "apiversions": [],
@@ -1995,7 +2004,8 @@
                 "/usr/lib/libWPEFrameworkCore.so.1",
                 "/usr/lib/libWPEFrameworkPlugins.so.1",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
-                "/usr/lib/libstdc++.so.6"
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/libWPEFrameworkOCIContainer.so"
         },
@@ -2013,7 +2023,8 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libopkg.so.1",
                 "/usr/lib/libsqlite3.so.0",
-                "/usr/lib/libstdc++.so.6"
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/libWPEFrameworkPackager.so"
         },
@@ -2031,7 +2042,8 @@
                 "/usr/lib/libWPEFrameworkTracing.so.1",
                 "/usr/lib/libds.so",
                 "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libstdc++.so.6"
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/libWPEFrameworkPlayerInfo.so"
         },
@@ -2158,6 +2170,7 @@
                 "/usr/lib/libWPEFrameworkTracing.so.1",
                 "/usr/lib/librdkshell.so",
                 "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0",
                 "/usr/lib/libtrower-base64.so.1.0.0"
             ],
             "name": "/usr/lib/libWPEFrameworkRDKShell.so"
@@ -2204,23 +2217,11 @@
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
                 "/usr/lib/libWPEFrameworkCore.so.1",
-                "/usr/lib/libWPEFrameworkPlugins.so.1",
-                "/usr/lib/libWPEFrameworkTracing.so.1",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libWPEFrameworkTelemetry.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/usr/lib/libWPEFrameworkCore.so.1",
                 "/usr/lib/libWPEFrameworkDefinitions.so.1",
                 "/usr/lib/libWPEFrameworkPlugins.so.1",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
-                "/usr/lib/libstdc++.so.6"
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/libWPEFrameworkTraceControl.so"
         },
@@ -2361,6 +2362,7 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgmodule-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
+                "/usr/lib/libgpg-error.so.0",
                 "/usr/lib/libgstapp-1.0.so.0",
                 "/usr/lib/libgstaudio-1.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -2373,7 +2375,6 @@
                 "/usr/lib/libicui18n.so.66",
                 "/usr/lib/libicuuc.so.66",
                 "/usr/lib/libjpeg.so.62",
-                "/usr/lib/libocdm.so.1",
                 "/usr/lib/libpng16.so.16",
                 "/usr/lib/librdkat.so",
                 "/usr/lib/libsoup-2.4.so.1",
@@ -2409,6 +2410,7 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgmodule-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
+                "/usr/lib/libgpg-error.so.0",
                 "/usr/lib/libgstapp-1.0.so.0",
                 "/usr/lib/libgstaudio-1.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -2421,7 +2423,6 @@
                 "/usr/lib/libicui18n.so.66",
                 "/usr/lib/libicuuc.so.66",
                 "/usr/lib/libjpeg.so.62",
-                "/usr/lib/libocdm.so.1",
                 "/usr/lib/libpng16.so.16",
                 "/usr/lib/librdkat.so",
                 "/usr/lib/libsoup-2.4.so.1",
@@ -2444,8 +2445,6 @@
                 "/lib/libm.so.6",
                 "/lib/libpthread.so.0",
                 "/lib/libsystemd.so.0",
-                "/lib/libuuid.so.1",
-                "/usr/lib/libIARMBus.so.0",
                 "/usr/lib/libWPEFrameworkCore.so.1",
                 "/usr/lib/libWPEFrameworkProtocols.so.1",
                 "/usr/lib/libWPEFrameworkSecurityUtil.so.1",
@@ -2454,15 +2453,13 @@
                 "/usr/lib/libcrypto.so.1.1",
                 "/usr/lib/libcurl.so.4",
                 "/usr/lib/libdash.so",
-                "/usr/lib/libds.so",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstapp-1.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0",
                 "/usr/lib/libmetrics.so",
-                "/usr/lib/libocdm.so.1",
                 "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libsubtec_connector.so",
                 "/usr/lib/libtr181api.so.0",
                 "/usr/lib/libxml2.so.2"
             ],
@@ -2768,6 +2765,19 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/lib/libm.so.6",
+                "/lib/libpthread.so.0",
+                "/lib/librt.so.1",
+                "/usr/lib/libasound.so.2",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libaudamadec.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
                 "/lib/libdl.so.2",
                 "/lib/libgcc_s.so.1",
                 "/lib/libpthread.so.0",
@@ -2790,18 +2800,15 @@
                 "/lib/libm.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libam_adp.so",
-                "/usr/lib/libamadec_hal.so",
                 "/usr/lib/libamaudioutils.so",
-                "/usr/lib/libamavutils.so",
                 "/usr/lib/libamlavsync.so",
-                "/usr/lib/libasound.so.2",
+                "/usr/lib/libaudamadec.so",
                 "/usr/lib/libcutils.so",
                 "/usr/lib/libdvbaudioutils.so",
                 "/usr/lib/libexpat.so.1",
                 "/usr/lib/liblog.so",
                 "/usr/lib/libms12v2.so.1",
-                "/usr/lib/libstdc++.so.6",
-                "/usr/lib/libtinyalsa.so.1"
+                "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libaudio_hal.so"
         },
@@ -2814,18 +2821,15 @@
                 "/lib/libm.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libam_adp.so",
-                "/usr/lib/libamadec_hal.so",
                 "/usr/lib/libamaudioutils.so",
-                "/usr/lib/libamavutils.so",
                 "/usr/lib/libamlavsync.so",
-                "/usr/lib/libasound.so.2",
+                "/usr/lib/libaudamadec.so",
                 "/usr/lib/libcutils.so",
                 "/usr/lib/libdvbaudioutils.so",
                 "/usr/lib/libexpat.so.1",
                 "/usr/lib/liblog.so",
                 "/usr/lib/libms12v2.so.1",
-                "/usr/lib/libstdc++.so.6",
-                "/usr/lib/libtinyalsa.so.1"
+                "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libaudio_hal.so.1"
         },
@@ -2838,18 +2842,15 @@
                 "/lib/libm.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libam_adp.so",
-                "/usr/lib/libamadec_hal.so",
                 "/usr/lib/libamaudioutils.so",
-                "/usr/lib/libamavutils.so",
                 "/usr/lib/libamlavsync.so",
-                "/usr/lib/libasound.so.2",
+                "/usr/lib/libaudamadec.so",
                 "/usr/lib/libcutils.so",
                 "/usr/lib/libdvbaudioutils.so",
                 "/usr/lib/libexpat.so.1",
                 "/usr/lib/liblog.so",
                 "/usr/lib/libms12v2.so.1",
-                "/usr/lib/libstdc++.so.6",
-                "/usr/lib/libtinyalsa.so.1"
+                "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libaudio_hal.so.1.0"
         },
@@ -2876,6 +2877,36 @@
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbluetooth.so.3.18.15"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libboost_filesystem.so.1"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libboost_filesystem.so.1.72"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libboost_filesystem.so.1.72.0"
         },
         {
             "apiversions": [],
@@ -2925,6 +2956,97 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/lib/libm.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libbreakpadwrapper.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/lib/libm.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libbreakpadwrapper.so.0.0.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libccspinterface.so.0",
+                "/usr/lib/libcjson.so.1",
+                "/usr/lib/libcurl.so.4",
+                "/usr/lib/libdcautil.so.0",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libhttp.so.0",
+                "/usr/lib/libmsgpackc.so.2",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libreportgen.so.0",
+                "/usr/lib/libscheduler.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libutils.so.0"
+            ],
+            "name": "/usr/lib/libbulkdata.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libccspinterface.so.0",
+                "/usr/lib/libcjson.so.1",
+                "/usr/lib/libcurl.so.4",
+                "/usr/lib/libdcautil.so.0",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libhttp.so.0",
+                "/usr/lib/libmsgpackc.so.2",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libreportgen.so.0",
+                "/usr/lib/libscheduler.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libutils.so.0"
+            ],
+            "name": "/usr/lib/libbulkdata.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libccspinterface.so.0",
+                "/usr/lib/libcjson.so.1",
+                "/usr/lib/libcurl.so.4",
+                "/usr/lib/libdcautil.so.0",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libhttp.so.0",
+                "/usr/lib/libmsgpackc.so.2",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libreportgen.so.0",
+                "/usr/lib/libscheduler.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libutils.so.0"
+            ],
+            "name": "/usr/lib/libbulkdata.so.0.0.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbz2.so.1"
@@ -2968,7 +3090,7 @@
                 "/usr/lib/libpixman-1.so.0",
                 "/usr/lib/libpng16.so.16"
             ],
-            "name": "/usr/lib/libcairo.so.2.11600.0"
+            "name": "/usr/lib/libcairo.so.2.11400.6"
         },
         {
             "apiversions": [],
@@ -2983,6 +3105,45 @@
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libcares.so.2.4.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libccspinterface.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libccspinterface.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libccspinterface.so.0.0.0"
         },
         {
             "apiversions": [],
@@ -3073,46 +3234,6 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libctemplate.so.3"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libctemplate.so.3.0.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libctemplate_nothreads.so.3"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libctemplate_nothreads.so.3.0.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
                 "/lib/libpthread.so.0",
                 "/lib/libz.so.1",
                 "/usr/lib/libcrypto.so.1.1",
@@ -3198,6 +3319,57 @@
                 "/usr/lib/libgobject-2.0.so.0"
             ],
             "name": "/usr/lib/libdbus-glib-1.so.2.3.4"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libccspinterface.so.0",
+                "/usr/lib/libcjson.so.1",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libutils.so.0"
+            ],
+            "name": "/usr/lib/libdcautil.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libccspinterface.so.0",
+                "/usr/lib/libcjson.so.1",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libutils.so.0"
+            ],
+            "name": "/usr/lib/libdcautil.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libccspinterface.so.0",
+                "/usr/lib/libcjson.so.1",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libutils.so.0"
+            ],
+            "name": "/usr/lib/libdcautil.so.0.0.0"
         },
         {
             "apiversions": [],
@@ -3492,6 +3664,7 @@
                 "/lib/libm.so.6",
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
+                "/usr/lib/libamavutils.so",
                 "/usr/lib/libcutils.so",
                 "/usr/lib/liblog.so",
                 "/usr/lib/libstdc++.so.6"
@@ -3681,27 +3854,6 @@
             "name": "/usr/lib/libessosrmgr.so.0.0.0"
         },
         {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6"
-            ],
-            "name": "/usr/lib/libethanlog.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6"
-            ],
-            "name": "/usr/lib/libethanlog.so.3"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6"
-            ],
-            "name": "/usr/lib/libethanlog.so.3.1.0"
-        },
-        {
             "apiversions": [
                 "LIBEVDEV_1",
                 "LIBEVDEV_1_3",
@@ -3788,6 +3940,14 @@
                 "/lib/libgcc_s.so.1"
             ],
             "name": "/usr/lib/libfaad-aml.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/usr/lib/libcutils.so"
+            ],
+            "name": "/usr/lib/libfaad.so"
         },
         {
             "apiversions": [],
@@ -4615,7 +4775,6 @@
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libgstsecmemallocator.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libgstaamp.so"
@@ -4714,24 +4873,6 @@
                 "/usr/lib/libgstreamer-1.0.so.0"
             ],
             "name": "/usr/lib/libgstamlhalasink.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libpthread.so.0",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstallocators-1.0.so.0",
-                "/usr/lib/libgstapp-1.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstcodecparsers-1.0.so.0",
-                "/usr/lib/libgstpbutils-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libgstsecmemallocator.so.0",
-                "/usr/lib/libsecmem.so"
-            ],
-            "name": "/usr/lib/libgstamlsecparse.so"
         },
         {
             "apiversions": [],
@@ -5074,20 +5215,6 @@
                 "/usr/lib/libsafec-3.5.1.so.3"
             ],
             "name": "/usr/lib/libgstdtcpenc.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstallocators-1.0.so.0",
-                "/usr/lib/libgstapp-1.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libgstsecmemallocator.so.0",
-                "/usr/lib/libsecmem.so"
-            ],
-            "name": "/usr/lib/libgstdummydrm.so"
         },
         {
             "apiversions": [],
@@ -5575,32 +5702,6 @@
         {
             "apiversions": [],
             "deps": [
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstallocators-1.0.so.0",
-                "/usr/lib/libgstapp-1.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libsecmem.so"
-            ],
-            "name": "/usr/lib/libgstsecmemallocator.so.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstallocators-1.0.so.0",
-                "/usr/lib/libgstapp-1.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libsecmem.so"
-            ],
-            "name": "/usr/lib/libgstsecmemallocator.so.0.0.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
                 "/lib/libc.so.6",
                 "/lib/libm.so.6",
                 "/lib/libpthread.so.0",
@@ -6083,6 +6184,42 @@
                 "/usr/lib/libnettle.so.4"
             ],
             "name": "/usr/lib/libhogweed.so.2.5"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libcurl.so.4",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libhttp.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libcurl.so.4",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libhttp.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libcurl.so.4",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libhttp.so.0.0.0"
         },
         {
             "apiversions": [],
@@ -6613,6 +6750,39 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libinterChipHelper.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libinterChipHelper.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libinterChipHelper.so.0.0.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libip4tc.so.2"
@@ -7125,6 +7295,13 @@
             "deps": [
                 "/lib/libc.so.6"
             ],
+            "name": "/usr/lib/liblinenoise.so.1.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6"
+            ],
             "name": "/usr/lib/liblog.so"
         },
         {
@@ -7178,6 +7355,13 @@
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/liblzo2.so.2.0.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6"
+            ],
+            "name": "/usr/lib/libmad.so"
         },
         {
             "apiversions": [],
@@ -7339,6 +7523,7 @@
                 "/lib/libdl.so.2",
                 "/lib/libgcc_s.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libbinder.so",
                 "/usr/lib/liblog.so",
                 "/usr/lib/libstdc++.so.6"
             ],
@@ -7351,6 +7536,7 @@
                 "/lib/libdl.so.2",
                 "/lib/libgcc_s.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libbinder.so",
                 "/usr/lib/liblog.so",
                 "/usr/lib/libstdc++.so.6"
             ],
@@ -7363,10 +7549,25 @@
                 "/lib/libdl.so.2",
                 "/lib/libgcc_s.so.1",
                 "/lib/libpthread.so.0",
+                "/usr/lib/libbinder.so",
                 "/usr/lib/liblog.so",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libms12v2.so.1.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6"
+            ],
+            "name": "/usr/lib/libmsgpackc.so.2"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6"
+            ],
+            "name": "/usr/lib/libmsgpackc.so.2.0.0"
         },
         {
             "apiversions": [],
@@ -7550,60 +7751,6 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libWPEFrameworkCore.so.1",
-                "/usr/lib/libWPEFrameworkCryptalgo.so.1",
-                "/usr/lib/libWPEFrameworkProtocols.so.1",
-                "/usr/lib/libWPEFrameworkTracing.so.1",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libocdm.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libWPEFrameworkCore.so.1",
-                "/usr/lib/libWPEFrameworkCryptalgo.so.1",
-                "/usr/lib/libWPEFrameworkProtocols.so.1",
-                "/usr/lib/libWPEFrameworkTracing.so.1",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libocdm.so.1"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libWPEFrameworkCore.so.1",
-                "/usr/lib/libWPEFrameworkCryptalgo.so.1",
-                "/usr/lib/libWPEFrameworkProtocols.so.1",
-                "/usr/lib/libWPEFrameworkTracing.so.1",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libocdm.so.1.0.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
                 "/usr/lib/libyajl.so.2"
             ],
             "name": "/usr/lib/libocispec.so"
@@ -7761,26 +7908,6 @@
                 "/usr/lib/libpcre.so.1"
             ],
             "name": "/usr/lib/libpcreposix.so.0.0.4"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libdl.so.2",
-                "/lib/libm.so.6",
-                "/usr/lib/libcrypt.so.2"
-            ],
-            "name": "/usr/lib/libperl.so.5"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libdl.so.2",
-                "/lib/libm.so.6",
-                "/usr/lib/libcrypt.so.2"
-            ],
-            "name": "/usr/lib/libperl.so.5.30.0"
         },
         {
             "apiversions": [],
@@ -7959,6 +8086,70 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libmsgpackc.so.2",
+                "/usr/lib/librtMessage.so"
+            ],
+            "name": "/usr/lib/librbus-core.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libmsgpackc.so.2",
+                "/usr/lib/librtMessage.so"
+            ],
+            "name": "/usr/lib/librbus-core.so.0.0.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/librbus-core.so.0",
+                "/usr/lib/librtMessage.so"
+            ],
+            "name": "/usr/lib/librbus.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/librbus-core.so.0",
+                "/usr/lib/librtMessage.so"
+            ],
+            "name": "/usr/lib/librbus.so.2.0.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libgcc_s.so.1",
+                "/lib/libpthread.so.0",
+                "/lib/librt.so.1",
+                "/usr/lib/libam_adp.so"
+            ],
+            "name": "/usr/lib/librdkCCReader.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libgcc_s.so.1",
+                "/lib/libpthread.so.0",
+                "/lib/librt.so.1",
+                "/usr/lib/libam_adp.so"
+            ],
+            "name": "/usr/lib/librdkCCReader.so.0.0.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
                 "/lib/libm.so.6",
                 "/usr/lib/libTTSClient.so",
@@ -8001,6 +8192,7 @@
                 "/lib/libgcc_s.so.1",
                 "/lib/libm.so.6",
                 "/usr/lib/liblog4c.so.3",
+                "/usr/lib/libsafec-3.5.1.so.3",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/librdkloggers.so.0"
@@ -8012,6 +8204,7 @@
                 "/lib/libgcc_s.so.1",
                 "/lib/libm.so.6",
                 "/usr/lib/liblog4c.so.3",
+                "/usr/lib/libsafec-3.5.1.so.3",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/librdkloggers.so.0.0.0"
@@ -8036,6 +8229,42 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/lib/libm.so.6",
+                "/lib/libsystemd.so.0",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libdbus-1.so.3",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libgthread-2.0.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsafec-3.5.1.so.3",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/librdkstmgr.so.2"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/lib/libm.so.6",
+                "/lib/libsystemd.so.0",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libdbus-1.so.3",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libgthread-2.0.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsafec-3.5.1.so.3",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/librdkstmgr.so.2.0.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
                 "/lib/libtinfo.so.5"
             ],
             "name": "/usr/lib/libreadline.so.5"
@@ -8047,6 +8276,42 @@
                 "/lib/libtinfo.so.5"
             ],
             "name": "/usr/lib/libreadline.so.5.2"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libcjson.so.1",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libreportgen.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libcjson.so.1",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libreportgen.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libcjson.so.1",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libreportgen.so.0.0.0"
         },
         {
             "apiversions": [],
@@ -8230,6 +8495,16 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libcjson.so.1",
+                "/usr/lib/librdkloggers.so.0"
+            ],
+            "name": "/usr/lib/librtMessage.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
                 "/lib/libpthread.so.0",
                 "/lib/libuuid.so.1",
@@ -8250,6 +8525,39 @@
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libsafec-3.5.1.so.3.0.6"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libscheduler.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libscheduler.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libscheduler.so.0.0.0"
         },
         {
             "apiversions": [],
@@ -8595,6 +8903,68 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/lib/libpthread.so.0",
+                "/usr/lib/librdkCCReader.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libsubtec_connector.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libccspinterface.so.0",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libmsgpackc.so.2",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libutils.so.0"
+            ],
+            "name": "/usr/lib/libt2parser.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libccspinterface.so.0",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libmsgpackc.so.2",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libutils.so.0"
+            ],
+            "name": "/usr/lib/libt2parser.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libccspinterface.so.0",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libmsgpackc.so.2",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libutils.so.0"
+            ],
+            "name": "/usr/lib/libt2parser.so.0.0.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
                 "/usr/lib/libteec.so.1.0"
             ],
             "name": "/usr/lib/libtee_preload_fw.so"
@@ -8614,6 +8984,48 @@
                 "/lib/libpthread.so.0"
             ],
             "name": "/usr/lib/libteec.so.1.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libutils.so.0"
+            ],
+            "name": "/usr/lib/libtelemetry_msgsender.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libutils.so.0"
+            ],
+            "name": "/usr/lib/libtelemetry_msgsender.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libutils.so.0"
+            ],
+            "name": "/usr/lib/libtelemetry_msgsender.so.0.0.0"
         },
         {
             "apiversions": [
@@ -8850,6 +9262,42 @@
                 "/lib/libpthread.so.0"
             ],
             "name": "/usr/lib/libulockmgr.so.1.0.1"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libutils.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libutils.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libutils.so.0.0.0"
         },
         {
             "apiversions": [],
@@ -9430,6 +9878,66 @@
                 "/usr/lib/libxkbcommon.so.0"
             ],
             "name": "/usr/lib/libwpe-0.2.so.1.0.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libccspinterface.so.0",
+                "/usr/lib/libcjson.so.1",
+                "/usr/lib/libcurl.so.4",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libmsgpackc.so.2",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libt2parser.so.0",
+                "/usr/lib/libutils.so.0"
+            ],
+            "name": "/usr/lib/libxconfclient.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libccspinterface.so.0",
+                "/usr/lib/libcjson.so.1",
+                "/usr/lib/libcurl.so.4",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libmsgpackc.so.2",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libt2parser.so.0",
+                "/usr/lib/libutils.so.0"
+            ],
+            "name": "/usr/lib/libxconfclient.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libccspinterface.so.0",
+                "/usr/lib/libcjson.so.1",
+                "/usr/lib/libcurl.so.4",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libmsgpackc.so.2",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libt2parser.so.0",
+                "/usr/lib/libutils.so.0"
+            ],
+            "name": "/usr/lib/libxconfclient.so.0.0.0"
         },
         {
             "apiversions": [
