@@ -137,12 +137,6 @@
             "soft": 6
         }
     ],
-    "dobby": {
-        "pluginDir": "/usr/lib/plugins/dobby",
-        "pluginDependencies": [
-            "/usr/lib/libethanlog.so.3"
-        ]
-    },
     "disableUserNamespacing": true,
     "logging": {
         "mode": "file",

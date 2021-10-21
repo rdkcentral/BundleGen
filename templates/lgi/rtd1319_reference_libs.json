@@ -1222,6 +1222,15 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libDeviceMapperPlugin.so.1"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
                 "/lib/libm.so.6",
                 "/usr/lib/libstdc++.so.6"
             ],
@@ -1255,16 +1264,6 @@
                 "/usr/lib/libwayland-server.so.0"
             ],
             "name": "/usr/lib/libEGL.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libsystemd.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libEthanLogPlugin.so"
         },
         {
             "apiversions": [],
@@ -1385,6 +1384,11 @@
         },
         {
             "apiversions": [],
+            "deps": [],
+            "name": "/usr/lib/libLISAAuthModule.so"
+        },
+        {
+            "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
@@ -1400,15 +1404,6 @@
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libMinidumpPlugin.so.1"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libMulticastSocketsPlugin.so"
         },
         {
             "apiversions": [],
@@ -1990,24 +1985,6 @@
         {
             "apiversions": [],
             "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libOpenCDMPlugin.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libPerfettoPlugin.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libRDKMfrLib.so"
@@ -2426,6 +2403,7 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
+                "/usr/lib/libLISAAuthModule.so",
                 "/usr/lib/libWPEFrameworkCore.so.1",
                 "/usr/lib/libWPEFrameworkPlugins.so.1",
                 "/usr/lib/libWPEFrameworkTracing.so.1",
@@ -3495,6 +3473,7 @@
                 "/usr/lib/librdkloggers.so.0",
                 "/usr/lib/libreportgen.so.0",
                 "/usr/lib/libscheduler.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libutils.so.0"
             ],
@@ -3517,6 +3496,7 @@
                 "/usr/lib/librdkloggers.so.0",
                 "/usr/lib/libreportgen.so.0",
                 "/usr/lib/libscheduler.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libutils.so.0"
             ],
@@ -3539,6 +3519,7 @@
                 "/usr/lib/librdkloggers.so.0",
                 "/usr/lib/libreportgen.so.0",
                 "/usr/lib/libscheduler.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libutils.so.0"
             ],
@@ -3604,6 +3585,7 @@
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/librbus.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libccspinterface.so"
@@ -3616,6 +3598,7 @@
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/librbus.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libccspinterface.so.0"
@@ -3628,6 +3611,7 @@
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/librbus.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libccspinterface.so.0.0.0"
@@ -3741,46 +3725,6 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libctemplate.so.3"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libctemplate.so.3.0.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libctemplate_nothreads.so.3"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libctemplate_nothreads.so.3.0.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
                 "/lib/libpthread.so.0",
                 "/lib/libz.so.1",
                 "/usr/lib/libcrypto.so.1.0.0",
@@ -3870,6 +3814,7 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/librbus.so.0",
                 "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libutils.so.0"
             ],
@@ -3886,6 +3831,7 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/librbus.so.0",
                 "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libutils.so.0"
             ],
@@ -3902,6 +3848,7 @@
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/librbus.so.0",
                 "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libutils.so.0"
             ],
@@ -4415,27 +4362,6 @@
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libessosrmgr.so.0.0.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6"
-            ],
-            "name": "/usr/lib/libethanlog.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6"
-            ],
-            "name": "/usr/lib/libethanlog.so.3"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6"
-            ],
-            "name": "/usr/lib/libethanlog.so.3.1.0"
         },
         {
             "apiversions": [
@@ -6586,6 +6512,7 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/libcurl.so.4",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libhttp.so"
@@ -6597,6 +6524,7 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/libcurl.so.4",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libhttp.so.0"
@@ -6608,6 +6536,7 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/libcurl.so.4",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libhttp.so.0.0.0"
@@ -7132,6 +7061,7 @@
                 "/lib/libc.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libinterChipHelper.so"
@@ -7142,6 +7072,7 @@
                 "/lib/libc.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libinterChipHelper.so.0"
@@ -7152,6 +7083,7 @@
                 "/lib/libc.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libinterChipHelper.so.0.0.0"
@@ -8340,26 +8272,6 @@
         {
             "apiversions": [],
             "deps": [
-                "/lib/libc.so.6",
-                "/lib/libdl.so.2",
-                "/lib/libm.so.6",
-                "/usr/lib/libcrypt.so.2"
-            ],
-            "name": "/usr/lib/libperl.so.5"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libdl.so.2",
-                "/lib/libm.so.6",
-                "/usr/lib/libcrypt.so.2"
-            ],
-            "name": "/usr/lib/libperl.so.5.30.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
                 "/lib/ld-linux-armhf.so.3",
                 "/lib/libc.so.6",
                 "/lib/libm.so.6",
@@ -8637,6 +8549,7 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/libcjson.so.1",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libreportgen.so"
@@ -8648,6 +8561,7 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/libcjson.so.1",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libreportgen.so.0"
@@ -8659,6 +8573,7 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/libcjson.so.1",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libreportgen.so.0.0.0"
@@ -8916,6 +8831,7 @@
                 "/lib/libc.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libscheduler.so"
@@ -8926,6 +8842,7 @@
                 "/lib/libc.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libscheduler.so.0"
@@ -8936,6 +8853,7 @@
                 "/lib/libc.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libscheduler.so.0.0.0"
@@ -9303,6 +9221,7 @@
                 "/usr/lib/libmsgpackc.so.2",
                 "/usr/lib/librbus.so.0",
                 "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libutils.so.0"
             ],
@@ -9319,6 +9238,7 @@
                 "/usr/lib/libmsgpackc.so.2",
                 "/usr/lib/librbus.so.0",
                 "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libutils.so.0"
             ],
@@ -9335,6 +9255,7 @@
                 "/usr/lib/libmsgpackc.so.2",
                 "/usr/lib/librbus.so.0",
                 "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libutils.so.0"
             ],
@@ -9369,6 +9290,7 @@
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/librbus.so.0",
                 "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libutils.so.0"
             ],
@@ -9382,6 +9304,7 @@
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/librbus.so.0",
                 "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libutils.so.0"
             ],
@@ -9395,6 +9318,7 @@
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/librbus.so.0",
                 "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libutils.so.0"
             ],
@@ -9623,6 +9547,7 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libutils.so"
@@ -9634,6 +9559,7 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libutils.so.0"
@@ -9645,6 +9571,7 @@
                 "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libutils.so.0.0.0"
@@ -10182,6 +10109,7 @@
                 "/usr/lib/libmsgpackc.so.2",
                 "/usr/lib/librbus.so.0",
                 "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libt2parser.so.0",
                 "/usr/lib/libutils.so.0"
@@ -10201,6 +10129,7 @@
                 "/usr/lib/libmsgpackc.so.2",
                 "/usr/lib/librbus.so.0",
                 "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libt2parser.so.0",
                 "/usr/lib/libutils.so.0"
@@ -10220,6 +10149,7 @@
                 "/usr/lib/libmsgpackc.so.2",
                 "/usr/lib/librbus.so.0",
                 "/usr/lib/librdkloggers.so.0",
+                "/usr/lib/libsecure_wrapper.so.0",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libt2parser.so.0",
                 "/usr/lib/libutils.so.0"
