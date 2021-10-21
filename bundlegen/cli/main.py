@@ -113,7 +113,7 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
 
     # Load app metadata
     metadata_from_image = img_unpacker.get_app_metadata_from_img()
-    appmetadata = os.path.abspath(appmetadata)
+    appmetadata = os.path.abspath(appmetadata) if appmetadata else None
 
     app_metadata_dict = {}
     if not metadata_from_image and not appmetadata:
