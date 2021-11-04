@@ -50,6 +50,8 @@ if [ -z "$TARGET_VERSION" ]; then
 fi
 if [ "$TARGET_VERSION" == "morty" ]; then
   TARGET_VERSION=""
+elif [ "$TARGET_VERSION" == "" ]; then
+  TARGET_VERSION=""
 else
   TARGET_VERSION="_$TARGET_VERSION"
 fi
