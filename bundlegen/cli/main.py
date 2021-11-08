@@ -96,7 +96,7 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
         return
 
     # Download the image to a temp directory
-    img_downloader = ImageDownloader()
+    img_downloader = ImageDownloader(tool=os.environ.get('SKOPEO_TOOL_PATH'))
     img_path = img_downloader.download_image(
         image, creds, selected_platform.get_config())
 
@@ -104,8 +104,8 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
         return
 
     # Unpack the image with umoci
-    tag = ImageDownloader().get_image_tag(image)
-    img_unpacker = ImageUnpackager(src=img_path, dst=outputdir)
+    tag = img_downloader.get_image_tag(image)
+    img_unpacker = ImageUnpackager(src=img_path, dst=outputdir, tool=os.environ.get('UMOCI_TOOL_PATH'))
     unpack_success = img_unpacker.unpack_image(tag, delete=True)
 
     if not unpack_success:

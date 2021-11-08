@@ -23,11 +23,12 @@ from bundlegen.core.utils import Utils
 
 
 class ImageUnpackager():
-    def __init__(self, src, dst):
+    def __init__(self, src, dst, tool):
         # Optimism
         self.umoci_found = True
-
-        if os.path.isfile('/usr/bin/umoci'):
+        if tool and os.path.isfile(tool):
+            self.umoci_path = tool
+        elif os.path.isfile('/usr/bin/umoci'):
             self.umoci_path = '/usr/bin/umoci'
         elif os.path.isfile('/usr/local/bin/umoci'):
             self.umoci_path = '/usr/local/bin/umoci'

@@ -23,11 +23,12 @@ from bundlegen.core.utils import Utils
 
 
 class ImageDownloader():
-    def __init__(self):
+    def __init__(self, tool):
         # Optimism
         self.skopeo_found = True
-
-        if os.path.isfile('/usr/bin/skopeo'):
+        if tool and os.path.isfile(tool):
+            self.skopeo_path = tool
+        elif os.path.isfile('/usr/bin/skopeo'):
             self.skopeo_path = '/usr/bin/skopeo'
         elif os.path.isfile('/bin/skopeo'):
             self.skopeo_path = '/bin/skopeo'
