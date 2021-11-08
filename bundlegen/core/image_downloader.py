@@ -16,6 +16,7 @@
 # limitations under the License.
 
 import os
+import shutil
 import time
 
 from loguru import logger
@@ -27,10 +28,9 @@ class ImageDownloader():
         # Optimism
         self.skopeo_found = True
 
-        if os.path.isfile('/usr/bin/skopeo'):
-            self.skopeo_path = '/usr/bin/skopeo'
-        elif os.path.isfile('/bin/skopeo'):
-            self.skopeo_path = '/bin/skopeo'
+        skopeo_path = shutil.which('skopeo')
+        if skopeo_path:
+            logger.debug(f"Using skopeo: {skopeo_path}")
         else:
             logger.error(
                 "Failed to find skopeo binary to download images", err=True)
@@ -100,7 +100,7 @@ class ImageDownloader():
         logger.info(f"Downloading image to {destination}...")
 
         # Build the command to skopeo
-        skopeo_command = f'{self.skopeo_path} '
+        skopeo_command = f'skopeo '
 
         if creds:
             skopeo_command += f'--src-creds {creds} '

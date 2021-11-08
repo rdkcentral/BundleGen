@@ -27,12 +27,9 @@ class ImageUnpackager():
         # Optimism
         self.umoci_found = True
 
-        if os.path.isfile('/usr/bin/umoci'):
-            self.umoci_path = '/usr/bin/umoci'
-        elif os.path.isfile('/usr/local/bin/umoci'):
-            self.umoci_path = '/usr/local/bin/umoci'
-        elif os.path.isfile('/bin/umoci'):
-            self.umoci_path = '/bin/umoci'
+        umoci_path = shutil.which('umoci')
+        if umoci_path:
+            logger.debug(f"Using umoci: {umoci_path}")
         else:
             logger.error(
                 "Failed to find umoci binary to unpack images", err=True)
@@ -55,7 +52,7 @@ class ImageUnpackager():
             logger.error("Cannot unpack image as cannot find umoci")
             return
 
-        umoci_command = f'{self.umoci_path} unpack --rootless --image {self.src}:{tag} {self.dest}'
+        umoci_command = f'umoci unpack --rootless --image {self.src}:{tag} {self.dest}'
 
         logger.debug(umoci_command)
 
