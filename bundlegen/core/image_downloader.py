@@ -100,7 +100,7 @@ class ImageDownloader():
         logger.info(f"Downloading image to {destination}...")
 
         # Build the command to skopeo
-        skopeo_command = f'skopeo '
+        skopeo_command = f'skopeo --insecure-policy '
 
         if creds:
             skopeo_command += f'--src-creds {creds} '
