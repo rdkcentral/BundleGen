@@ -102,6 +102,13 @@ class ImageDownloader():
         # Build the command to skopeo
         skopeo_command = f'skopeo '
 
+        if (os.path.exists(os.path.expanduser('~/.config/containers/policy.json')) or
+           os.path.exists('/etc/containers/policy.json')):
+           logger.debug('Found a policy.json file for skopeo')
+        else:
+           logger.debug('Did not find a policy.json file for skopeo. Will use insecure-policy flag for skopeo!')
+           skopeo_command += '--insecure-policy '
+
         if creds:
             skopeo_command += f'--src-creds {creds} '
 
