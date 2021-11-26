@@ -39,6 +39,7 @@ Platform templates define specific information about a platform that is used whe
     * Each item in the array should have two properties:
       * `src` (string, REQUIRED). Path to the library on the host
       * `dst` (string, REQUIRED). Mount destination inside the container
+  * `waylandDisplay` (string, OPTIONAL). Wayland compositor, by default set to 'westeros'.
 * `mounts` (array of mount objects, OPTIONAL). Any extra mounts that should be added to the config. Can be left empty if no mounts needed. Each item in the array should be an OCI `Mount` object as defined [here](https://github.com/opencontainers/runtime-spec/blob/master/config.md#mounts)
 * `network` (array of string, REQUIRED). Which network modes the platform supports and an application could use. Dobby's Networking plugin offers `nat`, `private` and `open` network options by default.
 * `envvar` (array of string, OPTIONAL). Any additional environment variables that should be set on all containers running on the platform

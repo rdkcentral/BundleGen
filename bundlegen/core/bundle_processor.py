@@ -278,8 +278,13 @@ class BundleProcessor:
                     self._add_bind_mount(
                         socket, "/tmp/westeros", False, ["rbind", "nosuid", "nodev"])
 
+            if self.platform_cfg.get('gpu').get('waylandDisplay'):
+                waylandDisplay = self.platform_cfg['gpu']['waylandDisplay']
+            else:
+                waylandDisplay = 'westeros'
+
             self.oci_config['process']['env'].append(
-                "WAYLAND_DISPLAY=westeros")
+                f"WAYLAND_DISPLAY={waylandDisplay}")
 
             # Add the GPU devices
 
