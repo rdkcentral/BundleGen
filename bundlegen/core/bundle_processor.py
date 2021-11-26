@@ -200,13 +200,18 @@ class BundleProcessor:
         # uid/gid set automatically from image by umoci
 
         # Args will be set to entrypoint from the image
-        # Add DobbyInit to start of arguments
 
-        self.oci_config['process']['args'].insert(0, '/usr/libexec/DobbyInit')
+        if self.platform_cfg.get('dobby') and self.platform_cfg['dobby'].get('dobbyInitPath'):
+            dobbyinitpath = self.platform_cfg['dobby']['dobbyInitPath']
+        else:
+            dobbyinitpath = '/usr/libexec/DobbyInit'
+
+        # Add DobbyInit to start of arguments
+        self.oci_config['process']['args'].insert(0, dobbyinitpath)
 
         # We'll need to mount DobbyInit into the container so we can actually use it
         self._add_bind_mount(
-            '/usr/libexec/DobbyInit', '/usr/libexec/DobbyInit', self.createmountpoints)
+            dobbyinitpath, dobbyinitpath, self.createmountpoints)
 
         # Add platform envvars
         for envvar in self.platform_cfg.get('envvar'):

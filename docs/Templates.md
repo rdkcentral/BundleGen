@@ -65,3 +65,4 @@ Platform templates define specific information about a platform that is used whe
   * `pluginDir` (string, REQUIRED). Location where Dobby plugins are found on the platform. Dobby plugins are by default found in `/usr/lib/plugins/dobby`
   * `pluginDependencies` (array of strings, REQUIRED. Libraries that the Dobby plugins depend on.
     * Dobby plugins are shared objects and have dependencies that must exist in the container. The exact dependencies needed will depend on which plugins are being used on the platform. To find dependencies, run `/lib/ld-linux-armhf.so.3 --list /usr/lib/plugins/dobby/ <plugin-name>` on the platform for each plugin
+  * `dobbyInitPath` (string, OPTIONAL). Location where DobbyInit is found on the platform. DobbyInit is by default found in `/usr/libexec/DobbyInit`
