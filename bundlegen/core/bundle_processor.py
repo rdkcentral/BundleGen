@@ -370,17 +370,49 @@ class BundleProcessor:
                 self.oci_config['linux']['resources']['memory']['limit'] = app_ram_bytes
 
     # ==========================================================================
+    def _is_mapped(self, id, mappings):
+        if id is None:
+            return True
+        if mappings is None:
+            return False
+        for entry in mappings:
+            containerID = entry['containerID']
+            size = entry['size']
+            if id >= containerID and id < containerID + size:
+                return True
+        return False
+
+    # ==========================================================================
+    def _check_uid_gid_mappings(self):
+        user = self.oci_config['process'].get('user')
+        uid = user.get('uid') if user else None
+        gid = user.get('gid') if user else None
+        gids = user.get('additionalGids') if user else None
+        uidMappings = self.oci_config['linux'].get('uidMappings')
+        gidMappings = self.oci_config['linux'].get('gidMappings')
+
+        if not self._is_mapped(uid, uidMappings):
+            logger.warning(f"No mapping found for UID {uid}")
+        if not self._is_mapped(gid, gidMappings):
+            logger.warning(f"No mapping found for GID {gid}")
+
+        if gids:
+            for id in gids:
+                if not self._is_mapped(id, gidMappings):
+                    logger.warning(f"No mapping found for additional GID {id}")
+
+    # ==========================================================================
     def _process_users_and_groups(self):
         """If a specific user/group mapping has been added to the platform config
         then we need to add that.
         """
         logger.debug("Adding user/group mappings")
 
-        if self.platform_cfg.get('user'):
-            user = self.platform_cfg.get('user')
-            uid = user.get('uid')
-            gid = user.get('gid')
-            gids = user.get('additionalGids')
+        if self.platform_cfg.get('usersAndGroups'):
+            user = self.platform_cfg['usersAndGroups'].get('user')
+            uid = user.get('uid') if user else None
+            gid = user.get('gid') if user else None
+            gids = user.get('additionalGids') if user else None
             if uid:
                 self.oci_config['process']['user']['uid'] = uid
             if gid:
@@ -400,6 +432,7 @@ class BundleProcessor:
             # that ran bundlegen. Remove these
             del self.oci_config['linux']['uidMappings']
             del self.oci_config['linux']['gidMappings']
+            self._check_uid_gid_mappings()
 
             return
 
@@ -420,6 +453,7 @@ class BundleProcessor:
 
         for gidmap in self.platform_cfg['usersAndGroups'].get('gidMap'):
             self.oci_config['linux']['gidMappings'].append(gidmap)
+        self._check_uid_gid_mappings()
 
     # ==========================================================================
     def _process_capabilities(self):
