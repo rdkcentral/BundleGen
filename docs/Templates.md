@@ -27,6 +27,8 @@ Platform templates define specific information about a platform that is used whe
   * `persistent` (object, OPTIONAL) Dobby supports persistent storage using loopback mounts. If the platform should not support loopback mounts, do not define this section
     * `storageDir` (string, REQUIRED). Where to store the `img` files that are mounted into the container
     * `maxSize` (string, REQUIRED). Maximum allowed size of the image files
+    * `minSize` (string, OPTIONAL). Minimum required size of the image files. Some filesystem types need a minimum size. When set, the size of a storage will be auto increased to match this minium. This is logged as a warning.
+    * `fstype` (string, OPTIONAL). Filesystem type to use like ext4 or xfs. Defaults to ext4.
 * `gpu`
   * `westeros` (object, OPTIONAL). If the platform uses a hard-coded path to a westeros socket, then set it here. If RDKShell is used to create displays, then a westeros socket path can be provided to Dobby dynamically when starting the container and this option can be excluded
     * `hostSocket` (string, OPTIONAL). Path to the hard-coded westeros socket on the host
