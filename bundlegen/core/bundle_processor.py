@@ -376,6 +376,18 @@ class BundleProcessor:
         """
         logger.debug("Adding user/group mappings")
 
+        if self.platform_cfg.get('user'):
+            user = self.platform_cfg.get('user')
+            uid = user.get('uid')
+            gid = user.get('gid')
+            gids = user.get('additionalGids')
+            if uid:
+                self.oci_config['process']['user']['uid'] = uid
+            if gid:
+                self.oci_config['process']['user']['gid'] = gid
+            if gids:
+                self.oci_config['process']['user']['additionalGids'] = gids
+
         # If the platform doesn't use user namespacing, delete the user namespace
         if self.platform_cfg.get('disableUserNamespacing'):
             logger.debug("User namespacing disabled on this platform")
