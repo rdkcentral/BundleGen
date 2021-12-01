@@ -63,6 +63,7 @@ class BundleProcessor:
             self._create_mount_points_umoci()
         self._process_oci_version()
         self._process_process()
+        self._process_root()
         self._process_mounts()
         self._process_resources()
         self._process_gpu()
@@ -222,6 +223,23 @@ class BundleProcessor:
         if resource_limits:
             for limit in resource_limits:
                 self.oci_config['process']['rlimits'].append(limit)
+
+    # ==========================================================================
+    def _process_root(self):
+        logger.debug("Processing root section")
+
+        root = self.platform_cfg.get('root')
+        if not root:
+            return
+
+        readonly = root.get('readonly')
+        if readonly:
+            self.oci_config['root']['readonly'] = readonly
+
+        path = root.get('path')
+        if path:
+            path = path.format(id = self.app_metadata['id'])
+            self.oci_config['root']['path'] = path
 
     # ==========================================================================
     def _process_mounts(self):
