@@ -40,6 +40,9 @@ Platform templates define specific information about a platform that is used whe
       * `src` (string, REQUIRED). Path to the library on the host
       * `dst` (string, REQUIRED). Mount destination inside the container
   * `waylandDisplay` (string, OPTIONAL). Wayland compositor, by default set to 'westeros'.
+* `root` (OPTIONAL)
+  * `path` (string, OPTIONAL). If set override the default rootfs path. In addition this path can include the {id} parameter which will be replaced by the id of the app as indicated in the app metadata. This allows BundleGen to generate the full rootfs path as it will exist on the target platform. For example: /somewhere/run/rootfs/{id}
+  * `readonly` (boolean, OPTIONAL). Set to true to mark the rootfs readonly.
 * `mounts` (array of mount objects, OPTIONAL). Any extra mounts that should be added to the config. Can be left empty if no mounts needed. Each item in the array should be an OCI `Mount` object as defined [here](https://github.com/opencontainers/runtime-spec/blob/master/config.md#mounts)
 * `network` (array of string, REQUIRED). Which network modes the platform supports and an application could use. Dobby's Networking plugin offers `nat`, `private` and `open` network options by default.
 * `envvar` (array of string, OPTIONAL). Any additional environment variables that should be set on all containers running on the platform
