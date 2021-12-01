@@ -115,13 +115,43 @@ class Utils:
 
     # ==========================================================================
     @staticmethod
-    def create_tgz(source, dest):
+    def add_tarinfo(tar, tarinfo, name, name_in_archive, uid, gid, mode_mask):
+        if uid:
+            tarinfo.uid = uid
+            tarinfo.uname = str(uid)
+        if gid:
+            tarinfo.gid = gid
+            tarinfo.gname = str(gid)
+        if mode_mask:
+            tarinfo.mode &= int(mode_mask, 8)
+
+        if tarinfo.isreg():
+            with open(name, "rb") as f:
+                tar.addfile(tarinfo, f)
+        elif tarinfo.isdir():
+            tar.addfile(tarinfo)
+            for f in os.listdir(name):
+                name_child = os.path.join(name, f)
+                name_in_archive_child = os.path.join(name_in_archive, f)
+                tarinfo_child = tar.gettarinfo(name_child, name_in_archive_child)
+                Utils.add_tarinfo(tar, tarinfo_child, name_child, name_in_archive_child,
+                    uid, gid, mode_mask)
+        else:
+            tar.addfile(tarinfo)
+
+    # ==========================================================================
+    @staticmethod
+    def create_tgz(source, dest, uid = None, gid = None, mode_mask = None):
         """Create a .tar.gz file of the source directory. Contents of source directory
         is at the root of the tar.gz file.
 
         Args:
             source (string): Path to directory to compress
             dest (string): Where to save the tarball
+            uid (int): if set, force this uid as owner on all files/dirs inside tarball
+            gid (int): if set, force this gid as group on all files/dirs inside tarball
+            mode_mask (string): if set, apply this mask on all files/dirs inside tarball
+                                for example '770' will remove all rights for 'other' users
 
         Returns:
             bool: True for success
@@ -146,7 +176,11 @@ class Utils:
             os.remove(output_filename)
 
         with tarfile.open(f'{output_filename}', "w:gz") as tar:
-            tar.add(source, arcname=os.path.basename(source))
+            if (uid or gid or mode_mask):
+                tarinfo = tar.gettarinfo(name=source, arcname=os.path.basename(source))
+                Utils.add_tarinfo(tar, tarinfo, source, os.path.basename(source), uid, gid, mode_mask)
+            else:
+                tar.add(source, arcname=os.path.basename(source))
 
         return True
 
