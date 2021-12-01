@@ -63,6 +63,7 @@ class BundleProcessor:
             self._create_mount_points_umoci()
         self._process_oci_version()
         self._process_process()
+        self._process_root()
         self._process_mounts()
         self._process_resources()
         self._process_gpu()
@@ -222,6 +223,23 @@ class BundleProcessor:
         if resource_limits:
             for limit in resource_limits:
                 self.oci_config['process']['rlimits'].append(limit)
+
+    # ==========================================================================
+    def _process_root(self):
+        logger.debug("Processing root section")
+
+        root = self.platform_cfg.get('root')
+        if not root:
+            return
+
+        readonly = root.get('readonly')
+        if readonly:
+            self.oci_config['root']['readonly'] = readonly
+
+        path = root.get('path')
+        if path:
+            path = path.format(id = self.app_metadata['id'])
+            self.oci_config['root']['path'] = path
 
     # ==========================================================================
     def _process_mounts(self):
@@ -511,10 +529,22 @@ class BundleProcessor:
                     # Validate we are allowed a size this large
                     maxSize = self.platform_cfg.get(
                         'storage').get('persistent').get('maxSize')
+                    minSize = self.platform_cfg.get(
+                        'storage').get('persistent').get('minSize')
+                    fstype = self.platform_cfg.get(
+                        'storage').get('persistent').get('fstype')
+                    if fstype is None:
+                        fstype = "ext4"
 
-                    if maxSize and humanfriendly.parse_size(size) > humanfriendly.parse_size(maxSize):
+                    if maxSize and humanfriendly.parse_size(size, binary=True) > humanfriendly.parse_size(maxSize, binary=True):
                         logger.warning(
-                            f"Persistent storage requested by app exceeds platform limit ({size} > {maxSize}")
+                            f"Persistent storage requested by app exceeds platform limit ({size} > {maxSize})")
+
+                    if minSize and humanfriendly.parse_size(size, binary=True) < humanfriendly.parse_size(minSize, binary=True):
+                        logger.warning(
+                            f"Persistent storage requested by app is less than minimum required by platform ({size} < {minSize})")
+                        logger.warning(f"Auto adjusting to {minSize} !")
+                        size = minSize
 
                     if not self.platform_cfg.get('storage').get('persistent'):
                         logger.error(
@@ -531,9 +561,9 @@ class BundleProcessor:
                     loopback_mnt_def = {
                         "destination": dest_path,
                         "flags": 14,
-                        "fstype": "ext4",
+                        "fstype": f"{fstype}",
                         "source": source_path,
-                        "imgsize": humanfriendly.parse_size(size)
+                        "imgsize": humanfriendly.parse_size(size, binary=True)
                     }
 
                     loopback_plugin['data']['loopback'].append(
@@ -551,14 +581,22 @@ class BundleProcessor:
             # Temp storage just uses a normal OCI mount set to tmpfs with the
             # size set accordingly
             if storage_settings.get('temp'):
-                for tmp_mnnt in storage_settings.get('temp'):
-                    size = humanfriendly.parse_size(tmp_mnnt.get('size'))
+                user = self.oci_config['process'].get('user')
+                uid = user.get('uid') if user else None
+                gid = user.get('gid') if user else None
 
+                for tmp_mnnt in storage_settings.get('temp'):
+                    size = humanfriendly.parse_size(tmp_mnnt.get('size'), binary=True)
+                    options = ["nosuid", "strictatime", f"mode=755", f"size={size}"]
+                    if uid:
+                        options.append(f"uid={uid}")
+                    if gid:
+                        options.append(f"gid={gid}")
                     mnt_to_add = {
                         "destination": tmp_mnnt['path'],
                         "type": "tmpfs",
                         "source": "tmpfs",
-                        "options": ["nosuid", "strictatime", "mode=755", f"size={size}"]
+                        "options": options
                     }
 
                     self.oci_config['mounts'].append(mnt_to_add)
