@@ -60,6 +60,10 @@ Platform templates define specific information about a platform that is used whe
       * `containerID` (uint32, REQUIRED) - is the starting uid/gid in the container.
       * `hostID` (uint32, REQUIRED) - is the starting uid/gid on the host to be mapped to containerID.
       * `size` (uint32, REQUIRED) - is the number of ids to be mapped.
+  * `user` (object, OPTIONAL). Here you can specify what user to run the container under. You can also specify its gid and additional gids.
+    * `uid` (uint32, OPTIONAL). Override the uid and thus the user the container should run under.
+    * `gid` (uint32, OPTIONAL). Override the gid and thus the user's group the container should run under.
+    * `additionalGids` (array of uint32, OPTIONAL). Set the additional groups that should be assigned to the user running the container.
 * `logging`
   * `mode` (string, REQUIRED). Sets the logging sink for containers. Dobby by default supports the following logging modes:
     * `file` - log to a file
