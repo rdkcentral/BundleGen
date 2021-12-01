@@ -167,7 +167,15 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
         Utils.create_ipk(outputdir, outputdir)
         logger.success(f"Successfully generated bundle at {outputdir}.ipk")
     else:
-        Utils.create_tgz(outputdir, outputdir)
+        tarball_settings = processor.platform_cfg.get('tarball')
+        file_ownership_user = tarball_settings.get('fileOwnershipSameAsUser') if tarball_settings else None
+        file_mask = tarball_settings.get('fileMask') if tarball_settings else None
+
+        user = processor.oci_config['process'].get('user')
+        uid = user.get('uid') if user and file_ownership_user else None
+        gid = user.get('gid') if user and file_ownership_user else None
+
+        Utils.create_tgz(outputdir, outputdir, uid, gid, file_mask)
         logger.success(f"Successfully generated bundle at {outputdir}.tar.gz")
 
 
