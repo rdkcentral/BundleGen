@@ -435,7 +435,7 @@ class BundleProcessor:
 
         # If the platform defines a baseline set of caps, use that
         app_capabilities = set()
-        if self.platform_cfg.get('capabilities'):
+        if not self.platform_cfg.get('capabilities') is None:
             app_capabilities.update(self.platform_cfg['capabilities'])
         else:
             app_capabilities.update(get_default_caps())
