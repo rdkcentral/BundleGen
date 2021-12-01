@@ -27,6 +27,8 @@ Platform templates define specific information about a platform that is used whe
   * `persistent` (object, OPTIONAL) Dobby supports persistent storage using loopback mounts. If the platform should not support loopback mounts, do not define this section
     * `storageDir` (string, REQUIRED). Where to store the `img` files that are mounted into the container
     * `maxSize` (string, REQUIRED). Maximum allowed size of the image files
+    * `minSize` (string, OPTIONAL). Minimum required size of the image files. Some filesystem types need a minimum size. When set, the size of a storage will be auto increased to match this minium. This is logged as a warning.
+    * `fstype` (string, OPTIONAL). Filesystem type to use like ext4 or xfs. Defaults to ext4.
 * `gpu`
   * `westeros` (object, OPTIONAL). If the platform uses a hard-coded path to a westeros socket, then set it here. If RDKShell is used to create displays, then a westeros socket path can be provided to Dobby dynamically when starting the container and this option can be excluded
     * `hostSocket` (string, OPTIONAL). Path to the hard-coded westeros socket on the host
@@ -40,6 +42,9 @@ Platform templates define specific information about a platform that is used whe
       * `src` (string, REQUIRED). Path to the library on the host
       * `dst` (string, REQUIRED). Mount destination inside the container
   * `waylandDisplay` (string, OPTIONAL). Wayland compositor, by default set to 'westeros'.
+* `root` (OPTIONAL)
+  * `path` (string, OPTIONAL). If set override the default rootfs path. In addition this path can include the {id} parameter which will be replaced by the id of the app as indicated in the app metadata. This allows BundleGen to generate the full rootfs path as it will exist on the target platform. For example: /somewhere/run/rootfs/{id}
+  * `readonly` (boolean, OPTIONAL). Set to true to mark the rootfs readonly.
 * `mounts` (array of mount objects, OPTIONAL). Any extra mounts that should be added to the config. Can be left empty if no mounts needed. Each item in the array should be an OCI `Mount` object as defined [here](https://github.com/opencontainers/runtime-spec/blob/master/config.md#mounts)
 * `network` (array of string, REQUIRED). Which network modes the platform supports and an application could use. Dobby's Networking plugin offers `nat`, `private` and `open` network options by default.
 * `envvar` (array of string, OPTIONAL). Any additional environment variables that should be set on all containers running on the platform
@@ -70,3 +75,6 @@ Platform templates define specific information about a platform that is used whe
   * `pluginDependencies` (array of strings, REQUIRED. Libraries that the Dobby plugins depend on.
     * Dobby plugins are shared objects and have dependencies that must exist in the container. The exact dependencies needed will depend on which plugins are being used on the platform. To find dependencies, run `/lib/ld-linux-armhf.so.3 --list /usr/lib/plugins/dobby/ <plugin-name>` on the platform for each plugin
   * `dobbyInitPath` (string, OPTIONAL). Location where DobbyInit is found on the platform. DobbyInit is by default found in `/usr/libexec/DobbyInit`
+  * `tarball` (OPTIONAL)
+    * `fileOwnershipSameAsUser` (boolean, OPTIONAL). If true then file ownership will be set to match uid/gid of the user that will run inside the container. This uid/gid is set while creating the tarball (inside the tarball only).
+    * `fileMask` (string, OPTIONAL). If set, this mask will be applied on the file permissions of every file and dir inside the tarball. This happens while creating the tarball (inside the tarball only). This mask string will be parsed as an octal number. For example "770" will remove all 'rwx' rights for 'other' users.
