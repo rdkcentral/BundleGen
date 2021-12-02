@@ -69,7 +69,7 @@ else
 
   echo "--> Generating runtime bundle..."
   rm -rf ./${TEMPLATE}-${APP_NAME}
-  bundlegen -vvv generate ${EXTRA_OPTIONS} --searchpath templates --platform ${TEMPLATE} oci:./oci-${APP_NAME}:latest ${TEMPLATE}-${APP_NAME}
+  bundlegen -vvv generate ${EXTRA_OPTIONS} --searchpath templates --platform ${TEMPLATE} oci:./oci-${APP_NAME}:latest ${TEMPLATE}-${APP_NAME} ${APPMETADATA}
 fi
 
 ./test/testapp.sh $BOXIP ${TEMPLATE}-${APP_NAME}.tar.gz
