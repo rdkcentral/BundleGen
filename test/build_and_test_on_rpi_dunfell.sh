@@ -14,4 +14,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-TARGET="rpi3" TARGET_VERSION="dunfell" MATCH_MODE="normal" ./test/build_and_test.sh "$@"
+TEMPLATE="rpi3_reference_dunfell" EXTRA_OPTIONS="-m normal" ./test/build_and_test.sh "$@"

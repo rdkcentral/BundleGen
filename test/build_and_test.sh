@@ -34,34 +34,22 @@ if [ ! -z "$3" ]; then
   APPMETADATA="--appmetadata $3"
 fi
 
-## normal, image or host
-if [ -z "$MATCH_MODE" ]; then
-  MATCH_MODE="normal"
+## EXTRA_OPTIONS
+if [ -z "$EXTRA_OPTIONS" ]; then
+  EXTRA_OPTIONS="-m normal --createmountpoints"
 fi
 
-## targets: rpi3, 7218c
-if [ -z "$TARGET" ]; then
-  TARGET="rpi3"
-fi
-
-## target/host platform version, options: morty, dunfell
-if [ -z "$TARGET_VERSION" ]; then
-  TARGET_VERSION="morty"
-fi
-if [ "$TARGET_VERSION" == "morty" ]; then
-  TARGET_VERSION=""
-elif [ "$TARGET_VERSION" == "" ]; then
-  TARGET_VERSION=""
-else
-  TARGET_VERSION="_$TARGET_VERSION"
+## template: rpi3_reference, 7218c_reference
+if [ -z "$TEMPLATE" ]; then
+  TEMPLATE="rpi3_reference"
 fi
 
 if [[ $2 == docker://** ]]; then
   APP_NAME="testapp"
   echo "--> Generating runtime bundle..."
-  rm -rf ./${TARGET}-${APP_NAME}
+  rm -rf ./${TEMPLATE}-${APP_NAME}
   ## you might need to login first like: skopeo login us.icr.io
-  bundlegen -vvv generate -m ${MATCH_MODE} --searchpath templates --platform ${TARGET}_reference${TARGET_VERSION} $2 ${TARGET}-${APP_NAME} ${APPMETADATA}
+  bundlegen -vvv generate ${EXTRA_OPTIONS} --searchpath templates --platform ${TEMPLATE} $2 ${TEMPLATE}-${APP_NAME} ${APPMETADATA}
 else
 
   OCI_TAR=$2
@@ -80,8 +68,8 @@ else
   tar -xvf $OCI_TAR -C ./oci-${APP_NAME}
 
   echo "--> Generating runtime bundle..."
-  rm -rf ./${TARGET}-${APP_NAME}
-  bundlegen -vvv generate -m ${MATCH_MODE} --searchpath templates --platform ${TARGET}_reference${TARGET_VERSION} oci:./oci-${APP_NAME}:latest ${TARGET}-${APP_NAME}
+  rm -rf ./${TEMPLATE}-${APP_NAME}
+  bundlegen -vvv generate ${EXTRA_OPTIONS} --searchpath templates --platform ${TEMPLATE} oci:./oci-${APP_NAME}:latest ${TEMPLATE}-${APP_NAME}
 fi
 
-./test/testapp.sh $BOXIP ${TARGET}-${APP_NAME}.tar.gz
+./test/testapp.sh $BOXIP ${TEMPLATE}-${APP_NAME}.tar.gz
