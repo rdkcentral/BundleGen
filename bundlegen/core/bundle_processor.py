@@ -375,8 +375,8 @@ class BundleProcessor:
         hw_max_ram = self.platform_cfg.get('hardware').get('maxRam')
         if hw_max_ram:
             app_ram_requirement = self.app_metadata.get('resources').get('ram')
-            app_ram_bytes = humanfriendly.parse_size(app_ram_requirement)
-            platform_ram_bytes = humanfriendly.parse_size(hw_max_ram)
+            app_ram_bytes = humanfriendly.parse_size(app_ram_requirement, binary=True)
+            platform_ram_bytes = humanfriendly.parse_size(hw_max_ram, binary=True)
 
             self.oci_config['linux']['resources']['memory'] = {}
 
