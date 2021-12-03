@@ -75,6 +75,9 @@ Platform templates define specific information about a platform that is used whe
   * `pluginDependencies` (array of strings, REQUIRED. Libraries that the Dobby plugins depend on.
     * Dobby plugins are shared objects and have dependencies that must exist in the container. The exact dependencies needed will depend on which plugins are being used on the platform. To find dependencies, run `/lib/ld-linux-armhf.so.3 --list /usr/lib/plugins/dobby/ <plugin-name>` on the platform for each plugin
   * `dobbyInitPath` (string, OPTIONAL). Location where DobbyInit is found on the platform. DobbyInit is by default found in `/usr/libexec/DobbyInit`
+  * `generateCompliantConfig` (boolean, OPTIONAL). When set BundleGen will generate the DobbyPluginLauncher hooks (if any plugins are used). This will also set "ociVersion" to "1.0.2" and not "1.0.2-dobby" so that Dobby does not generate these hooks.
+  * `hookLauncherExecutablePath` (string, OPTIONAL, only used when generateCompliantConfig is true). Path to the DobbyPluginLauncher binary on the target host. Defaults to "/usr/bin/DobbyPluginLauncher"
+  * `hookLauncherParametersPath` (string, REQUIRED if generateCompliantConfig is true). Path in the host that will contain the config.json of the container. It can include the {id} parameter which will be replaced by the id of the app as indicated in the app metadata. For example "/somewhere/{id}"
 * `tarball` (OPTIONAL)
   * `fileOwnershipSameAsUser` (boolean, OPTIONAL). If true then file ownership will be set to match uid/gid of the user that will run inside the container. This uid/gid is set while creating the tarball (inside the tarball only).
   * `fileMask` (string, OPTIONAL). If set, this mask will be applied on the file permissions of every file and dir inside the tarball. This happens while creating the tarball (inside the tarball only). This mask string will be parsed as an octal number. For example "770" will remove all 'rwx' rights for 'other' users.
