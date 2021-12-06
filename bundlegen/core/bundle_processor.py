@@ -70,6 +70,7 @@ class BundleProcessor:
         self._process_dobby_plugin_dependencies()
         self._process_users_and_groups()
         self._process_capabilities()
+        self._process_hostname()
 
         # RDK Plugins section
         self._add_rdk_plugins()
@@ -327,6 +328,15 @@ class BundleProcessor:
         if path:
             path = path.format(id = self.app_metadata['id'])
             self.oci_config['root']['path'] = path
+
+    # ==========================================================================
+    def _process_hostname(self):
+        logger.debug("Processing hostname section")
+
+        hostname = self.platform_cfg.get('hostname')
+        if hostname:
+            hostname = hostname.format(id = self.app_metadata['id'])
+            self.oci_config['hostname'] = hostname
 
     # ==========================================================================
     def _process_mounts(self):
@@ -737,6 +747,12 @@ class BundleProcessor:
                     self._createEmptyDirInRootfs(tmp_mnnt['path'])
 
     # ==========================================================================
+    def _add_annotation(self, key, value):
+        """Adds an annotation to the config
+        """
+        self.oci_config['annotations'][key] = value
+
+    # ==========================================================================
     def _process_logging(self):
         """Adds the logging plugin to the config to set up container logs
         """
@@ -747,6 +763,7 @@ class BundleProcessor:
                 "Platform does not contain logging options - container will not produce any logs")
             return
 
+        self.oci_config['process']['terminal'] = True
         logging_plugin = {}
 
         # If logging to a file
@@ -763,11 +780,13 @@ class BundleProcessor:
                     }
                 }
             }
+            self._add_annotation('run.oci.hooks.stderr','/dev/stderr')
+            self._add_annotation('run.oci.hooks.stdout','/dev/stdout')
         elif self.platform_cfg['logging'].get('mode') == 'journald':
             logging_plugin = {
                 "required": True,
                 "data": {
-                    "sink": "jourald"
+                    "sink": "journald"
                 }
             }
 
