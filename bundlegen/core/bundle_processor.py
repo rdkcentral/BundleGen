@@ -40,7 +40,7 @@ class BundleProcessor:
         self.libmatcher = LibraryMatching(
             self.platform_cfg, self.bundle_path, self._add_bind_mount, nodepwalking, libmatchingmode, createmountpoints)
 
-        self.seccomp = Seccomp(self.platform_cfg, self.oci_config)
+        self.seccomp = Seccomp(self.platform_cfg, self.app_metadata, self.oci_config)
 
     # Umoci will produce a config based on a "good, sane default" configuration
     # as defined here: https://github.com/opencontainers/umoci/blob/master/oci/config/convert/default.go
@@ -608,10 +608,7 @@ class BundleProcessor:
 
     # ==========================================================================
     def _process_seccomp(self):
-        """Just adds the rdkplugins section ready to be populated
-
-        Also adds a mount for the Dobby plugin directory so the startContainer
-        hook can load them
+        """Adds a seccomp profile to the container config
         """
         self.seccomp.enable_seccomp()
 

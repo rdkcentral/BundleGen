@@ -27,5 +27,11 @@
         "ram": "5M"
     },
     "features": [],
-    "mounts": []
+    "mounts": [],
+    "seccomp": {
+        "allow": [
+            "chown",
+            "getpid"
+        ]
+    }
 }

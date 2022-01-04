@@ -1,6 +1,7 @@
 {
     "platformName": "rpi3_reference",
     "os": "linux",
+    "kernel": "4.4.0-201-generic",
     "arch": {
         "arch": "arm",
         "variant": "v7"
