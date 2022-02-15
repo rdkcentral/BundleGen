@@ -57,7 +57,8 @@
                     "rbind",
                     "nosuid",
                     "nodev",
-                    "ro"
+                    "ro",
+		    "X-mount.mkdir"
                 ]
             },
             {
@@ -68,10 +69,43 @@
                     "bind",
                     "ro"
                 ]
+            },
+            {
+                "source": "/etc/ssl/certs",
+                "destination": "/etc/ssl/certs",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "nosuid",
+                    "nodev",
+                    "ro",
+                    "X-mount.mkdir"
+                ]
+            },
+            {
+                "source": "/usr/share/ca-certificates",
+                "destination": "/usr/share/ca-certificates",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "nosuid",
+                    "nodev",
+                    "ro",
+                    "X-mount.mkdir"
+                ]
+            },
+            {
+                "source": "/var/run/dbus/system_bus_socket",
+                "destination": "/var/run/dbus/system_bus_socket",
+                "type": "bind",
+                "options": [
+                    "bind",
+                    "rw"
+                ]
             }
         ],
         "envvar": [
-            "LD_PRELOAD=/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.0"
+            "LD_PRELOAD=/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.0", "RIALTO_CLIENT_BACKEND_LIB=/usr/lib/libRialtoClient.so.0.1.0"
         ],
         "devs": [
             {
