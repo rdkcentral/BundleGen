@@ -117,7 +117,7 @@ def start():
             channel = connection.channel()
 
             # will only create if queue doesn't exist
-            channel.queue_declare(queue="bundlegen-requests")
+            channel.queue_declare(queue="bundlegen-requests", durable=True)
             channel.basic_consume(queue='bundlegen-requests',
                                   on_message_callback=msg_received)
 
