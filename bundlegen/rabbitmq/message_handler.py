@@ -210,7 +210,15 @@ def generate_bundle(options: message.Message) -> Tuple[Result, str]:
     persistent_path = os.path.join(
         options.outputdir or os.environ.get('BUNDLE_STORE_DIR'), f"{tarball_name}.tar.gz")
 
-    Utils.create_tgz(outputdir, tmp_path)
+    tarball_settings = processor.platform_cfg.get('tarball')
+    file_ownership_user = tarball_settings.get('fileOwnershipSameAsUser') if tarball_settings else None
+    file_mask = tarball_settings.get('fileMask') if tarball_settings else None
+
+    user = processor.oci_config['process'].get('user')
+    uid = user.get('uid') if user and file_ownership_user else None
+    gid = user.get('gid') if user and file_ownership_user else None
+
+    Utils.create_tgz(outputdir, tmp_path, uid, gid, file_mask)
 
     # Move to persistent storage
     logger.debug(
