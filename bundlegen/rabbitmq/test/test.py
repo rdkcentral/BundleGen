@@ -53,7 +53,7 @@ def main():
     channel = connection.channel()
 
     # will only create if queue doesn't exist
-    channel.queue_declare(queue="bundlegen-requests")
+    channel.queue_declare(queue="bundlegen-requests", durable=True)
 
     # "magic" queue that means bundlegen can reply when it's finished with the
     # path to the bundle (or an error message). The queue is automatically
@@ -87,7 +87,8 @@ def main():
     uuid_str = str(uuid.uuid4())
 
     msg = message.Message(uuid_str, "rpi3_reference",
-                          "docker://hello-world", metadata, message.LibMatchMode.NORMAL)
+                          "docker://hello-world", metadata, message.LibMatchMode.NORMAL,
+                          "","", "", True)
 
     logger.debug(f"Request: \n{pprint.pformat(msg.__dict__)}")
     logger.info("Sending request to BundleGen")
