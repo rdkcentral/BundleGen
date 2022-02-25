@@ -72,4 +72,16 @@ else
   bundlegen -vvv generate ${EXTRA_OPTIONS} --searchpath templates --platform ${TEMPLATE} oci:./oci-${APP_NAME}:latest ${TEMPLATE}-${APP_NAME} ${APPMETADATA}
 fi
 
-./test/testapp.sh $BOXIP ${TEMPLATE}-${APP_NAME}.tar.gz
+USE_LISA=`./test/testapp_lisa.sh $BOXIP dummy probe | grep "LISA RUNNING" -c`
+if [ "$USE_LISA" == "1" ]; then
+  echo "Using LISA..."
+  ./test/testapp_lisa.sh $BOXIP ${TEMPLATE}-${APP_NAME}.tar.gz
+else
+  USE_PACKAGER=`./test/testapp.sh $BOXIP dummy probe | grep "PACKAGER RUNNING" -c`
+  if [ "$USE_PACKAGER" == "1" ]; then
+    echo "Using Packager..."
+    ./test/testapp.sh $BOXIP ${TEMPLATE}-${APP_NAME}.tar.gz
+  else
+    echo "Neither LISA nor Packager seem to be running on your target! Cannot proceed!"
+  fi
+fi
