@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2021 Liberty Global Services B.V.
+# Copyright 2022 Liberty Global Services B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ function action_help {
     echo " (ignores APP_ID - but the argument has to be given)"
     echo "  list      - list of installed applications"
     echo "  apps      - list of running applications"
-    echo "  probe     - check if Packager service running"
+    echo "  probe     - check if LISA service running"
     echo ""
     echo 'or unique abbreviation e.g. "ru", "r" for run action.'
     echo ""
@@ -69,35 +69,36 @@ function kill_app {
 
 function uninstall_app {
   echo "--> Uninstall app"
-  curl -s -X POST http://$BOXIP:9998/jsonrpc -d `jq -c -n --arg pkgId "$PKGID" '{jsonrpc: "2.0", id: 1, method: "Packager.1.remove",  params: {pkgId: $pkgId}}'`
+  curl -s -X POST http://$BOXIP:9998/jsonrpc -d `jq -c -n --arg pkgId "$PKGID" '{jsonrpc: "2.0", id: 1, method: "LISA.1.uninstall",  params: {id: $pkgId, version: "1.0", type: "dac", uninstallType: "full" }}'`
   echo
 
   # loop until app removed
-  STATUS=""
-  while [ "$STATUS" != "false" ];
+  STATUS="....."
+  while [ "$STATUS" != '""' ];
   do
     echo "--> Waiting until app removed..."
     sleep 2
-    STATUS=`curl -s -X POST http://$BOXIP:9998/jsonrpc -d $(jq -c -n --arg pkgId "$PKGID" '{jsonrpc: "2.0", id: 1, method: "Packager.1.getPackageInfo",  params: {pkgId: $pkgId}}') | jq .result.success`
+    STATUS=`curl -s -X POST http://$BOXIP:9998/jsonrpc -d $(jq -c -n --arg pkgId "$PKGID" '{jsonrpc: "2.0", id: 1, method: "LISA.1.getStorageDetails",  params: {id: $pkgId, type: "dac", version: "1.0"}}') | jq '.result.apps.path' `
   done
   echo "--> App is removed!"
 }
 
 function install_app {
   echo "--> Copying bundle to box on lighttpd server location"
+  echo "root@$BOXIP:/opt/www/${PKGNAME}"
   scp -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -C "${PKG}" "root@$BOXIP:/opt/www/${PKGNAME}"
 
   echo "--> Start (re-)installation of app"
-  curl -s -X POST http://$BOXIP:9998/jsonrpc -d `jq -c -n --arg pkgId "$PKGID" --arg url "http://127.0.0.1:50050/${PKGNAME}" '{jsonrpc: "2.0", id: 1, method: "Packager.1.install",  params: {pkgId: $pkgId, type: "DAC", url: $url}}'`
+  curl -s -X POST http://$BOXIP:9998/jsonrpc -d `jq -c -n --arg pkgId "$PKGID" --arg url "http://127.0.0.1:50050/${PKGNAME}" '{jsonrpc: "2.0", id: 1, method: "LISA.1.install",  params: {id: $pkgId, url: $url, version: "1.0", appName: "testapp", type: "dac", category: "category"}}'`
   echo
 
   ## loop until app installed
- INSTALLED=""
-  while [ "$INSTALLED" != "true" ];
+  INSTALLED='""'
+  while [ "$INSTALLED" == '""' ];
   do
     echo "--> Waiting until app installed..."
     sleep 2
-    INSTALLED=`curl -s -X POST http://$BOXIP:9998/jsonrpc -d $(jq -c -n --arg pkgId "$PKGID" '{jsonrpc: "2.0", id: 1, method: "Packager.1.getPackageInfo",  params: {pkgId: $pkgId}}') | jq .result.success`
+    INSTALLED=`curl -s -X POST http://$BOXIP:9998/jsonrpc -d $(jq -c -n --arg pkgId "$PKGID" '{jsonrpc: "2.0", id: 1, method: "LISA.1.getStorageDetails",  params: {id: $pkgId, type: "dac", version: "1.0"}}') | jq '.result.apps.path' `
   done
 
   echo "--> App is installed!"
@@ -108,7 +109,7 @@ function run_app {
   ## run app
   echo "--> Starting app!"
   curl -s -X POST http://$BOXIP:9998/jsonrpc -d \
-    `jq -c -n --arg client "$PKGID" --arg client "$PKGID" --arg uri "$PKGID" '{jsonrpc: "2.0", id: 1, method: "org.rdk.RDKShell.1.launchApplication",  params: {client: $client, mimeType: "application/dac.native", uri: $uri}}'`
+    `jq -c -n --arg client "$PKGID" --arg client "$PKGID" --arg uri "$PKGID;1.0" '{jsonrpc: "2.0", id: 1, method: "org.rdk.RDKShell.1.launchApplication",  params: {client: $client, mimeType: "application/dac.native", uri: $uri}}'`
   echo
 }
 
@@ -122,7 +123,7 @@ function focus_app {
 function list_installed_app {
   ## list installed applications
   echo "--> List installed applications"
-  curl -s -X POST http://$BOXIP:9998/jsonrpc -d `jq -c -n '{jsonrpc: "2.0", id: 1, method: "Packager.1.getInstalled"}'` | jq .
+  curl -s -X POST http://$BOXIP:9998/jsonrpc -d `jq -c -n '{jsonrpc: "2.0", id: 1, method: "LISA.1.getList"}'` | jq '.result.apps'
 }
 
 function list_running_app {
@@ -132,13 +133,13 @@ function list_running_app {
 }
 
 function probe {
-  echo "--> Probe Packager"
-  CMD=`jq -c -n '{jsonrpc: "2.0", id: 1, method: "Packager.1.getInstalled"}'`
+  echo "--> Probe LISA"
+  CMD=`jq -c -n '{jsonrpc: "2.0", id: 1, method: "LISA.1.getList"}'`
   RESULT=`curl -s -X POST http://$BOXIP:9998/jsonrpc -d $CMD | grep -v "error" -c`
   if [ "$RESULT" == "1" ]; then
-    echo "PACKAGER RUNNING"
+    echo "LISA RUNNING"
   else
-    echo "PACKAGER NOT RUNNING"
+    echo "LISA NOT RUNNING"
   fi
 }
 
