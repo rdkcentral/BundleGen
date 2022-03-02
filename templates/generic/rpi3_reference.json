@@ -58,7 +58,8 @@
                     "rbind",
                     "nosuid",
                     "nodev",
-                    "ro"
+                    "ro",
+                    "X-mount.mkdir"
                 ]
             }
         ],
