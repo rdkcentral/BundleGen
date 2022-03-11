@@ -19,7 +19,8 @@
     },
     "gpu": {
         "extraMounts": [],
-        "gfxLibs": []
+        "gfxLibs": [],
+        "devs": []
     },
     "mounts": [],
     "network": {
@@ -64,27 +65,5 @@
     "logging": {
         "mode": "file",
         "logDir": "/var/log"
-    },
-    "dobby": {
-        "pluginDir": "/usr/local/lib/plugins/dobby",
-        "pluginDependencies": [
-            "/lib/x86_64-linux-gnu/libc.so.6",
-            "/lib/x86_64-linux-gnu/libdl.so.2",
-            "/lib/x86_64-linux-gnu/libgcc_s.so.1",
-            "/lib/x86_64-linux-gnu/libgcrypt.so.20",
-            "/lib/x86_64-linux-gnu/libgpg-error.so.0",
-            "/lib/x86_64-linux-gnu/liblzma.so.5",
-            "/lib/x86_64-linux-gnu/libm.so.6",
-            "/lib/x86_64-linux-gnu/libnl-3.so.200",
-            "/lib/x86_64-linux-gnu/libpcre.so.3",
-            "/lib/x86_64-linux-gnu/libpthread.so.0",
-            "/lib/x86_64-linux-gnu/librt.so.1",
-            "/lib/x86_64-linux-gnu/libselinux.so.1",
-            "/lib/x86_64-linux-gnu/libsystemd.so.0",
-            "/usr/lib/x86_64-linux-gnu/libnl-route-3.so.200",
-            "/usr/lib/x86_64-linux-gnu/libstdc++.so.6",
-            "/usr/lib/x86_64-linux-gnu/libyajl.so.2",
-            "/lib64/ld-linux-x86-64.so.2"
-        ]
     }
 }
