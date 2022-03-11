@@ -955,24 +955,25 @@ class BundleProcessor:
         """Adds the devicemapper plugin to the config to set up dynamic devices:
            devices that do not have a fixed major/minor after boot
         """
-        logger.debug("Configuring devicemapper")
+        if self.platform_cfg.get('hardware').get('graphics'):
+            logger.debug("Configuring devicemapper")
 
-        dynamic_devices = []
-        for dev in self.platform_cfg.get('gpu').get('devs'):
-            if 'dynamic' in dev and dev['dynamic']:
-                dynamic_devices.append(dev['path'])
+            dynamic_devices = []
+            for dev in self.platform_cfg.get('gpu').get('devs'):
+                if 'dynamic' in dev and dev['dynamic']:
+                    dynamic_devices.append(dev['path'])
 
-        if len(dynamic_devices) == 0:
-            return
+            if len(dynamic_devices) == 0:
+                return
 
-        devicemapper_plugin = {
-            'required': True,
-            'data' : {
-                'devices': dynamic_devices
+            devicemapper_plugin = {
+                'required': True,
+                'data' : {
+                    'devices': dynamic_devices
+                }
             }
-        }
 
-        self.oci_config['rdkPlugins']['devicemapper'] = devicemapper_plugin
+            self.oci_config['rdkPlugins']['devicemapper'] = devicemapper_plugin
         return
 
     # ==========================================================================
