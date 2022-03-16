@@ -45,7 +45,8 @@ def message_decoder(obj):
                           unpacked_obj["output_filename"],
                           unpacked_obj["searchpath"],
                           unpacked_obj["outputdir"],
-                          unpacked_obj["createmountpoints"])
+                          unpacked_obj["createmountpoints"],
+                          unpacked_obj["app_id"])
     return msg
 
 
@@ -176,6 +177,8 @@ def generate_bundle(options: message.Message) -> Tuple[Result, str]:
         app_metadata_dict = metadata_from_image
         img_unpacker.delete_img_app_metadata()
 
+    if options.app_id:
+        app_metadata_dict['id'] = options.app_id
 
     # Begin processing. Work in the output dir where the img was unpacked to
     processor = BundleProcessor(

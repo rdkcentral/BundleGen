@@ -31,7 +31,13 @@ output_filename: str,
 searchpath: str,
 outputdir: str,
 createmountpoints: bool,
+app_id: str,
 ```
+*app_metadata:*
+Optional. If not empty, this metadata will override all the metadata present inside the OCI image. If no metadata present inside the OCI image, then this parameter is mandatory.
+
+*app_id:*
+Optional. If not empty, used to override the id inside the metadata. Mainly intended for override on app id inside the metadata inside the OCI image.
 
 BundleGen will respond with the following message on success/failure
 ```
