@@ -88,7 +88,7 @@ def main():
 
     msg = message.Message(uuid_str, "rpi3_reference",
                           "docker://hello-world", metadata, message.LibMatchMode.NORMAL,
-                          "","", "", True)
+                          "","", "", True, "")
 
     logger.debug(f"Request: \n{pprint.pformat(msg.__dict__)}")
     logger.info("Sending request to BundleGen")

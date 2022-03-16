@@ -42,7 +42,8 @@ class Message():
                  output_filename: str,
                  searchpath: str,
                  outputdir: str,
-                 createmountpoints: bool):
+                 createmountpoints: bool,
+                 app_id: str):
         self.uuid = uuid
         self.platform = platform
         self.image_url = image_url
@@ -50,6 +51,7 @@ class Message():
         self.searchpath = searchpath
         self.outputdir = outputdir
         self.createmountpoints = createmountpoints
+        self.app_id = app_id
 
         if app_metadata is None:
             self.app_metadata = {}
