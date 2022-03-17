@@ -93,7 +93,7 @@ class BundleProcessor:
 
         # If the app requires graphics but the hardware does not (e.g dev VM)
         if self.app_metadata['graphics'] and not self.platform_cfg.get('hardware').get('graphics'):
-            logger.warning("Platform does not support graphics output")
+            logger.error("Platform does not support graphics output")
             return False
 
         # Does platform support necessary features?
@@ -102,7 +102,7 @@ class BundleProcessor:
                 self.platform_cfg['rdk'].get('supportedFeatures'))]
 
             if missing_features:
-                logger.warning(
+                logger.error(
                     'App requires the following features which are not supported by the platform: ' + ', '.join(missing_features))
                 return False
 
@@ -110,8 +110,9 @@ class BundleProcessor:
         if self.app_metadata.get('network'):
             app_network_type = self.app_metadata['network'].get('type')
             if not app_network_type in self.platform_cfg['network']['options']:
-                logger.warning(
+                logger.error(
                     f"App requires {app_network_type} networking, which is not supported by the platform")
+                return False
 
         # TODO:: Implement more checks here...
         return True

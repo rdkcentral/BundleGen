@@ -72,6 +72,11 @@ else
   bundlegen -vvv generate ${EXTRA_OPTIONS} --searchpath templates --platform ${TEMPLATE} oci:./oci-${APP_NAME}:latest ${TEMPLATE}-${APP_NAME} ${APPMETADATA}
 fi
 
+if [ $? -ne 0 ]; then
+  echo "Failed! Aborting..."
+  exit 1
+fi
+
 USE_LISA=`./test/testapp_lisa.sh $BOXIP dummy probe | grep "LISA RUNNING" -c`
 if [ "$USE_LISA" == "1" ]; then
   echo "Using LISA..."
