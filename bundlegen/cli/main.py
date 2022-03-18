@@ -93,7 +93,7 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
 
     if not selected_platform.found_config():
         logger.error(f"Could not find config for platform {platform}")
-        return
+        sys.exit(1)
 
     # Download the image to a temp directory
     img_downloader = ImageDownloader()
@@ -101,7 +101,7 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
         image, creds, selected_platform.get_config())
 
     if not img_path:
-        return
+        sys.exit(1)
 
     # Unpack the image with umoci
     tag = ImageDownloader().get_image_tag(image)
@@ -109,7 +109,7 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
     unpack_success = img_unpacker.unpack_image(tag, delete=True)
 
     if not unpack_success:
-        return
+        sys.exit(1)
 
     # Load app metadata
     metadata_from_image = img_unpacker.get_app_metadata_from_img()
@@ -120,13 +120,13 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
         # No metadata at all
         logger.error(
             f"Cannot find app metadata file in OCI image and none provided to BundleGen")
-        return
+        sys.exit(1)
 
     if not metadata_from_image and appmetadata:
         # No metadata in image, but custom file provided
         if not os.path.exists(appmetadata):
             logger.error(f'App metadata file {appmetadata} does not exist')
-            return
+            sys.exit(1)
         with open(appmetadata) as metadata:
             logger.debug(f"Loading metadata from {appmetadata}")
             app_metadata_dict = json.load(metadata)
@@ -151,13 +151,13 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
     if not processor.check_compatibility():
         # Not compatible - delete any work done so far
         shutil.rmtree(outputdir)
-        return
+        sys.exit(2)
 
     success = processor.begin_processing()
 
     if not success:
         logger.warning("Failed to produce bundle")
-        return
+        sys.exit(3)
 
     # Processing finished, now create a tarball/ipk of the output directory
     if ipk:
