@@ -114,6 +114,82 @@ class BundleProcessor:
                     f"App requires {app_network_type} networking, which is not supported by the platform")
                 return False
 
+        # Does platform support required storages
+        storage_settings = self.app_metadata.get('storage')
+        persistent_storages_required = storage_settings.get('persistent') if storage_settings else None
+        if persistent_storages_required and len(persistent_storages_required) > 0:
+            if not self.platform_cfg.get('storage').get('persistent'):
+                logger.error(
+                    "Cannot create persistent storage - platform does not define options")
+                return False
+            # Can be multiple persistent storage options
+            total_size = 0
+            # Validate we are allowed a size this large
+            maxSize = self.platform_cfg.get(
+                'storage').get('persistent').get('maxSize')
+            minSize = self.platform_cfg.get(
+                'storage').get('persistent').get('minSize')
+            maxTotalSize = self.platform_cfg.get(
+                'storage').get('persistent').get('maxTotalSize')
+            for persistent in persistent_storages_required:
+                # Get desired size from app metadata
+                size = persistent.get('size')
+
+                if maxSize and humanfriendly.parse_size(size, binary=True) > humanfriendly.parse_size(maxSize, binary=True):
+                    logger.error(
+                        f"Persistent storage requested by app exceeds platform limit ({size} > {maxSize})")
+                    return False
+
+                if minSize and humanfriendly.parse_size(size, binary=True) < humanfriendly.parse_size(minSize, binary=True):
+                    logger.warning(
+                        f"Persistent storage requested by app is less than minimum required by platform ({size} < {minSize})")
+                    logger.warning(f"Auto adjusting to {minSize} !")
+                    size = minSize
+                    persistent['size'] = size
+                total_size += humanfriendly.parse_size(size, binary=True)
+
+            if maxTotalSize and total_size > humanfriendly.parse_size(maxTotalSize, binary=True):
+                logger.error(
+                        f"Total persistent storage requested by app exceeds platform limit ({humanfriendly.format_size(total_size, binary=True)} > {maxTotalSize})")
+                return False
+
+        temporary_storages_required = storage_settings.get('temp') if storage_settings else None
+        if temporary_storages_required and len(temporary_storages_required) > 0:
+            if not self.platform_cfg.get('storage').get('temp'):
+                logger.warning(
+                    "Allowing all temporary storages - platform does not define restrictions")
+            else:
+                # Can be multiple temp storage options
+                total_size = 0
+                # Validate we are allowed a size this large
+                maxSize = self.platform_cfg.get(
+                    'storage').get('temp').get('maxSize')
+                minSize = self.platform_cfg.get(
+                    'storage').get('temp').get('minSize')
+                maxTotalSize = self.platform_cfg.get(
+                    'storage').get('temp').get('maxTotalSize')
+                for temp in temporary_storages_required:
+                    # Get desired size from app metadata
+                    size = temp.get('size')
+
+                    if maxSize and humanfriendly.parse_size(size, binary=True) > humanfriendly.parse_size(maxSize, binary=True):
+                        logger.error(
+                            f"Temporary storage requested by app exceeds platform limit ({size} > {maxSize})")
+                        return False
+
+                    if minSize and humanfriendly.parse_size(size, binary=True) < humanfriendly.parse_size(minSize, binary=True):
+                        logger.warning(
+                            f"Temporary storage requested by app is less than minimum required by platform ({size} < {minSize})")
+                        logger.warning(f"Auto adjusting to {minSize} !")
+                        size = minSize
+                        persistent['size'] = size
+                    total_size += humanfriendly.parse_size(size, binary=True)
+
+                if maxTotalSize and total_size > humanfriendly.parse_size(maxTotalSize, binary=True):
+                    logger.error(
+                            f"Total temporary storage requested by app exceeds platform limit ({humanfriendly.format_size(total_size, binary=True)} > {maxTotalSize})")
+                    return False
+
         # TODO:: Implement more checks here...
         return True
 
@@ -670,30 +746,10 @@ class BundleProcessor:
                     size = persistent.get('size')
                     dest_path = persistent.get('path')
 
-                    # Validate we are allowed a size this large
-                    maxSize = self.platform_cfg.get(
-                        'storage').get('persistent').get('maxSize')
-                    minSize = self.platform_cfg.get(
-                        'storage').get('persistent').get('minSize')
                     fstype = self.platform_cfg.get(
                         'storage').get('persistent').get('fstype')
                     if fstype is None:
                         fstype = "ext4"
-
-                    if maxSize and humanfriendly.parse_size(size, binary=True) > humanfriendly.parse_size(maxSize, binary=True):
-                        logger.warning(
-                            f"Persistent storage requested by app exceeds platform limit ({size} > {maxSize})")
-
-                    if minSize and humanfriendly.parse_size(size, binary=True) < humanfriendly.parse_size(minSize, binary=True):
-                        logger.warning(
-                            f"Persistent storage requested by app is less than minimum required by platform ({size} < {minSize})")
-                        logger.warning(f"Auto adjusting to {minSize} !")
-                        size = minSize
-
-                    if not self.platform_cfg.get('storage').get('persistent'):
-                        logger.error(
-                            "Cannot create persistent storage - platform does not define options")
-                        return
 
                     # Create a path for where the img file should be saved on the host
                     persistent_storage_dir = self.platform_cfg.get(
