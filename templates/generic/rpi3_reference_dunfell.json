@@ -87,8 +87,8 @@
                 ]
             },
             {
-                "source": "/var/run/dbus/system_bus_socket",
-                "destination": "/var/run/dbus/system_bus_socket",
+                "source": "/tmp/rialto-0",
+                "destination": "/tmp/rialto-0",
                 "type": "bind",
                 "options": [
                     "bind",
@@ -97,8 +97,7 @@
             }
         ],
         "envvar": [
-            "LD_PRELOAD=/usr/lib/libGLESv2.so.2:/usr/lib/libwayland-egl.so.1",
-            "RIALTO_CLIENT_BACKEND_LIB=/usr/lib/libRialtoClient.so.0.1.0"
+            "LD_PRELOAD=/usr/lib/libGLESv2.so.2:/usr/lib/libwayland-egl.so.1"
         ],
         "devs": [
             {
