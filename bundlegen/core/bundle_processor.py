@@ -803,6 +803,27 @@ class BundleProcessor:
 
                     self._createEmptyDirInRootfs(tmp_mnnt['path'])
 
+        # Optional mounts also use the storage plugin
+        optional_mounts = []
+        for mount in self.oci_config['mounts']:
+            if mount.get('options') and 'X-dobby.optional' in mount['options']:
+                optional_mounts.append(mount)
+        for mount in optional_mounts:
+            self.oci_config['mounts'].remove(mount)
+            mount['options'].remove('X-dobby.optional')
+        if len(optional_mounts)> 0:
+            storage_plugin = self.oci_config['rdkPlugins'].get('storage')
+            if not storage_plugin:
+                storage_plugin = {
+                    "required": True,
+                    "data": {
+                    }
+                }
+                self.oci_config['rdkPlugins']['storage'] = storage_plugin
+            storage_plugin['data']['dynamic'] = []
+            for mount in optional_mounts:
+                storage_plugin['data']['dynamic'].append(mount)
+
     # ==========================================================================
     def _add_annotation(self, key, value):
         """Adds an annotation to the config
