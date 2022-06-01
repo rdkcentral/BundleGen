@@ -58,7 +58,7 @@
                     "nosuid",
                     "nodev",
                     "ro",
-		    "X-mount.mkdir"
+                    "X-mount.mkdir"
                 ]
             },
             {
@@ -99,8 +99,9 @@
                 "destination": "/tmp/rialto-0",
                 "type": "bind",
                 "options": [
-                    "bind",
-                    "rw"
+                    "rbind",
+                    "rw",
+                    "X-dobby.optional"
                 ]
             }
         ],
@@ -133,7 +134,7 @@
                 "src": "/usr/lib/libGLESv2.so",
                 "dst": "/usr/lib/libGLESv2.so.2"
             },
-	    {
+            {
                 "src": "/usr/lib/libwayland-egl.so.0",
                 "dst": "/usr/lib/libwayland-egl.so"
             },
