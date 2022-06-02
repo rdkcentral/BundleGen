@@ -102,5 +102,8 @@ Options:
                                   create mount points by crun during container
                                   creation.
 
+  -x, --appid TEXT                Optional. Application id. Can be used to
+                                  override the id inside the metadata.
+
   --help                  Show this message and exit.
 ```

@@ -49,7 +49,7 @@ if [[ $2 == docker://** ]]; then
   echo "--> Generating runtime bundle..."
   rm -rf ./${TEMPLATE}-${APP_NAME}
   ## you might need to login first like: skopeo login us.icr.io
-  bundlegen -vvv generate ${EXTRA_OPTIONS} --searchpath templates --platform ${TEMPLATE} $2 ${TEMPLATE}-${APP_NAME} ${APPMETADATA}
+  bundlegen -vvv generate ${EXTRA_OPTIONS} --appid ${TEMPLATE}-${APP_NAME} --searchpath templates --platform ${TEMPLATE} $2 ${TEMPLATE}-${APP_NAME} ${APPMETADATA}
 else
 
   OCI_TAR=$2
@@ -69,7 +69,7 @@ else
 
   echo "--> Generating runtime bundle..."
   rm -rf ./${TEMPLATE}-${APP_NAME}
-  bundlegen -vvv generate ${EXTRA_OPTIONS} --searchpath templates --platform ${TEMPLATE} oci:./oci-${APP_NAME}:latest ${TEMPLATE}-${APP_NAME} ${APPMETADATA}
+  bundlegen -vvv generate ${EXTRA_OPTIONS} --appid ${TEMPLATE}-${APP_NAME} --searchpath templates --platform ${TEMPLATE} oci:./oci-${APP_NAME}:latest ${TEMPLATE}-${APP_NAME} ${APPMETADATA}
 fi
 
 if [ $? -ne 0 ]; then
