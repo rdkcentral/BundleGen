@@ -208,6 +208,39 @@ class BundleProcessor:
         logger.debug('Written config.json successfully')
 
     # ==========================================================================
+    def get_real_uid_gid(self):
+        """
+        When the container has user namespacing enabled, the uid/gid set in the process
+        options will not match the actual uid/gid on the host. Work out what the real values
+        will be if necessary
+
+        Returns:
+            tuple: (uid, gid)
+        """
+        user = self.oci_config['process'].get('user')
+        uid = user.get('uid') if user else None
+        gid = user.get('gid') if user else None
+
+        if self.platform_cfg.get('disableUserNamespacing'):
+            # No user namespacing, return the user/group the process will run as
+            return (uid, gid)
+        
+        # User namespacing enabled, find the actual UID
+        user_mapping = self.platform_cfg.get('usersAndGroups').get('uidMap')
+        group_mapping = self.platform_cfg.get('usersAndGroups').get('gidMap')
+
+        real_uid = next((x['hostID'] for x in user_mapping if x['containerID'] == uid), None)
+        real_gid = next((x['hostID'] for x in group_mapping if x['containerID'] == gid), None)
+
+        if real_uid and real_gid:
+            logger.debug(f"User namespacing enabled - resolved host uid/gid to {real_uid}:{real_gid}")
+            return (real_uid, real_gid)
+        
+        logger.warning("User namespacing enabled but could not resolve host uid/gid")
+        return (uid, gid)
+        
+
+    # ==========================================================================
     def _add_bind_mount(self, src, dst, createmountpoint=False, options=None):
         """Adds a bind mount for a file on the host into the container
 
