@@ -44,7 +44,7 @@
     },
     "storage": {
         "persistent": {
-            "storageDir": "/opt/data",
+            "storageDir": "/opt/dac_apps/data/0/dac",
             "maxSize": "100M"
         }
     },
