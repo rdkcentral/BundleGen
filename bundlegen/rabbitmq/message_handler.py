@@ -217,9 +217,9 @@ def generate_bundle(options: message.Message) -> Tuple[Result, str]:
     file_ownership_user = tarball_settings.get('fileOwnershipSameAsUser') if tarball_settings else None
     file_mask = tarball_settings.get('fileMask') if tarball_settings else None
 
-    user = processor.oci_config['process'].get('user')
-    uid = user.get('uid') if user and file_ownership_user else None
-    gid = user.get('gid') if user and file_ownership_user else None
+    container_uid_gid = processor.get_real_uid_gid()
+    uid = container_uid_gid[0] if container_uid_gid[0] and file_ownership_user else None
+    gid = container_uid_gid[1] if container_uid_gid[1] and file_ownership_user else None
 
     Utils.create_tgz(outputdir, tmp_path, uid, gid, file_mask)
 
