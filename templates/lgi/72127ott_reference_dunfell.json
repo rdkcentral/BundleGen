@@ -1,5 +1,5 @@
 {
-    "platformName": "7218c_reference",
+    "platformName": "72127ott_reference",
     "os": "linux",
     "arch": {
         "arch": "arm",
@@ -113,6 +113,13 @@
                 "type": "c",
                 "path": "/dev/nexus",
                 "major": 33,
+                "minor": 0,
+                "access": "rw"
+            },
+            {
+                "type": "c",
+                "path": "/dev/dri/card0",
+                "major": 226,
                 "minor": 0,
                 "access": "rw"
             }
