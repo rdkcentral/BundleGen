@@ -19,6 +19,7 @@ import os
 import json
 import humanfriendly
 import textwrap
+from hashlib import sha256
 from loguru import logger
 from pathlib import Path
 from bundlegen.core.utils import Utils
@@ -788,8 +789,14 @@ class BundleProcessor:
                     persistent_storage_dir = self.platform_cfg.get(
                         'storage').get('persistent').get('storageDir')
 
+                    # We want to ensure that the same image is used if we upgrade to a new bundle version to persist
+                    # app data across upgrades. This will ensure the filename is always the same providing the destination
+                    # path (path inside the container) do not change.
+                    hash_key = dest_path.encode('ascii')
+                    img_name = sha256(hash_key).hexdigest()
+
                     source_path = os.path.join(
-                        persistent_storage_dir, self.app_metadata['id'], f"{Utils.get_random_string(8)}.img")
+                        persistent_storage_dir, self.app_metadata['id'], f"{img_name}.img")
 
                     loopback_mnt_def = {
                         "destination": dest_path,
