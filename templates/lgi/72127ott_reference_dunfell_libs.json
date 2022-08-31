@@ -1121,17 +1121,6 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
-                "/usr/lib/libgio-2.0.so.0",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgnutls.so.28",
-                "/usr/lib/libgobject-2.0.so.0"
-            ],
-            "name": "/usr/lib/gio/modules/libgiognutls.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
                 "/usr/lib/libcrypto.so.1.1",
                 "/usr/lib/libgio-2.0.so.0",
                 "/usr/lib/libglib-2.0.so.0",
@@ -1326,6 +1315,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
@@ -1355,6 +1345,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstaudio-1.0.so.0",
@@ -1366,6 +1358,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
@@ -1556,7 +1549,9 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
                 "/lib/libm.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstaudio-1.0.so.0",
@@ -1568,6 +1563,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
@@ -1594,7 +1590,9 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
                 "/lib/libm.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstaudio-1.0.so.0",
@@ -1672,7 +1670,9 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
                 "/lib/libm.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstaudio-1.0.so.0",
@@ -1701,6 +1701,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0"
@@ -1737,6 +1738,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -1748,21 +1750,8 @@
         {
             "apiversions": [],
             "deps": [
-                "/lib/libm.so.6",
-                "/usr/lib/libcairo-gobject.so.2",
-                "/usr/lib/libcairo.so.2",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libgstvideo-1.0.so.0"
-            ],
-            "name": "/usr/lib/gstreamer-1.0/libgstcairo.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstapp-1.0.so.0",
@@ -1796,6 +1785,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
@@ -2082,6 +2072,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0",
@@ -2201,6 +2193,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
                 "/lib/libm.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
@@ -2346,6 +2339,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0",
@@ -2439,6 +2433,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -2476,7 +2472,6 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libm.so.6",
-                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -2490,6 +2485,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -2501,6 +2497,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstaudio-1.0.so.0",
@@ -2716,6 +2714,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
                 "/lib/libm.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
@@ -2809,6 +2808,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -2852,7 +2852,6 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
-                "/lib/libpthread.so.0",
                 "/lib/libz.so.1",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
@@ -2867,6 +2866,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -2878,28 +2878,13 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0"
             ],
             "name": "/usr/lib/gstreamer-1.0/libgstproxy.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libnexus.so",
-                "/usr/lib/libnxclient.so",
-                "/usr/lib/librmfosal.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/gstreamer-1.0/libgstqamtunersrc.so"
         },
         {
             "apiversions": [],
@@ -2936,6 +2921,7 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libm.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -2961,6 +2947,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libgio-2.0.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
@@ -3037,6 +3024,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libgio-2.0.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
@@ -3051,6 +3039,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
@@ -3090,6 +3079,7 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libm.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstaudio-1.0.so.0",
@@ -3101,6 +3091,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -3176,6 +3168,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
                 "/lib/libm.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
@@ -3218,6 +3211,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0",
@@ -3229,6 +3223,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
@@ -3457,6 +3452,7 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libm.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -3468,6 +3464,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
                 "/lib/libm.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
@@ -3539,6 +3536,7 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
                 "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
@@ -3580,6 +3578,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -3703,6 +3702,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -3710,6 +3710,30 @@
                 "/usr/lib/libgstvideo-1.0.so.0"
             ],
             "name": "/usr/lib/gstreamer-1.0/libgstyadif.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1"
+            ],
+            "name": "/usr/lib/libBasicUsageEnvironment.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1"
+            ],
+            "name": "/usr/lib/libBasicUsageEnvironment.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1"
+            ],
+            "name": "/usr/lib/libBasicUsageEnvironment.so.0.0.1"
         },
         {
             "apiversions": [],
@@ -3769,6 +3793,7 @@
                 "/usr/lib/libnexus.so",
                 "/usr/lib/libnxclient.so",
                 "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libv3dcompiler.so",
                 "/usr/lib/libv3dplatform.so"
             ],
             "name": "/usr/lib/libEGL.so"
@@ -3786,6 +3811,7 @@
                 "/usr/lib/libnexus.so",
                 "/usr/lib/libnxclient.so",
                 "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libv3dcompiler.so",
                 "/usr/lib/libv3dplatform.so"
             ],
             "name": "/usr/lib/libEGL.so.1"
@@ -3826,6 +3852,7 @@
                 "/usr/lib/libnexus.so",
                 "/usr/lib/libnxclient.so",
                 "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libv3dcompiler.so",
                 "/usr/lib/libv3dplatform.so"
             ],
             "name": "/usr/lib/libGLESv1_CM.so"
@@ -3843,6 +3870,7 @@
                 "/usr/lib/libnexus.so",
                 "/usr/lib/libnxclient.so",
                 "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libv3dcompiler.so",
                 "/usr/lib/libv3dplatform.so"
             ],
             "name": "/usr/lib/libGLESv1_CM.so.1"
@@ -3865,6 +3893,7 @@
                 "/usr/lib/libnexus.so",
                 "/usr/lib/libnxclient.so",
                 "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libv3dcompiler.so",
                 "/usr/lib/libv3dplatform.so"
             ],
             "name": "/usr/lib/libGLESv2.so"
@@ -3882,6 +3911,7 @@
                 "/usr/lib/libnexus.so",
                 "/usr/lib/libnxclient.so",
                 "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libv3dcompiler.so",
                 "/usr/lib/libv3dplatform.so"
             ],
             "name": "/usr/lib/libGLESv2.so.2"
@@ -4016,10 +4046,33 @@
                 "/usr/lib/libWPEFrameworkProtocols.so.2",
                 "/usr/lib/libWPEFrameworkSecurityUtil.so.2",
                 "/usr/lib/libWPEFrameworkTracing.so.2",
-                "/usr/lib/libsecurityagent.so.2",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libTextToSpeechServiceClient.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1"
+            ],
+            "name": "/usr/lib/libUsageEnvironment.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1"
+            ],
+            "name": "/usr/lib/libUsageEnvironment.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1"
+            ],
+            "name": "/usr/lib/libUsageEnvironment.so.0.0.0"
         },
         {
             "apiversions": [],
@@ -4694,16 +4747,14 @@
         {
             "apiversions": [],
             "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1"
+                "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libb_dcc.so"
         },
         {
             "apiversions": [],
             "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1"
+                "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libb_os.so"
         },
@@ -4711,7 +4762,20 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1"
+                "/lib/libgcc_s.so.1",
+                "/lib/libm.so.6",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libb_playback_ip.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
+                "/lib/librt.so.1",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so"
             ],
             "name": "/usr/lib/libb_secbuf.so"
         },
@@ -4736,6 +4800,7 @@
                 "/usr/lib/libnexus.so",
                 "/usr/lib/libnxclient.so",
                 "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libv3dcompiler.so",
                 "/usr/lib/libv3dplatform.so"
             ],
             "name": "/usr/lib/libbcmvulkan_icd.so"
@@ -4744,11 +4809,27 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
                 "/usr/lib/libcrypto.so.1.1",
                 "/usr/lib/libssl.so.1.1"
             ],
             "name": "/usr/lib/libbcrypt.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/lib/libm.so.6",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libbip_base.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6"
+            ],
+            "name": "/usr/lib/libbip_client.so"
         },
         {
             "apiversions": [],
@@ -4994,50 +5075,6 @@
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libbz2.so.1.0.6"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libdl.so.2",
-                "/lib/libm.so.6",
-                "/lib/libpthread.so.0",
-                "/lib/librt.so.1",
-                "/lib/libz.so.1",
-                "/usr/lib/libEGL.so.1",
-                "/usr/lib/libcairo.so.2",
-                "/usr/lib/libfontconfig.so.1",
-                "/usr/lib/libfreetype.so.6",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libnexus.so",
-                "/usr/lib/libnxclient.so",
-                "/usr/lib/libnxpl.so",
-                "/usr/lib/libpixman-1.so.0",
-                "/usr/lib/libpng16.so.16"
-            ],
-            "name": "/usr/lib/libcairo-gobject.so.2"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libdl.so.2",
-                "/lib/libm.so.6",
-                "/lib/libpthread.so.0",
-                "/lib/librt.so.1",
-                "/lib/libz.so.1",
-                "/usr/lib/libEGL.so.1",
-                "/usr/lib/libcairo.so.2",
-                "/usr/lib/libfontconfig.so.1",
-                "/usr/lib/libfreetype.so.6",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libnexus.so",
-                "/usr/lib/libnxclient.so",
-                "/usr/lib/libnxpl.so",
-                "/usr/lib/libpixman-1.so.0",
-                "/usr/lib/libpng16.so.16"
-            ],
-            "name": "/usr/lib/libcairo-gobject.so.2.11400.6"
         },
         {
             "apiversions": [],
@@ -5439,15 +5476,15 @@
                 "/usr/lib/libprdyhttp.so",
                 "/usr/lib/libsrai.so",
                 "/usr/lib/libssl.so.1.1",
-                "/usr/lib/libwidevine_ce_cdm_shared.so"
+                "/usr/lib/libwidevine_ce_cdm_shared.so",
+                "/usr/lib/libwidevine_tl.so"
             ],
             "name": "/usr/lib/libdif.so"
         },
         {
             "apiversions": [],
             "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1"
+                "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libdrmrootfs.so"
         },
@@ -5456,7 +5493,6 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
-                "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/libdshalcli.so",
                 "/usr/lib/libstdc++.so.6"
@@ -5496,7 +5532,6 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
-                "/lib/libpthread.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/libdshalcli.so",
                 "/usr/lib/libstdc++.so.6"
@@ -5508,7 +5543,6 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
-                "/usr/lib/libIARMBus.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0"
             ],
             "name": "/usr/lib/libdshalcli.so"
@@ -5517,10 +5551,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
-                "/lib/libdl.so.2",
                 "/lib/libgcc_s.so.1",
-                "/lib/libpthread.so.0",
-                "/usr/lib/libIARMBus.so.0",
                 "/usr/lib/libbreakpadwrapper.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
@@ -5576,7 +5607,6 @@
                 "/usr/lib/libdvrsink.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libhnsource.so.0",
-                "/usr/lib/libqamsrc.so.0",
                 "/usr/lib/libsafec-3.5.1.so.3",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libtinyxml.so.2.6.2"
@@ -5597,7 +5627,6 @@
                 "/usr/lib/libdvrsink.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libhnsource.so.0",
-                "/usr/lib/libqamsrc.so.0",
                 "/usr/lib/libsafec-3.5.1.so.3",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libtinyxml.so.2.6.2"
@@ -6194,6 +6223,30 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1"
+            ],
+            "name": "/usr/lib/libgroupsock.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1"
+            ],
+            "name": "/usr/lib/libgroupsock.so.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1"
+            ],
+            "name": "/usr/lib/libgroupsock.so.0.0.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
                 "/usr/lib/libgio-2.0.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
@@ -6379,6 +6432,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstapp-1.0.so.0",
@@ -6390,6 +6445,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstapp-1.0.so.0",
@@ -6433,6 +6490,7 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libm.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -6445,6 +6503,7 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libm.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -6505,6 +6564,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0"
@@ -6514,6 +6575,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0"
@@ -6548,6 +6611,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -6559,6 +6623,7 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -6639,6 +6704,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0"
@@ -6648,6 +6715,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstreamer-1.0.so.0"
@@ -6823,6 +6892,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -6833,6 +6904,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -6895,6 +6968,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -6905,6 +6980,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -6943,6 +7020,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -6954,6 +7033,8 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/libc.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libgobject-2.0.so.0",
                 "/usr/lib/libgstbase-1.0.so.0",
@@ -7559,66 +7640,6 @@
             "name": "/usr/lib/libiksemel.so.3.1.1"
         },
         {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/liblog4c.so.3",
-                "/usr/lib/librdkloggers.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libinbsectionfilter.so.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/liblog4c.so.3",
-                "/usr/lib/librdkloggers.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libinbsectionfilter.so.0.0.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libinbsectionfilter.so.0",
-                "/usr/lib/librdkloggers.so.0",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/libsectionfilter.so.0",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libinbsimanager.so.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libinbsectionfilter.so.0",
-                "/usr/lib/librdkloggers.so.0",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/libsectionfilter.so.0",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libinbsimanager.so.0.0.0"
-        },
-        {
             "apiversions": [
                 "LIBINPUT_0.12.0",
                 "LIBINPUT_0.14.0",
@@ -7909,6 +7930,30 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1"
+            ],
+            "name": "/usr/lib/libliveMedia.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1"
+            ],
+            "name": "/usr/lib/libliveMedia.so.1"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1"
+            ],
+            "name": "/usr/lib/libliveMedia.so.1.2.1"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
                 "/lib/libpthread.so.0"
             ],
             "name": "/usr/lib/liblog4c.so.3"
@@ -8068,9 +8113,7 @@
         {
             "apiversions": [],
             "deps": [
-                "/lib/libc.so.6",
-                "/lib/libdl.so.2",
-                "/lib/libpthread.so.0"
+                "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libmongoose.so"
         },
@@ -8404,13 +8447,12 @@
                 "/lib/libpthread.so.0",
                 "/lib/librt.so.1",
                 "/usr/lib/libbcrypt.so",
-                "/usr/lib/libcmndrm.so",
-                "/usr/lib/libcmndrm_tl.so",
                 "/usr/lib/libdrmrootfs.so",
                 "/usr/lib/libnexus.so",
                 "/usr/lib/libnxclient.so",
                 "/usr/lib/libsrai.so",
-                "/usr/lib/libstdc++.so.6"
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libwidevine_tl.so"
             ],
             "name": "/usr/lib/liboemcrypto_tl.so"
         },
@@ -8427,44 +8469,6 @@
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libogg.so.0.8.4"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/liblog4c.so.3",
-                "/usr/lib/librdkloggers.so.0",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6",
-                "/usr/lib/libtinyxml.so.2.6.2"
-            ],
-            "name": "/usr/lib/liboobsimgrstub.so.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/liblog4c.so.3",
-                "/usr/lib/librdkloggers.so.0",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6",
-                "/usr/lib/libtinyxml.so.2.6.2"
-            ],
-            "name": "/usr/lib/liboobsimgrstub.so.0.0.0"
         },
         {
             "apiversions": [],
@@ -8599,44 +8603,6 @@
             "name": "/usr/lib/libpcap.so.1.9.1"
         },
         {
-            "apiversions": [
-                "LIBPCI_3.0",
-                "LIBPCI_3.1",
-                "LIBPCI_3.2",
-                "LIBPCI_3.3",
-                "LIBPCI_3.4",
-                "LIBPCI_3.5",
-                "LIBPCI_3.6",
-                "LIBPCI_3.7"
-            ],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libresolv.so.2",
-                "/lib/libudev.so.1",
-                "/lib/libz.so.1"
-            ],
-            "name": "/usr/lib/libpci.so.3"
-        },
-        {
-            "apiversions": [
-                "LIBPCI_3.0",
-                "LIBPCI_3.1",
-                "LIBPCI_3.2",
-                "LIBPCI_3.3",
-                "LIBPCI_3.4",
-                "LIBPCI_3.5",
-                "LIBPCI_3.6",
-                "LIBPCI_3.7"
-            ],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libresolv.so.2",
-                "/lib/libudev.so.1",
-                "/lib/libz.so.1"
-            ],
-            "name": "/usr/lib/libpci.so.3.6.4"
-        },
-        {
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6"
@@ -8754,8 +8720,7 @@
         {
             "apiversions": [],
             "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1"
+                "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libprdyhttp.so"
         },
@@ -8892,108 +8857,6 @@
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libproxy/0.4.15/modules/config_gnome3.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libIARMBus.so.0",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libinbsectionfilter.so.0",
-                "/usr/lib/libinbsimanager.so.0",
-                "/usr/lib/liblog4c.so.3",
-                "/usr/lib/liboobsimgrstub.so.0",
-                "/usr/lib/librdkloggers.so.0",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/libsectionfilter.so.0",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6",
-                "/usr/lib/libtinyxml.so.2.6.2"
-            ],
-            "name": "/usr/lib/libqamsrc.so.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libIARMBus.so.0",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libinbsectionfilter.so.0",
-                "/usr/lib/libinbsimanager.so.0",
-                "/usr/lib/liblog4c.so.3",
-                "/usr/lib/liboobsimgrstub.so.0",
-                "/usr/lib/librdkloggers.so.0",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/libsectionfilter.so.0",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6",
-                "/usr/lib/libtinyxml.so.2.6.2"
-            ],
-            "name": "/usr/lib/libqamsrc.so.0.0.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libcurl.so.4",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/librmfosal.so.0",
-                "/usr/lib/librtCore.so",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/librbi.so.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libcurl.so.4",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/librmfosal.so.0",
-                "/usr/lib/librtCore.so",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/librbi.so.0.0.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/librbifilter.so.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/librbifilter.so.0.0.0"
         },
         {
             "apiversions": [],
@@ -9385,34 +9248,6 @@
             "name": "/usr/lib/librmfosalutils.so.0.0.0"
         },
         {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libjansson.so.4",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/librmfosal.so.0",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/librmfproxyservice.so.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libjansson.so.4",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/librmfosal.so.0",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/librmfproxyservice.so.0.0.0"
-        },
-        {
             "apiversions": [
                 "LIBRPCSERVER_1.0.0"
             ],
@@ -9541,32 +9376,6 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/librdkloggers.so.0",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libsectionfilter.so.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/librdkloggers.so.0",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libsectionfilter.so.0.0.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
                 "/usr/lib/librdkloggers.so.0"
             ],
             "name": "/usr/lib/libsecure_wrapper.so.0"
@@ -9690,7 +9499,6 @@
                 "/usr/lib/libdvrsink.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libhnsource.so.0",
-                "/usr/lib/libqamsrc.so.0",
                 "/usr/lib/librfcapi.so.0",
                 "/usr/lib/libsafec-3.5.1.so.3",
                 "/usr/lib/libstdc++.so.6",
@@ -9713,7 +9521,6 @@
                 "/usr/lib/libdvrsink.so.0",
                 "/usr/lib/libglib-2.0.so.0",
                 "/usr/lib/libhnsource.so.0",
-                "/usr/lib/libqamsrc.so.0",
                 "/usr/lib/librfcapi.so.0",
                 "/usr/lib/libsafec-3.5.1.so.3",
                 "/usr/lib/libstdc++.so.6",
@@ -9806,8 +9613,7 @@
         {
             "apiversions": [],
             "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1"
+                "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libsrai.so"
         },
@@ -10245,40 +10051,15 @@
         },
         {
             "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libtranscoderfilter.so.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/libsocinit.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libtranscoderfilter.so.0.0.0"
-        },
-        {
-            "apiversions": [],
             "deps": [],
             "name": "/usr/lib/libtrower-base64.so.1.0.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6"
+            ],
+            "name": "/usr/lib/libtshdrbuilder.so"
         },
         {
             "apiversions": [],
@@ -10455,7 +10236,24 @@
                 "/lib/librt.so.1",
                 "/usr/lib/libnexus.so",
                 "/usr/lib/libnxclient.so",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libv3dcompiler.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/ld-linux-armhf.so.3",
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libgcc_s.so.1",
+                "/lib/libm.so.6",
+                "/lib/libpthread.so.0",
+                "/lib/librt.so.1",
+                "/usr/lib/libnexus.so",
+                "/usr/lib/libnxclient.so",
                 "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libv3dcompiler.so",
                 "/usr/lib/libv3dplatform.so"
             ],
             "name": "/usr/lib/libv3ddriver.so"
@@ -10954,9 +10752,22 @@
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
                 "/lib/libm.so.6",
+                "/lib/libpthread.so.0",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libwidevine_ce_cdm_shared.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/usr/lib/libbcrypt.so",
+                "/usr/lib/libcrypto.so.1.1",
+                "/usr/lib/libdrmrootfs.so",
+                "/usr/lib/libsrai.so",
+                "/usr/lib/libssl.so.1.1"
+            ],
+            "name": "/usr/lib/libwidevine_tl.so"
         },
         {
             "apiversions": [],
