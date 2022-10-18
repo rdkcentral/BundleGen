@@ -804,7 +804,7 @@ class BundleProcessor:
                     # We want to ensure that the same image is used if we upgrade to a new bundle version to persist
                     # app data across upgrades. This will ensure the filename is always the same providing the destination
                     # path (path inside the container) do not change.
-                    hash_key = dest_path.encode('ascii')
+                    
                     
 
                     source_path = os.path.join(
