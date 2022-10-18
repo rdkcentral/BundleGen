@@ -157,6 +157,12 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
         shutil.rmtree(outputdir)
         sys.exit(2)
 
+    '''
+    Create JSON schema for BundleGen templates/metadata files
+    validate the app metadata & platform config files against the reference schema
+    '''
+    processor.validateWithSchema()
+
     success = processor.begin_processing()
 
     if not success:

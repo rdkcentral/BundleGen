@@ -19,6 +19,8 @@ import os
 import json
 import humanfriendly
 import textwrap
+import jsonschema
+from jsonschema import validate
 from hashlib import sha256
 from loguru import logger
 from pathlib import Path
@@ -54,6 +56,30 @@ class BundleProcessor:
             return False
 
         return True
+
+    # ==========================================================================
+    # Create JSON schema for BundleGen templates/metadata files & validate
+
+    def validateWithSchema(self):
+        logger.info("validate JSON config files with the template schemas.")
+
+        # App metadata
+        try:
+            with open('bundlegen/schema/appMetadataSchema.json', "r") as f:
+                appSchema = json.load(f)
+                validate(instance=self.app_metadata, schema=appSchema)
+        except IOError:
+            logger.error("IOError during metadatda schema open.")
+
+        # Platform metadata - Schema file contains the rules for both platfomr.JSON & platform_libs.json
+        try:
+            with open('bundlegen/schema/platformSchema.json', "r") as f:
+                platformSchema = json.load(f)
+                validate(instance=self.platform_cfg, schema=platformSchema)
+        except IOError:
+            logger.error("IOError during platform schema open.")
+
+        logger.success(f"validateWithSchema success!")
 
     # ==========================================================================
     def begin_processing(self):

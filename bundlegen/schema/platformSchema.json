@@ -1,0 +1,424 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/Welcome9",
+    "definitions": {
+        "Welcome9": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "platformName": {
+                    "type": "string"
+                },
+                "os": {
+                    "type": "string"
+                },
+                "arch": {
+                    "$ref": "#/definitions/Arch"
+                },
+                "rdk": {
+                    "$ref": "#/definitions/Rdk"
+                },
+                "hardware": {
+                    "$ref": "#/definitions/Hardware"
+                },
+                "storage": {
+                    "$ref": "#/definitions/Storage"
+                },
+                "gpu": {
+                    "$ref": "#/definitions/GPU"
+                },
+                "mounts": {
+                    "type": "array",
+                    "items": {}
+                },
+                "network": {
+                    "$ref": "#/definitions/Network"
+                },
+                "envvar": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "resourceLimits": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ResourceLimit"
+                    }
+                },
+                "disableUserNamespacing": {
+                    "type": "boolean"
+                },
+                "logging": {
+                    "$ref": "#/definitions/Logging"
+                },
+                "seccomp": {
+                    "$ref": "#/definitions/Seccomp"
+                },
+                "libs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LIB"
+                    }
+                }
+            },
+            "required": [
+                "arch",
+                "disableUserNamespacing",
+                "envvar",
+                "gpu",
+                "hardware",
+                "libs",
+                "logging",
+                "mounts",
+                "network",
+                "os",
+                "platformName",
+                "rdk",
+                "resourceLimits",
+                "seccomp",
+                "storage"
+            ],
+            "title": "Welcome9"
+        },
+        "Arch": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "arch": {
+                    "type": "string"
+                },
+                "variant": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "arch",
+                "variant"
+            ],
+            "title": "Arch"
+        },
+        "GPU": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "extraMounts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ExtraMount"
+                    }
+                },
+                "envvar": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "devs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Dev"
+                    }
+                },
+                "gfxLibs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GfxLIB"
+                    }
+                }
+            },
+            "required": [
+                "devs",
+                "envvar",
+                "extraMounts",
+                "gfxLibs"
+            ],
+            "title": "GPU"
+        },
+        "Dev": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "major": {
+                    "type": "integer"
+                },
+                "minor": {
+                    "type": "integer"
+                },
+                "access": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "access",
+                "major",
+                "minor",
+                "path",
+                "type"
+            ],
+            "title": "Dev"
+        },
+        "ExtraMount": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "source": {
+                    "type": "string"
+                },
+                "destination": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "options": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "destination",
+                "options",
+                "source",
+                "type"
+            ],
+            "title": "ExtraMount"
+        },
+        "GfxLIB": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "src": {
+                    "type": "string"
+                },
+                "dst": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "dst",
+                "src"
+            ],
+            "title": "GfxLIB"
+        },
+        "Hardware": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "graphics": {
+                    "type": "boolean"
+                },
+                "maxRam_disabled": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "graphics",
+                "maxRam_disabled"
+            ],
+            "title": "Hardware"
+        },
+        "LIB": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "apiversions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "deps": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "parentlib": {
+                    "$ref": "#/definitions/Parentlib"
+                },
+                "sublibs": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "apiversions",
+                "deps",
+                "name"
+            ],
+            "title": "LIB"
+        },
+        "Logging": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "mode": {
+                    "type": "string"
+                },
+                "logDir": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "logDir",
+                "mode"
+            ],
+            "title": "Logging"
+        },
+        "Network": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "options": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "options"
+            ],
+            "title": "Network"
+        },
+        "Rdk": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "version": {
+                    "type": "string"
+                },
+                "supportedFeatures": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "supportedFeatures",
+                "version"
+            ],
+            "title": "Rdk"
+        },
+        "ResourceLimit": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "hard": {
+                    "type": "integer"
+                },
+                "soft": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "hard",
+                "soft",
+                "type"
+            ],
+            "title": "ResourceLimit"
+        },
+        "Seccomp": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "defaultAction": {
+                    "type": "string"
+                },
+                "architectures": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "syscalls": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Syscall"
+                    }
+                }
+            },
+            "required": [
+                "architectures",
+                "defaultAction",
+                "syscalls"
+            ],
+            "title": "Seccomp"
+        },
+        "Syscall": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "names": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "action": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "names"
+            ],
+            "title": "Syscall"
+        },
+        "Storage": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "persistent": {
+                    "$ref": "#/definitions/Persistent"
+                }
+            },
+            "required": [
+                "persistent"
+            ],
+            "title": "Storage"
+        },
+        "Persistent": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "storageDir": {
+                    "type": "string"
+                },
+                "maxSize": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "maxSize",
+                "storageDir"
+            ],
+            "title": "Persistent"
+        },
+        "Parentlib": {
+            "type": "string",
+            "enum": [
+                "/lib/libc.so.6"
+            ],
+            "title": "Parentlib"
+        }
+    }
+}
