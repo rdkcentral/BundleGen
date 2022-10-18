@@ -16,6 +16,7 @@
 # limitations under the License.
 
 import os
+import sys
 import json
 import humanfriendly
 import textwrap
@@ -28,17 +29,29 @@ from bundlegen.core.capabilities import *
 
 
 class BundleProcessor:
-    def __init__(self, platform_cfg, bundle_path, app_metadata, nodepwalking, libmatchingmode, createmountpoints):
-        self.platform_cfg: dict = platform_cfg
-        self.bundle_path = bundle_path
-        self.rootfs_path = os.path.join(self.bundle_path, "rootfs")
-        self.app_metadata = app_metadata
-        self.handled_libs = set()
-        self.createmountpoints = createmountpoints
-
-        self.oci_config: dict = self.load_config()
-        self.libmatcher = LibraryMatching(
-            self.platform_cfg, self.bundle_path, self._add_bind_mount, nodepwalking, libmatchingmode, createmountpoints)
+    def __init__(self, *args):
+        if (len(args)) == 6:
+            # Mapping of the arguments
+            # The arguments should be given in a order like (platform_cfg, bundle_path, app_metadata, nodepwalking, libmatchingmode, createmountpoints)
+            platform_cfg = args[0]
+            bundle_path = args[1]
+            app_metadata = args[2]
+            nodepwalking = args[3]
+            libmatchingmode = args[4]
+            createmountpoints = args[5]
+            self.platform_cfg: dict = platform_cfg
+            self.bundle_path = bundle_path
+            self.rootfs_path = os.path.join(self.bundle_path, "rootfs")
+            self.app_metadata = app_metadata
+            self.handled_libs = set()
+            self.createmountpoints = createmountpoints
+            self.oci_config: dict = self.load_config()
+            self.libmatcher = LibraryMatching(self.platform_cfg, self.bundle_path, self._add_bind_mount, nodepwalking, libmatchingmode, createmountpoints)
+        elif (len(args)) != 0:
+            logger.error("The arguments should be in a order like platform_cfg, bundle_path, app_metadata, nodepwalking, libmatchingmode, createmountpoints")
+            sys.exit(1)
+        else:
+            logger.disable("This is for L1_unit_testing")
 
     # Umoci will produce a config based on a "good, sane default" configuration
     # as defined here: https://github.com/opencontainers/umoci/blob/master/oci/config/convert/default.go
@@ -796,7 +809,7 @@ class BundleProcessor:
                     img_name = sha256(hash_key).hexdigest()
 
                     source_path = os.path.join(
-                        persistent_storage_dir, self.app_metadata['id'], f"{img_name}.img")
+                        persistent_storage_dir, self.app_metadata['id'], f"{Utils.get_random_string(8)}.img")
 
                     loopback_mnt_def = {
                         "destination": dest_path,
@@ -965,19 +978,20 @@ class BundleProcessor:
         """Creates a file in the container rootfs if it doesn't exist with the
         specified contents and linux mode
         """
-        fullPath = os.path.join(self.rootfs_path, path.lstrip('/'))
+        if self.rootfs_path:
+            fullPath = os.path.join(self.rootfs_path, path.lstrip('/'))
 
-        # Create the directory if doesn't exist
-        directory = os.path.dirname(fullPath)
-        if not os.path.exists(directory):
-            os.makedirs(directory, 0o755)
+            # Create the directory if doesn't exist
+            directory = os.path.dirname(fullPath)
+            if not os.path.exists(directory):
+                os.makedirs(directory, 0o755)
 
-        # Write the file
-        with open(fullPath, 'w') as f:
-            # Dedent to remove any leading spaces if using multiline strings
-            f.write(textwrap.dedent(contents))
+                # Write the file
+                with open(fullPath, 'w') as f:
+                    # Dedent to remove any leading spaces if using multiline strings
+                    f.write(textwrap.dedent(contents))
 
-        os.chmod(fullPath, mode)
+                    os.chmod(fullPath, mode)
 
     # ==========================================================================
     def _createEmptyDirInRootfs(self, path):
