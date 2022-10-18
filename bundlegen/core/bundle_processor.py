@@ -19,7 +19,6 @@ import os
 import json
 import humanfriendly
 import textwrap
-import jsonschema
 from jsonschema import validate
 from hashlib import sha256
 from loguru import logger
