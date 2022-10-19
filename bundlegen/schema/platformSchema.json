@@ -1,65 +1,56 @@
+/*
+* If not stated otherwise in this file or this component's license file the
+* following copyright and licenses apply:
+*
+* Copyright 2021 RDK Management
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
 {
-    "$schema": "http://json-schema.org/draft-06/schema#",
-    "$ref": "#/definitions/Welcome9",
-    "definitions": {
+    "$schema": "http://json-schema.org/draft/2020-12/schema",
+    "$ref": "#/$defs/Welcome9",
+    "$defs": {
         "Welcome9": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "platformName": {
-                    "type": "string"
-                },
-                "os": {
-                    "type": "string"
-                },
-                "arch": {
-                    "$ref": "#/definitions/Arch"
-                },
-                "rdk": {
-                    "$ref": "#/definitions/Rdk"
-                },
-                "hardware": {
-                    "$ref": "#/definitions/Hardware"
-                },
-                "storage": {
-                    "$ref": "#/definitions/Storage"
-                },
-                "gpu": {
-                    "$ref": "#/definitions/GPU"
-                },
+                "platformName": {"type": "string"},
+                "os": {"type": "string"},
+                "arch": {"$ref": "#/$defs/Arch"},
+                "rdk": {"$ref": "#/$defs/Rdk"},
+                "hardware": {"$ref": "#/$defs/Hardware"},
+                "storage": {"$ref": "#/$defs/Storage"},
+                "gpu": {"$ref": "#/$defs/GPU"},
                 "mounts": {
                     "type": "array",
                     "items": {}
                 },
-                "network": {
-                    "$ref": "#/definitions/Network"
-                },
+                "network": {"$ref": "#/$defs/Network"},
                 "envvar": {
                     "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "items": {"type": "string"}
                 },
                 "resourceLimits": {
                     "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/ResourceLimit"
-                    }
+                    "items": {"$ref": "#/$defs/ResourceLimit"}
                 },
-                "disableUserNamespacing": {
-                    "type": "boolean"
-                },
-                "logging": {
-                    "$ref": "#/definitions/Logging"
-                },
-                "seccomp": {
-                    "$ref": "#/definitions/Seccomp"
-                },
+                "disableUserNamespacing": {"type": "boolean"},
+                "logging": {"$ref": "#/$defs/Logging"},
+                "seccomp": {"$ref": "#/$defs/Seccomp"},
                 "libs": {
                     "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/LIB"
-                    }
+                    "items": {"$ref": "#/$defs/LIB"}
                 }
             },
             "required": [
@@ -85,12 +76,8 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "arch": {
-                    "type": "string"
-                },
-                "variant": {
-                    "type": "string"
-                }
+                "arch": {"type": "string"},
+                "variant": {"type": "string"}
             },
             "required": [
                 "arch",
@@ -104,27 +91,19 @@
             "properties": {
                 "extraMounts": {
                     "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/ExtraMount"
-                    }
+                    "items": {"$ref": "#/$defs/ExtraMount"}
                 },
                 "envvar": {
                     "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "items": {"type": "string"}
                 },
                 "devs": {
                     "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Dev"
-                    }
+                    "items": {"$ref": "#/$defs/Dev"}
                 },
                 "gfxLibs": {
                     "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/GfxLIB"
-                    }
+                    "items": {"$ref": "#/$defs/GfxLIB"}
                 }
             },
             "required": [
@@ -139,21 +118,11 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "type": {
-                    "type": "string"
-                },
-                "path": {
-                    "type": "string"
-                },
-                "major": {
-                    "type": "integer"
-                },
-                "minor": {
-                    "type": "integer"
-                },
-                "access": {
-                    "type": "string"
-                }
+                "type": {"type": "string"},
+                "path": {"type": "string"},
+                "major": {"type": "integer"},
+                "minor": {"type": "integer"},
+                "access": {"type": "string"}
             },
             "required": [
                 "access",
@@ -168,20 +137,12 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "source": {
-                    "type": "string"
-                },
-                "destination": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                },
+                "source": {"type": "string"},
+                "destination": {"type": "string"},
+                "type": {"type": "string"},
                 "options": {
                     "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "items": {"type": "string"}
                 }
             },
             "required": [
@@ -196,12 +157,8 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "src": {
-                    "type": "string"
-                },
-                "dst": {
-                    "type": "string"
-                }
+                "src": {"type": "string"},
+                "dst": {"type": "string"}
             },
             "required": [
                 "dst",
@@ -213,12 +170,8 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "graphics": {
-                    "type": "boolean"
-                },
-                "maxRam_disabled": {
-                    "type": "string"
-                }
+                "graphics": {"type": "boolean"},
+                "maxRam_disabled": {"type": "string"}
             },
             "required": [
                 "graphics",
@@ -232,27 +185,17 @@
             "properties": {
                 "apiversions": {
                     "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "items": {"type": "string"}
                 },
                 "deps": {
                     "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "items": {"type": "string"}
                 },
-                "name": {
-                    "type": "string"
-                },
-                "parentlib": {
-                    "$ref": "#/definitions/Parentlib"
-                },
+                "name": {"type": "string"},
+                "parentlib": {"$ref": "#/$defs/Parentlib"},
                 "sublibs": {
                     "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "items": {"type": "string"}
                 }
             },
             "required": [
@@ -266,12 +209,8 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "mode": {
-                    "type": "string"
-                },
-                "logDir": {
-                    "type": "string"
-                }
+                "mode": {"type": "string"},
+                "logDir": {"type": "string"}
             },
             "required": [
                 "logDir",
@@ -285,28 +224,20 @@
             "properties": {
                 "options": {
                     "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "items": {"type": "string"}
                 }
             },
-            "required": [
-                "options"
-            ],
+            "required": ["options"],
             "title": "Network"
         },
         "Rdk": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "version": {
-                    "type": "string"
-                },
+                "version": {"type": "string"},
                 "supportedFeatures": {
                     "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "items": {"type": "string"}
                 }
             },
             "required": [
@@ -319,15 +250,9 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "type": {
-                    "type": "string"
-                },
-                "hard": {
-                    "type": "integer"
-                },
-                "soft": {
-                    "type": "integer"
-                }
+                "type": {"type": "string"},
+                "hard": {"type": "integer"},
+                "soft": {"type": "integer"}
             },
             "required": [
                 "hard",
@@ -340,20 +265,14 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "defaultAction": {
-                    "type": "string"
-                },
+                "defaultAction": {"type": "string"},
                 "architectures": {
                     "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "items": {"type": "string"}
                 },
                 "syscalls": {
                     "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Syscall"
-                    }
+                    "items": {"$ref": "#/$defs/Syscall"}
                 }
             },
             "required": [
@@ -369,13 +288,9 @@
             "properties": {
                 "names": {
                     "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "items": {"type": "string"}
                 },
-                "action": {
-                    "type": "string"
-                }
+                "action": {"type": "string"}
             },
             "required": [
                 "action",
@@ -387,25 +302,17 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "persistent": {
-                    "$ref": "#/definitions/Persistent"
-                }
+                "persistent": {"$ref": "#/$defs/Persistent"}
             },
-            "required": [
-                "persistent"
-            ],
+            "required": ["persistent"],
             "title": "Storage"
         },
         "Persistent": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "storageDir": {
-                    "type": "string"
-                },
-                "maxSize": {
-                    "type": "string"
-                }
+                "storageDir": {"type": "string"},
+                "maxSize": {"type": "string"}
             },
             "required": [
                 "maxSize",
@@ -415,9 +322,7 @@
         },
         "Parentlib": {
             "type": "string",
-            "enum": [
-                "/lib/libc.so.6"
-            ],
+            "enum": ["/lib/libc.so.6"],
             "title": "Parentlib"
         }
     }
