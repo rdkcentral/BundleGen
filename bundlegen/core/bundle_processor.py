@@ -57,7 +57,9 @@ class BundleProcessor:
         return True
 
     # ==========================================================================
-    # Create JSON schema for BundleGen templates/metadata files & validate
+    # This function validates the app metadata & platform config JSON with the 
+    # reference JSON schemas. If validation is success, OCI bundle generation proceeds 
+    # else function will throw an error & OCI bundle is not generated.    
 
     def validateWithSchema(self):
         logger.info("validate JSON config files with the template schemas.")
