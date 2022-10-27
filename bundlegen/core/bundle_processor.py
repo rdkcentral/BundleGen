@@ -1001,3 +1001,6 @@ class BundleProcessor:
         fullPath = os.path.join(self.rootfs_path, path.lstrip('/'))
 
         logger.debug(f"Creating directory {fullPath}")
+        # Create the directory if doesn't exist
+        if not os.path.exists(fullPath):
+            os.makedirs(fullPath, 0o755)
