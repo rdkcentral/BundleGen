@@ -194,7 +194,6 @@ def index():
 
                     tar.extractall(path, members, numeric_owner=numeric_owner) 
 
-
                 safe_extract(tar, img_temp_path)
 
             # Delete tar
