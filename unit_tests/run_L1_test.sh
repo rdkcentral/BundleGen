@@ -26,6 +26,7 @@ cd unit_tests/
 echo "1. All"
 echo "2. test_Bundleprocessor_ut"
 
+echo "Individual Test"
 echo "Select anyone from above"
 echo "ex: All"
 
