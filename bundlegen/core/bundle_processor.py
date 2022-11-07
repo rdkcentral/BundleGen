@@ -57,11 +57,11 @@ class BundleProcessor:
         return True
 
     # ==========================================================================
-    # This function validates the app metadata & platform config JSON with the 
-    # reference JSON schemas. If validation is success, OCI bundle generation proceeds 
-    # else function will throw an error & OCI bundle is not generated.    
+    # This function validates the app metadata JSON with the
+    # reference JSON schemas. If validation is success, OCI bundle generation proceeds
+    # else function will throw an error & OCI bundle is not generated.
 
-    def validateWithSchema(self):
+    def validate_app_metadata_config(self):
         logger.info("validate JSON config files with the template schemas.")
 
         # App metadata
@@ -70,17 +70,11 @@ class BundleProcessor:
                 appSchema = json.load(f)
                 validate(instance=self.app_metadata, schema=appSchema)
         except IOError:
-            logger.error("IOError during metadatda schema open.")
-
-        # Platform metadata - Schema file contains the rules for both platfomr.JSON & platform_libs.json
-        try:
-            with open('bundlegen/schema/platformSchema.json', "r") as f:
-                platformSchema = json.load(f)
-                validate(instance=self.platform_cfg, schema=platformSchema)
-        except IOError:
-            logger.error("IOError during platform schema open.")
+            logger.error("IOError during metadata schema open.")
+            return False
 
         logger.success(f"validateWithSchema success!")
+        return True
 
     # ==========================================================================
     def begin_processing(self):

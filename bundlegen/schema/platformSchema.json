@@ -1,155 +1,61 @@
 {
-    "$schema": "http://json-schema.org/draft/2020-12/schema",
-    "$ref": "#/$defs/Welcome9",
+    "$schema": "https://json-schema.org/draft/2020-12/schema#",
+    "type": "object",
+    "properties": {
+        "platformName": {"type": "string"},
+        "os": {"type": "string"},
+        "arch": {"$ref": "#/$defs/arch_type"},
+        "rdk": {"$ref": "#/$defs/rdk_type"},
+        "hardware": {"$ref": "#/$defs/hardware_type"},
+        "storage": {"$ref": "#/$defs/storage_type"},
+        "gpu": {"$ref": "#/$defs/gpu_type"},
+        "mounts": {"$ref": "#/$defs/mounts_type"},
+        "network": {"$ref": "#/$defs/network_type"},
+        "envvar": {"$ref": "#/$defs/supportedFeatures_type"},
+        "resourceLimits": {"$ref": "#/$defs/resourceLimits_type"},
+        "disableUserNamespacing": {"type": "boolean"},
+        "logging": {"$ref": "#/$defs/logging_type"}
+    },
+    "required": [
+        "platformName",
+        "os",
+        "arch",
+        "rdk",
+        "hardware",
+        "storage",
+        "gpu",
+        "network",
+        "logging"
+    ],
     "$defs": {
-        "Welcome9": {
+        "arch_type": {
             "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "platformName": {"type": "string"},
-                "os": {"type": "string"},
-                "arch": {"$ref": "#/$defs/Arch"},
-                "rdk": {"$ref": "#/$defs/Rdk"},
-                "hardware": {"$ref": "#/$defs/Hardware"},
-                "storage": {"$ref": "#/$defs/Storage"},
-                "gpu": {"$ref": "#/$defs/GPU"},
-                "mounts": {
-                    "type": "array",
-                    "items": {}
-                },
-                "network": {"$ref": "#/$defs/Network"},
-                "envvar": {
-                    "type": "array",
-                    "items": {"type": "string"}
-                },
-                "resourceLimits": {
-                    "type": "array",
-                    "items": {"$ref": "#/$defs/ResourceLimit"}
-                },
-                "disableUserNamespacing": {"type": "boolean"},
-                "logging": {"$ref": "#/$defs/Logging"},
-                "seccomp": {"$ref": "#/$defs/Seccomp"},
-                "libs": {
-                    "type": "array",
-                    "items": {"$ref": "#/$defs/LIB"}
-                }
-            },
-            "required": [
-                "arch",
-                "disableUserNamespacing",
-                "envvar",
-                "gpu",
-                "hardware",
-                "libs",
-                "logging",
-                "mounts",
-                "network",
-                "os",
-                "platformName",
-                "rdk",
-                "resourceLimits",
-                "seccomp",
-                "storage"
-            ],
-            "title": "Welcome9"
-        },
-        "Arch": {
-            "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "arch": {"type": "string"},
                 "variant": {"type": "string"}
             },
             "required": [
-                "arch",
-                "variant"
-            ],
-            "title": "Arch"
+                "arch"
+            ]
         },
-        "GPU": {
+        "supportedFeatures_type": {
+            "type": "array",
+            "minItems": 0,
+            "items": {"type": "string"}
+        },
+        "rdk_type": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
-                "extraMounts": {
-                    "type": "array",
-                    "items": {"$ref": "#/$defs/ExtraMount"}
-                },
-                "envvar": {
-                    "type": "array",
-                    "items": {"type": "string"}
-                },
-                "devs": {
-                    "type": "array",
-                    "items": {"$ref": "#/$defs/Dev"}
-                },
-                "gfxLibs": {
-                    "type": "array",
-                    "items": {"$ref": "#/$defs/GfxLIB"}
-                }
+                "version": {"type": "string"},
+                "supportedFeatures": {"$ref": "#/$defs/supportedFeatures_type"}
             },
             "required": [
-                "devs",
-                "envvar",
-                "extraMounts",
-                "gfxLibs"
-            ],
-            "title": "GPU"
+                "version",
+                "supportedFeatures"
+            ]
         },
-        "Dev": {
+        "hardware_type": {
             "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "type": {"type": "string"},
-                "path": {"type": "string"},
-                "major": {"type": "integer"},
-                "minor": {"type": "integer"},
-                "access": {"type": "string"}
-            },
-            "required": [
-                "access",
-                "major",
-                "minor",
-                "path",
-                "type"
-            ],
-            "title": "Dev"
-        },
-        "ExtraMount": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "source": {"type": "string"},
-                "destination": {"type": "string"},
-                "type": {"type": "string"},
-                "options": {
-                    "type": "array",
-                    "items": {"type": "string"}
-                }
-            },
-            "required": [
-                "destination",
-                "options",
-                "source",
-                "type"
-            ],
-            "title": "ExtraMount"
-        },
-        "GfxLIB": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "src": {"type": "string"},
-                "dst": {"type": "string"}
-            },
-            "required": [
-                "dst",
-                "src"
-            ],
-            "title": "GfxLIB"
-        },
-        "Hardware": {
-            "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "graphics": {"type": "boolean"},
                 "maxRam_disabled": {"type": "string"}
@@ -157,154 +63,125 @@
             "required": [
                 "graphics",
                 "maxRam_disabled"
-            ],
-            "title": "Hardware"
+            ]
         },
-        "LIB": {
+        "persistent_type": {
             "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "apiversions": {
-                    "type": "array",
-                    "items": {"type": "string"}
-                },
-                "deps": {
-                    "type": "array",
-                    "items": {"type": "string"}
-                },
-                "name": {"type": "string"},
-                "parentlib": {"$ref": "#/$defs/Parentlib"},
-                "sublibs": {
-                    "type": "array",
-                    "items": {"type": "string"}
-                }
-            },
-            "required": [
-                "apiversions",
-                "deps",
-                "name"
-            ],
-            "title": "LIB"
-        },
-        "Logging": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "mode": {"type": "string"},
-                "logDir": {"type": "string"}
-            },
-            "required": [
-                "logDir",
-                "mode"
-            ],
-            "title": "Logging"
-        },
-        "Network": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "options": {
-                    "type": "array",
-                    "items": {"type": "string"}
-                }
-            },
-            "required": ["options"],
-            "title": "Network"
-        },
-        "Rdk": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "version": {"type": "string"},
-                "supportedFeatures": {
-                    "type": "array",
-                    "items": {"type": "string"}
-                }
-            },
-            "required": [
-                "supportedFeatures",
-                "version"
-            ],
-            "title": "Rdk"
-        },
-        "ResourceLimit": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "type": {"type": "string"},
-                "hard": {"type": "integer"},
-                "soft": {"type": "integer"}
-            },
-            "required": [
-                "hard",
-                "soft",
-                "type"
-            ],
-            "title": "ResourceLimit"
-        },
-        "Seccomp": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "defaultAction": {"type": "string"},
-                "architectures": {
-                    "type": "array",
-                    "items": {"type": "string"}
-                },
-                "syscalls": {
-                    "type": "array",
-                    "items": {"$ref": "#/$defs/Syscall"}
-                }
-            },
-            "required": [
-                "architectures",
-                "defaultAction",
-                "syscalls"
-            ],
-            "title": "Seccomp"
-        },
-        "Syscall": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "names": {
-                    "type": "array",
-                    "items": {"type": "string"}
-                },
-                "action": {"type": "string"}
-            },
-            "required": [
-                "action",
-                "names"
-            ],
-            "title": "Syscall"
-        },
-        "Storage": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "persistent": {"$ref": "#/$defs/Persistent"}
-            },
-            "required": ["persistent"],
-            "title": "Storage"
-        },
-        "Persistent": {
-            "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "storageDir": {"type": "string"},
                 "maxSize": {"type": "string"}
             },
             "required": [
-                "maxSize",
                 "storageDir"
-            ],
-            "title": "Persistent"
+            ]
         },
-        "Parentlib": {
-            "type": "string",
-            "enum": ["/lib/libc.so.6"],
-            "title": "Parentlib"
+        "storage_type": {
+            "type": "object",
+            "properties": {
+                "persistent": {"$ref": "#/$defs/persistent_type"}
+            }
+        },
+        "extraMounts_type": {
+            "type": "array",
+            "minItems": 0,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "source": {"type": "string"},
+                    "destination": {"type": "string"},
+                    "type": {"type": "string"},
+                    "options": {"$ref": "#/$defs/supportedFeatures_type"}
+                },
+                "required": [
+                    "destination"
+                ]
+            }
+        },
+        "devs_type": {
+            "type": "array",
+            "minItems": 0,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "type": {"type": "string"},
+                    "path": {"type": "string"},
+                    "major": {"type": "integer"},
+                    "minor": {"type": "integer"},
+                    "access": {"type": "string"}
+                },
+                "required": [
+                    "type",
+                    "path",
+                    "major",
+                    "minor"
+                ]
+            }
+        },
+        "gfxLibs_type": {
+            "type": "array",
+            "minItems": 0,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "src": {"type": "string"},
+                    "dst": {"type": "string"}
+                },
+                "required": [
+                    "src",
+                    "dst"
+                ]
+            }
+        },
+        "gpu_type": {
+            "type": "object",
+            "properties": {
+                "extraMounts": {"$ref": "#/$defs/extraMounts_type"},
+                "envvar": {"$ref": "#/$defs/supportedFeatures_type"},
+                "devs": {"$ref": "#/$defs/devs_type"},
+                "gfxLibs": {"$ref": "#/$defs/gfxLibs_type"}
+            },
+            "required": [
+                "gfxLibs"
+            ]
+        },
+        "mounts_type": {
+            "type": "array",
+            "minItems": 0
+        },
+        "network_type": {
+            "type": "object",
+            "properties": {
+                "options": {"$ref": "#/$defs/supportedFeatures_type"}
+            },
+            "required": ["options"]
+        },
+        "resourceLimits_type": {
+            "type": "array",
+            "minItems": 0,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "type": {"type": "string"},
+                    "hard": {"type": "integer"},
+                    "soft": {"type": "integer"}
+                },
+                "required": [
+                    "type",
+                    "hard",
+                    "soft"
+                ]
+            }
+        },
+        "logging_type": {
+            "type": "object",
+            "properties": {
+                "mode": {"type": "string"},
+                "logDir": {"type": "string"}
+            },
+            "required": [
+                "mode",
+                "logDir"
+            ]
         }
     }
 }

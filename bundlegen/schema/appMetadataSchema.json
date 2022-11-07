@@ -35,14 +35,9 @@
     "required": [
         "id",
         "type",
-        "version",
-        "description",
-        "priority",
         "graphics",
         "network",
         "storage",
-        "resources",
-        "features",
-        "mounts"
+        "resources"
     ]
 }

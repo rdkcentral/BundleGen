@@ -96,6 +96,12 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
         logger.error(f"Could not find config for platform {platform}")
         sys.exit(1)
 
+    # Validate platform config with JSON schema
+    success = selected_platform.validate_platform_config()
+    if not success:
+        logger.error("Validation of platform config FAILED with schema")
+        sys.exit(1)
+
     # Download the image to a temp directory
     img_downloader = ImageDownloader()
     img_path = img_downloader.download_image(
@@ -157,8 +163,10 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
         shutil.rmtree(outputdir)
         sys.exit(2)
 
-    # Validate the app metadata & platform config files against the reference schemas
-    processor.validateWithSchema()
+    success = processor.validate_app_metadata_config()
+    if not success:
+        logger.error("Validation of app metadata FAILED with schema")
+        sys.exit(1)
 
     success = processor.begin_processing()
 
