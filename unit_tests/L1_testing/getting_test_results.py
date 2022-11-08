@@ -16,8 +16,6 @@
 # limitations under the License.
 
 import os
-import sys
-import unittest
 
 from loguru import logger
 os.chdir("..")
