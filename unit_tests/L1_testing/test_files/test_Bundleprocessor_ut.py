@@ -20,15 +20,42 @@
 import os
 import sys
 import unittest
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from unit_tests.L1_testing import getting_test_results
 from bundlegen.core.bundle_processor import BundleProcessor
 from loguru import logger
 
-
+has_failures = []
 
 #This class will test the functionality of API's in bundleprocessor.py file.
 class TestBundleProcessor(unittest.TestCase):
+    failure = unittest.TestCase.failureException
+
+    @property
+    def failureException(self):
+         has_failures.append('fail')
+         return self.failure
+
+    def setUp(self):
+         logger.debug("Setup")
+         global has_failures
+         has_failures = []
+         getting_test_results.add_test_results.add_tests(self)
+
+    def tearDown(self):
+         logger.debug("Tear down")
+         global has_failures
+         if has_failures:
+             getting_test_results.add_test_results.test_failed(self)
+         else:
+             getting_test_results.add_test_results.test_passed(self)
+
+    @classmethod
+    def tearDownClass(self):
+        getting_test_results.add_test_results.end_results(self)
+
     def test_process_oci_version(self):
     #When generate_compliant_config: True then it will parse the value of ociversion as 1.0.2
         logger.debug("-->It will parse oci_version as 1.0.2")
@@ -388,7 +415,7 @@ class TestBundleProcessor(unittest.TestCase):
         #Parsing all values to rdk_plugins from app_metadata which values were defined in network
         logger.debug("-->Parsing all values of network to rdkPlugins")
         processor = BundleProcessor()
-        processor.rootfs_path = None
+        processor.rootfs_path = "/tmp/test"
         processor.createmountpoints = None
         processor.app_metadata = {
             "network": {
@@ -508,7 +535,7 @@ class TestBundleProcessor(unittest.TestCase):
         }
         self.assertEqual(processor.oci_config, expected)
         logger.debug("-->Test was Successfully verified")
- 
+
     def test_add_rdk_plugins(self):
     #If platform_cfg has plugindir inside the dobby then rdk_plugins dict was created inside oci_config
         logger.debug("-->Creates rdk_plugins inside oci_config")
