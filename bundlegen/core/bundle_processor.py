@@ -16,7 +16,6 @@
 # limitations under the License.
 
 import os
-import sys
 import json
 import humanfriendly
 import textwrap
@@ -29,6 +28,13 @@ from bundlegen.core.capabilities import *
 
 
 class BundleProcessor:
+    def __new__(cls, *args):
+        if (len(args)==0) or (len(args)==6):
+            return object.__new__(cls)
+        else:
+            logger.error("The arguments should be in a order like platform_cfg, bundle_path, app_metadata, nodepwalking, libmatchingmode, createmountpoints")
+            return False
+
     def __init__(self, *args):
         if (len(args)) == 6:
             # Mapping of the arguments
@@ -47,9 +53,6 @@ class BundleProcessor:
             self.createmountpoints = createmountpoints
             self.oci_config: dict = self.load_config()
             self.libmatcher = LibraryMatching(self.platform_cfg, self.bundle_path, self._add_bind_mount, nodepwalking, libmatchingmode, createmountpoints)
-        elif (len(args)) != 0:
-            logger.error("The arguments should be in a order like platform_cfg, bundle_path, app_metadata, nodepwalking, libmatchingmode, createmountpoints")
-            sys.exit(1)
         else:
             logger.disable("This is for L1_unit_testing")
 
@@ -978,20 +981,19 @@ class BundleProcessor:
         """Creates a file in the container rootfs if it doesn't exist with the
         specified contents and linux mode
         """
-        if self.rootfs_path:
-            fullPath = os.path.join(self.rootfs_path, path.lstrip('/'))
+        fullPath = os.path.join(self.rootfs_path, path.lstrip('/'))
 
-            # Create the directory if doesn't exist
-            directory = os.path.dirname(fullPath)
-            if not os.path.exists(directory):
-                os.makedirs(directory, 0o755)
+        # Create the directory if doesn't exist
+        directory = os.path.dirname(fullPath)
+        if not os.path.exists(directory):
+            os.makedirs(directory, 0o755)
 
-                # Write the file
-                with open(fullPath, 'w') as f:
-                    # Dedent to remove any leading spaces if using multiline strings
-                    f.write(textwrap.dedent(contents))
+        # Write the file
+        with open(fullPath, 'w') as f:
+            # Dedent to remove any leading spaces if using multiline strings
+            f.write(textwrap.dedent(contents))
 
-                    os.chmod(fullPath, mode)
+        os.chmod(fullPath, mode)
 
     # ==========================================================================
     def _createEmptyDirInRootfs(self, path):
@@ -1001,6 +1003,7 @@ class BundleProcessor:
         fullPath = os.path.join(self.rootfs_path, path.lstrip('/'))
 
         logger.debug(f"Creating directory {fullPath}")
+
         # Create the directory if doesn't exist
         if not os.path.exists(fullPath):
             os.makedirs(fullPath, 0o755)

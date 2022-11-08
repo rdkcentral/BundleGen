@@ -15,40 +15,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#!/bin/bash
-cd ..
-python3.7 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-pip install --editable .
-cd unit_tests/
-
-echo "1. All"
-echo "2. test_Bundleprocessor_ut"
-
-echo "Individual Test"
-echo "Select anyone from above"
-echo "ex: All"
-
-
-read n
-
-if [ $n == "All" ]
-then
-
-  for py_file in $(find L1_testing -name *.py)
-
-  do
-      python $py_file
-  done
-fi
-
-if [ $n != "All" ]
-then
-cd L1_testing
-python $n.py
-fi
-deactivate
-
-
+import argparse
+import glob
+import os
+os.chdir('test_files')
+parse = argparse.ArgumentParser()
+parse.add_argument("-s")
+args = parse.parse_args()
+if args.s:
+    os.system('python test_'+args.s+'_ut.py')
+else:
+    files = glob.glob('*.py')
+    for i in files:
+        os.system('python '+i)
 
