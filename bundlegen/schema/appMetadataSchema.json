@@ -30,7 +30,8 @@
         "mounts": {
             "type": "array",
             "items": {}
-        }
+        },
+	"priority": {"type": "string"}
     },
     "required": [
         "id",
