@@ -1,0 +1,36 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema#",
+    "type": "object",
+    "properties": {
+        "libs": {"$ref": "#/$defs/libs_type"}
+    },
+    "required": ["libs"],
+    "$defs": {
+        "apiversions_type": {
+            "type": "array",
+            "minItems": 0,
+            "items": {"type": "string"}
+        },
+        "deps_type": {
+            "type": "array",
+            "minItems": 0
+        },
+        "libs_type": {
+            "type": "array",
+            "minItems": 0,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "apiversions": {"$ref": "#/$defs/apiversions_type"},
+                    "deps": {"$ref": "#/$defs/deps_type"},
+                    "name": {"type": "string"}
+                },
+                "required": [
+                    "apiversions",
+                    "deps",
+                    "name"
+                ]
+            }
+        }
+    }
+}

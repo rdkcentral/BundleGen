@@ -1,0 +1,273 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema#",
+    "type": "object",
+    "properties": {
+        "platformName": {"type": "string"},
+        "os": {"type": "string"},
+        "arch": {"$ref": "#/$defs/arch_type"},
+        "rdk": {"$ref": "#/$defs/rdk_type"},
+        "hardware": {"$ref": "#/$defs/hardware_type"},
+        "storage": {"$ref": "#/$defs/storage_type"},
+        "gpu": {"$ref": "#/$defs/gpu_type"},
+        "mounts": {"$ref": "#/$defs/mounts_type"},
+        "network": {"$ref": "#/$defs/network_type"},
+        "envvar": {"$ref": "#/$defs/supportedFeatures_type"},
+        "resourceLimits": {"$ref": "#/$defs/resourceLimits_type"},
+        "disableUserNamespacing": {"type": "boolean"},
+	"root": {"$ref": "#/$defs/root_type"},
+	"hostname": {"type": "string"},
+	"dobby": {"$ref": "#/$defs/dobby_type"},
+	"logging": {"$ref": "#/$defs/logging_type"},
+	"tarball": {"$ref": "#/$defs/tarball_type"}
+    },
+    "required": [
+        "platformName",
+        "os",
+        "arch",
+        "rdk",
+        "hardware",
+        "network"
+    ],
+    "$defs": {
+        "arch_type": {
+            "type": "object",
+            "properties": {
+                "arch": {"type": "string"},
+                "variant": {"type": "string"}
+            },
+            "required": [
+                "arch"
+            ]
+        },
+	"usersAndGroups_type": {
+            "type": "object",
+            "properties": {
+                "uid": {"type": "string"},
+                "variant": {"type": "string"}
+            },
+            "required": [
+                "arch"
+            ]
+        },
+        "supportedFeatures_type": {
+            "type": "array",
+            "minItems": 0,
+            "items": {"type": "string"}
+        },
+        "rdk_type": {
+            "type": "object",
+            "properties": {
+                "version": {"type": "string"},
+                "supportedFeatures": {"$ref": "#/$defs/supportedFeatures_type"}
+            },
+            "required": [
+                "version",
+                "supportedFeatures"
+            ]
+        },
+        "hardware_type": {
+            "type": "object",
+            "properties": {
+                "graphics": {"type": "boolean"},
+                "maxRam": {"type": "string"}
+            },
+            "required": [
+                "graphics"
+            ]
+        },
+        "persistent_type": {
+            "type": "object",
+            "properties": {
+                "storageDir": {"type": "string"},
+                "maxSize": {"type": "string"},
+		"minSize": {"type": "string"},
+		"fstype": {"type": "string"},
+		"maxTotalSize": {"type": "string"}
+            },
+            "required": [
+                "storageDir"
+            ]
+        },
+	"temp_type": {
+            "type": "object",
+            "properties": {
+                "maxSize": {"type": "string"},
+		"minSize": {"type": "string"},
+		"maxTotalSize": {"type": "string"}
+            }
+        },
+        "storage_type": {
+            "type": "object",
+            "properties": {
+                "persistent": {"$ref": "#/$defs/persistent_type"},
+		"temp": {"$ref": "#/$defs/temp_type"}
+            }
+        },
+	"options_type": {
+            "type": "array",
+            "minItems": 0,
+            "items": {"type": "string"}
+        },
+        "extraMounts_type": {
+            "type": "array",
+            "minItems": 0,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "source": {"type": "string"},
+                    "destination": {"type": "string"},
+                    "options": {"$ref": "#/$defs/options_type"}
+                },
+                "required": [
+                    "destination"
+                ]
+            }
+        },
+        "devs_type": {
+            "type": "array",
+            "minItems": 0,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "type": {"type": "string"},
+                    "path": {"type": "string"},
+                    "major": {"type": "integer"},
+                    "minor": {"type": "integer"},
+		    "fileMode": {"type": "integer"},
+		    "uid": {"type": "integer"},
+		    "gid": {"type": "integer"},
+                    "access": {"type": "string"}
+                },
+                "required": [
+                    "type",
+                    "path",
+                    "major",
+                    "minor"
+                ]
+            }
+        },
+        "gfxLibs_type": {
+            "type": "array",
+            "minItems": 0,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "src": {"type": "string"},
+                    "dst": {"type": "string"}
+                },
+                "required": [
+                    "src",
+                    "dst"
+                ]
+            }
+        },
+	"westeros_type": {
+            "type": "object",
+            "properties": {
+                "hostSocket": {"type": "string"}
+            }
+        },
+        "gpu_type": {
+            "type": "object",
+            "properties": {
+                "extraMounts": {"$ref": "#/$defs/extraMounts_type"},
+                "envvar": {"$ref": "#/$defs/supportedFeatures_type"},
+                "devs": {"$ref": "#/$defs/devs_type"},
+                "gfxLibs": {"$ref": "#/$defs/gfxLibs_type"},
+		"westeros": {"$ref": "#/$defs/westeros_type"},
+		"waylandDisplay": {"type": "string"}
+            },
+            "required": [
+                "gfxLibs"
+            ]
+        },
+	"root_type": {
+            "type": "object",
+            "properties": {
+                "path": {"type": "string"},
+		"readonly": {"type": "boolean"}
+            }
+        },
+        "mounts_type": {
+            "type": "array",
+            "minItems": 0,
+	    "items": {
+                "type": "object",
+                "properties": {
+                    "source": {"type": "string"},
+                    "destination": {"type": "string"},
+                    "options": {"$ref": "#/$defs/options_type"}
+                },
+                "required": [
+                    "destination"
+                ]
+            }
+        },
+        "network_type": {
+            "type": "object",
+            "properties": {
+                "options": {"$ref": "#/$defs/supportedFeatures_type"}
+            },
+            "required": ["options"]
+        },
+        "resourceLimits_type": {
+            "type": "array",
+            "minItems": 0,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "type": {"type": "string"},
+                    "hard": {"type": "integer"},
+                    "soft": {"type": "integer"}
+                },
+                "required": [
+                    "type",
+                    "hard",
+                    "soft"
+                ]
+            }
+        },
+        "logging_type": {
+        	"type": "object",
+            	"properties": {
+                "mode": {
+		    "type": "string",
+		    "enum": ["file", "journald", "devnull"]
+		},
+                "logDir": {"type": "string"}
+            	},
+	    	"if": {
+			"properties": { "mode": {"const": "file"}}
+	    	},
+	    	"then": {
+			"required": [
+		    		"mode",
+		    		"logDir"
+			]
+	    	},
+	    	"else": {
+			"required": [
+	   	    		"mode"
+			]
+		}
+        },
+	"dobby_type": {
+		"type": "object",
+		"properties": {
+			"plugin": {"type": "string"},
+			"pluginDependencies": {"$ref": "#/$defs/supportedFeatures_type"},
+			"dobbyInitPath": {"type": "string"},
+			"generateCompliantConfig": {"type": "boolean"},
+			"hookLauncherExecutablePath": {"type": "string"},
+			"hookLauncherParametersPath": {"type": "string"}
+		}
+	},
+	"tarball_type": {
+		"type": "object",
+		"properties": {
+			"fileOwnershipSameAsUser": {"type": "boolean"},
+			"fileMask":  {"type": "string"}
+		}
+	}
+    }
+}
