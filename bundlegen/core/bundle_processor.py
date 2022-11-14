@@ -73,6 +73,7 @@ class BundleProcessor:
         self._process_capabilities()
         self._process_hostname()
         self._process_apparmorProfile()
+        self._process_seccomp()
 
         # RDK Plugins section
         self._add_rdk_plugins()
@@ -1004,3 +1005,17 @@ class BundleProcessor:
             return
         self.oci_config['process']['apparmorProfile'] = {}
         self.oci_config['process']['apparmorProfile'] = self.platform_cfg.get('apparmorProfile')
+
+    # ==========================================================================
+    def _process_seccomp(self):
+        """
+        Adds the seccomp information from platform to the config json.
+        """
+        logger.debug(" _process_seccomp ENTER")
+
+        if not self.platform_cfg.get('seccomp'):
+            logger.success(f"Platform does not have seccomp set")
+            return
+        self.oci_config['linux']['seccomp'] = {}
+        self.oci_config['linux']['seccomp'] = self.platform_cfg.get('seccomp')
+
