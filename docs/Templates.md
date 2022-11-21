@@ -77,8 +77,8 @@ Platform templates define specific information about a platform that is used whe
     * `devnull` - log to /dev/null (i.e. don't store container logs)
   * `logDir` (string, REQUIRED if `mode` is set to `file`). Directory to store container logs if logging to file
 * `dobby` (object, OPTIONAL)
-  * `pluginDir` (string, REQUIRED). Location where Dobby plugins are found on the platform. Dobby plugins are by default found in `/usr/lib/plugins/dobby`
-  * `pluginDependencies` (array of strings, REQUIRED. Libraries that the Dobby plugins depend on.
+  * `pluginDir` (string, OPTIONAL). Location where Dobby plugins are found on the platform. Dobby plugins are by default found in `/usr/lib/plugins/dobby`
+  * `pluginDependencies` (array of strings, OPTIONAL. Libraries that the Dobby plugins depend on.
     * Dobby plugins are shared objects and have dependencies that must exist in the container. The exact dependencies needed will depend on which plugins are being used on the platform. To find dependencies, run `/lib/ld-linux-armhf.so.3 --list /usr/lib/plugins/dobby/ <plugin-name>` on the platform for each plugin
   * `dobbyInitPath` (string, OPTIONAL). Location where DobbyInit is found on the platform. DobbyInit is by default found in `/usr/libexec/DobbyInit`
   * `generateCompliantConfig` (boolean, OPTIONAL). When set BundleGen will generate the DobbyPluginLauncher hooks (if any plugins are used). This will also set "ociVersion" to "1.0.2" and not "1.0.2-dobby" so that Dobby does not generate these hooks.

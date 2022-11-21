@@ -254,7 +254,7 @@
 	"dobby_type": {
 		"type": "object",
 		"properties": {
-			"plugin": {"type": "string"},
+			"pluginDir": {"type": "string"},
 			"pluginDependencies": {"$ref": "#/$defs/supportedFeatures_type"},
 			"dobbyInitPath": {"type": "string"},
 			"generateCompliantConfig": {"type": "boolean"},
