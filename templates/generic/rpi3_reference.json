@@ -39,8 +39,7 @@
         ]
     },
     "hardware": {
-        "graphics": true,
-        "maxRam_disabled": "610M"
+        "graphics": true
     },
     "storage": {
         "persistent": {
