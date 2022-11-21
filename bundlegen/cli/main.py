@@ -152,6 +152,9 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
     # Begin processing. Work in the output dir where the img was unpacked to
     processor = BundleProcessor(
         selected_platform.get_config(), outputdir, app_metadata_dict, nodepwalking, libmatchingmode, createmountpoints)
+    if processor == False:
+        sys.exit(1)
+
     if not processor.check_compatibility():
         # Not compatible - delete any work done so far
         shutil.rmtree(outputdir)
