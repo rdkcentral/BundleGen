@@ -628,6 +628,7 @@ class TestBundleProcessor(unittest.TestCase):
         logger.debug("-->Test was Successfully verified")
 
     def test_should_generate_compliant_config(self):
+        logger.debug("-->Assigning generateCompliantConfig to true")
         processor = BundleProcessor()
         processor.rootfs_path = None
         processor.createmountpoints = None
@@ -639,8 +640,10 @@ class TestBundleProcessor(unittest.TestCase):
         actual = processor._should_generate_compliant_config()
         expected = True
         self.assertEqual(actual, expected)
+        logger.debug("-->Test was Successfully verified")
 
     def test_should_generate_compliant_config_false(self):
+        logger.debug("-->Assigning generateCompliantConfig to false")
         processor = BundleProcessor()
         processor.rootfs_path = None
         processor.createmountpoints = None
@@ -651,18 +654,24 @@ class TestBundleProcessor(unittest.TestCase):
         }
         actual = processor._should_generate_compliant_config()
         expected = False
+        self.assertEqual(actual, expected)
+        logger.debug("-->Test was Successfully verified")
 
     def test_is_mapped_1(self):
+        logger.debug("-->Assigning value of id to None")
         processor = BundleProcessor()
         actual = processor._is_mapped(None,0)
         expected = True
         self.assertEqual(actual, expected)
+        logger.debug("-->Test was Successfully verified")
 
     def test_is_mapped_2(self):
+        logger.debug("-->Assigning value of mappings to None")
         processor = BundleProcessor()
         actual = processor._is_mapped(0,None)
         expected = False
         self.assertEqual(actual, expected)
+        logger.debug("-->Test was Successfully verified")
 
 
 if __name__ == "__main__":

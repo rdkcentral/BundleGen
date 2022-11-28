@@ -18,14 +18,18 @@
 import argparse
 import glob
 import os
+import sys
 os.chdir('test_files')
 parse = argparse.ArgumentParser()
 parse.add_argument("-s")
 args = parse.parse_args()
 if args.s:
-    os.system('python test_'+args.s+'_ut.py')
+    return_value = os.system('python test_'+args.s+'_ut.py')
+    if ( (return_value >> 8) != 0):
+       sys.exit(1)
 else:
     files = glob.glob('*.py')
     for i in files:
-        os.system('python '+i)
-
+        return_value=os.system('python '+i)
+        if ( (return_value >> 8) != 0):
+            sys.exit(1)
