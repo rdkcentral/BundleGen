@@ -1,0 +1,37 @@
+name: L1 unit test
+
+on:
+  push:
+    branches: [ master, main, 'sprint/**', 'release/**' ]
+
+  pull_request:
+    # By default: opened, synchronize, or reopened
+    branches: [ master, main, 'sprint/**', 'release/**' ]
+
+jobs:
+  L1-unit-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+
+      - name: Checkout this repository
+          echo "Checkout this repo"
+        uses: actions/checkout@v3
+        with:
+          path: Bundlegen
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+          cache: 'pip'
+      - run: pip install -r Bundlegen/requirements.txt
+      - run: pip install --editable Bundlegen/
+
+      - name: Run the unit test
+        working-directory: ./Bundlegen/unit_tests/L1_testing
+        run: |
+            python run_L1_test.py
