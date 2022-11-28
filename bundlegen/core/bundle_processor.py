@@ -19,6 +19,7 @@ import os
 import json
 import humanfriendly
 import textwrap
+from jsonschema import validate
 from hashlib import sha256
 from loguru import logger
 from pathlib import Path
@@ -69,6 +70,26 @@ class BundleProcessor:
             logger.error("App is not compatible with the selected platform")
             return False
 
+        return True
+
+    # ==========================================================================
+    # This function validates the app metadata JSON with the
+    # reference JSON schemas. If validation is success, OCI bundle generation proceeds
+    # else function will throw an error & OCI bundle is not generated.
+
+    def validate_app_metadata_config(self):
+        logger.info("validate JSON config files with the template schemas.")
+
+        # App metadata
+        try:
+            with open('bundlegen/schema/appMetadataSchema.json', "r") as f:
+                appSchema = json.load(f)
+                validate(instance=self.app_metadata, schema=appSchema)
+        except IOError:
+            logger.error("IOError during metadata schema open.")
+            return False
+
+        logger.success(f"validateWithSchema success!")
         return True
 
     # ==========================================================================
@@ -934,24 +955,25 @@ class BundleProcessor:
         """Adds the devicemapper plugin to the config to set up dynamic devices:
            devices that do not have a fixed major/minor after boot
         """
-        logger.debug("Configuring devicemapper")
+        if self.platform_cfg.get('hardware').get('graphics'):
+            logger.debug("Configuring devicemapper")
 
-        dynamic_devices = []
-        for dev in self.platform_cfg.get('gpu').get('devs'):
-            if 'dynamic' in dev and dev['dynamic']:
-                dynamic_devices.append(dev['path'])
+            dynamic_devices = []
+            for dev in self.platform_cfg.get('gpu').get('devs'):
+                if 'dynamic' in dev and dev['dynamic']:
+                    dynamic_devices.append(dev['path'])
 
-        if len(dynamic_devices) == 0:
-            return
+            if len(dynamic_devices) == 0:
+                return
 
-        devicemapper_plugin = {
-            'required': True,
-            'data' : {
-                'devices': dynamic_devices
+            devicemapper_plugin = {
+                'required': True,
+                'data' : {
+                    'devices': dynamic_devices
+                }
             }
-        }
 
-        self.oci_config['rdkPlugins']['devicemapper'] = devicemapper_plugin
+            self.oci_config['rdkPlugins']['devicemapper'] = devicemapper_plugin
         return
 
     # ==========================================================================

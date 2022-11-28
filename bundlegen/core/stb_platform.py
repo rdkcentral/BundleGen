@@ -19,7 +19,7 @@ import os
 import json
 import click
 from loguru import logger
-
+from jsonschema import validate
 
 class STBPlatform:
     def __init__(self, name, search_path=None):
@@ -59,6 +59,31 @@ class STBPlatform:
                     logger.debug(f"Found platform config {config_path}")
 
         self.config_files = config_files
+
+   # ==========================================================================
+    def validate_platform_config(self):
+        if (len(self.config_files) > 0):
+            for fileName in self.config_files:
+                try:
+                    with open(fileName, "r") as file:
+                        jsonFile = json.load(file)
+                        if("_libs.json" in fileName):
+                            schemaFile = "bundlegen/schema/platform_libsSchema.json"
+                        else:
+                            schemaFile = "bundlegen/schema/platformSchema.json"
+                        try:
+                            with open(schemaFile, "r") as f:
+                                platformSchema = json.load(f)
+                                validate(instance=jsonFile, schema=platformSchema)
+                        except IOError:
+                            logger.error("IOError during platform schema open.")
+                            return False
+                except IOError:
+                    logger.error("IOError during platform config open.")
+                    return False
+
+        logger.success(f"Validated platform schema files here {self.config_files}")
+        return True
 
     # ==========================================================================
     def parse_config(self):

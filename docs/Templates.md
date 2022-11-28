@@ -5,7 +5,7 @@ Platform templates define specific information about a platform that is used whe
 * `platformName` (string, REQUIRED). Specifies the name of the platform
 * `os` (string, REQUIRED). Specifies the OS of the platform
   * Supported options include linux or windows
-* `arch`
+* `arch` (object, REQUIRED)
   * `arch` (string, REQUIRED). Specifies the CPU architecture.
     * OCI images can contain multiple variants of an application, compiled for different architectures
     * Supported values are listed in the Go language document for [`GOARCH`](https://golang.org/doc/install/source#environment):
@@ -17,13 +17,13 @@ Platform templates define specific information about a platform that is used whe
     | ARM 32-bit, v7 |    `arm`     |  `v7`   |
     | ARM 32-bit, v8 |    `arm`     |  `v8`   |
     | ARM 64-bit, v8 |   `arm64`    |  `v8`   |
-* `rdk`
+* `rdk` (object, REQUIRED)
   * `version` (string, REQUIRED). Version of RDK installed on the platform
   * `supportedFeatures` (array of strings, REQUIRED). Which RDK services/Thunder NanoServices are installed and available on the platform. Images that require features not present on the platform cannot be converted to OCI bundles
-* `hardware`
+* `hardware` (object, REQUIRED)
   * `graphics` (boolean, REQUIRED). Whether the platform supports graphics output or not (e.g. on a headless development VM)
-  * `maxRAM` (string, REQUIRED). The maximum amount of RAM an application can use. If an application requires more RAM, a warning will be shown during bundle generation.
-* `storage`
+  * `maxRAM` (string, OPTIONAL). The maximum amount of RAM an application can use. If an application requires more RAM, a warning will be shown during bundle generation.
+* `storage` (object, OPTIONAL)
   * `persistent` (object, OPTIONAL) Dobby supports persistent storage using loopback mounts. If the platform should not support loopback mounts, do not define this section
     * `storageDir` (string, REQUIRED). Where to store the `img` files that are mounted into the container
     * `maxSize` (string, OPTIONAL). Maximum allowed size of the image files
@@ -34,7 +34,7 @@ Platform templates define specific information about a platform that is used whe
     * `maxSize` (string, OPTIONAL). Maximum allowed size of the temporary storage
     * `minSize` (string, OPTIONAL). Minimum required size of the temporary storage. When set, the size of a storage will be auto increased to match this minium. This is logged as a warning.
     * `maxTotalSize` (string, OPTIONAL). Maximum allowed **total** size of the temporary storages
-* `gpu`
+* `gpu` (object, OPTIONAL)
   * `westeros` (object, OPTIONAL). If the platform uses a hard-coded path to a westeros socket, then set it here. If RDKShell is used to create displays, then a westeros socket path can be provided to Dobby dynamically when starting the container and this option can be excluded
     * `hostSocket` (string, OPTIONAL). Path to the hard-coded westeros socket on the host
   * `extraMounts` (array, OPTIONAL) Array of *mount* objects that will be added to the config to allow mounting specific graphics sockets or other files into a container. Each mount object should be an OCI `Mount` object as defined [here](https://github.com/opencontainers/runtime-spec/blob/master/config.md#mounts). Use `X-dobby.optional` to make the mount optional.
@@ -70,15 +70,15 @@ Platform templates define specific information about a platform that is used whe
     * `uid` (uint32, OPTIONAL). Override the uid and thus the user the container should run under.
     * `gid` (uint32, OPTIONAL). Override the gid and thus the user's group the container should run under.
     * `additionalGids` (array of uint32, OPTIONAL). Set the additional groups that should be assigned to the user running the container.
-* `logging`
+* `logging` (object, OPTIONAL)
   * `mode` (string, REQUIRED). Sets the logging sink for containers. Dobby by default supports the following logging modes:
     * `file` - log to a file
     * `journald` - log to journald
     * `devnull` - log to /dev/null (i.e. don't store container logs)
   * `logDir` (string, REQUIRED if `mode` is set to `file`). Directory to store container logs if logging to file
-* `dobby`
-  * `pluginDir` (string, REQUIRED). Location where Dobby plugins are found on the platform. Dobby plugins are by default found in `/usr/lib/plugins/dobby`
-  * `pluginDependencies` (array of strings, REQUIRED. Libraries that the Dobby plugins depend on.
+* `dobby` (object, OPTIONAL)
+  * `pluginDir` (string, OPTIONAL). Location where Dobby plugins are found on the platform. Dobby plugins are by default found in `/usr/lib/plugins/dobby`
+  * `pluginDependencies` (array of strings, OPTIONAL. Libraries that the Dobby plugins depend on.
     * Dobby plugins are shared objects and have dependencies that must exist in the container. The exact dependencies needed will depend on which plugins are being used on the platform. To find dependencies, run `/lib/ld-linux-armhf.so.3 --list /usr/lib/plugins/dobby/ <plugin-name>` on the platform for each plugin
   * `dobbyInitPath` (string, OPTIONAL). Location where DobbyInit is found on the platform. DobbyInit is by default found in `/usr/libexec/DobbyInit`
   * `generateCompliantConfig` (boolean, OPTIONAL). When set BundleGen will generate the DobbyPluginLauncher hooks (if any plugins are used). This will also set "ociVersion" to "1.0.2" and not "1.0.2-dobby" so that Dobby does not generate these hooks.
