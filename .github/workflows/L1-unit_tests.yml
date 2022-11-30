@@ -29,7 +29,8 @@ jobs:
           python-version: '3.x'
           cache: 'pip'
       - run: pip install -r Bundlegen/requirements.txt
-      - run: pip install --editable Bundlegen/
+             pip install --editable Bundlegen/
+             pip install jsonschema
 
       - name: Run the unit test
         working-directory: ./Bundlegen/unit_tests/L1_testing
