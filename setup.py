@@ -25,7 +25,8 @@ setuptools.setup(
     install_requires=[
         'click',
         'loguru',
-        'humanfriendly'
+        'humanfriendly',
+        'jsonschema'
     ],
     entry_points='''
         [console_scripts]
