@@ -18,7 +18,6 @@
 import os
 import sys
 import argparse
-import glob
 import tarfile
 import shutil
 from bundlegen.core.utils import Utils

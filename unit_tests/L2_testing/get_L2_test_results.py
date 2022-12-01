@@ -15,10 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-import sys
-import unittest
-
 from loguru import logger
 
 result = open("L2_test_results.txt", "w")
