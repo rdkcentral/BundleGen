@@ -19,7 +19,8 @@
         "resources": {
             "type": "object",
             "properties": {
-                "ram": {"type": "string"}
+                "ram": {"type": "string"},
+                "gpu": {"type": "string"}
             },
             "required": ["ram"]
         },
@@ -31,7 +32,33 @@
             "type": "array",
             "items": {}
         },
-	"priority": {"type": "string"}
+        "thunder": {
+            "type": "object",
+            "properties": {
+                "bearerUrl": {"type": "string"},
+                "trusted": {"type": "boolean"},
+                "connLimit": {"type": "integer"}
+            }
+        },
+        "ipc": {
+            "type": "object",
+            "properties": {
+                "enable": {"type":"boolean"}
+            }
+        },
+        "minidump": {
+            "type": "object",
+            "properties": {
+                "enable": {"type":"boolean"}
+            }
+        },
+        "oomcrush": {
+            "type": "object",
+            "properties": {
+                "enable": {"type":"boolean"}
+            }
+        },
+        "priority": {"type": "string"}
     },
     "required": [
         "id",

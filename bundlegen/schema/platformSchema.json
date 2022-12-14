@@ -14,11 +14,15 @@
         "envvar": {"$ref": "#/$defs/supportedFeatures_type"},
         "resourceLimits": {"$ref": "#/$defs/resourceLimits_type"},
         "disableUserNamespacing": {"type": "boolean"},
-	"root": {"$ref": "#/$defs/root_type"},
-	"hostname": {"type": "string"},
-	"dobby": {"$ref": "#/$defs/dobby_type"},
-	"logging": {"$ref": "#/$defs/logging_type"},
-	"tarball": {"$ref": "#/$defs/tarball_type"}
+        "journaldOptions":{"$ref": "#/$defs/journaldOptions_type"},
+        "ipc": {"$ref": "#/$defs/ipc_type"},
+        "minidump": {"$ref": "#/$defs/minidump_type"},
+        "oomcrash": {"$ref": "#/$defs/oomcrash_type"},
+        "root": {"$ref": "#/$defs/root_type"},
+        "hostname": {"type": "string"},
+        "dobby": {"$ref": "#/$defs/dobby_type"},
+        "logging": {"$ref": "#/$defs/logging_type"},
+        "tarball": {"$ref": "#/$defs/tarball_type"}
     },
     "required": [
         "platformName",
@@ -80,30 +84,30 @@
             "properties": {
                 "storageDir": {"type": "string"},
                 "maxSize": {"type": "string"},
-		"minSize": {"type": "string"},
-		"fstype": {"type": "string"},
-		"maxTotalSize": {"type": "string"}
+                "minSize": {"type": "string"},
+                "fstype": {"type": "string"},
+                "maxTotalSize": {"type": "string"}
             },
             "required": [
                 "storageDir"
             ]
         },
-	"temp_type": {
+        "temp_type": {
             "type": "object",
             "properties": {
                 "maxSize": {"type": "string"},
-		"minSize": {"type": "string"},
-		"maxTotalSize": {"type": "string"}
+                "minSize": {"type": "string"},
+                "maxTotalSize": {"type": "string"}
             }
         },
         "storage_type": {
             "type": "object",
             "properties": {
                 "persistent": {"$ref": "#/$defs/persistent_type"},
-		"temp": {"$ref": "#/$defs/temp_type"}
+                "temp": {"$ref": "#/$defs/temp_type"}
             }
         },
-	"options_type": {
+        "options_type": {
             "type": "array",
             "minItems": 0,
             "items": {"type": "string"}
@@ -133,9 +137,9 @@
                     "path": {"type": "string"},
                     "major": {"type": "integer"},
                     "minor": {"type": "integer"},
-		    "fileMode": {"type": "integer"},
-		    "uid": {"type": "integer"},
-		    "gid": {"type": "integer"},
+                    "fileMode": {"type": "integer"},
+                    "uid": {"type": "integer"},
+                    "gid": {"type": "integer"},
                     "access": {"type": "string"}
                 },
                 "required": [
@@ -161,7 +165,7 @@
                 ]
             }
         },
-	"westeros_type": {
+        "westeros_type": {
             "type": "object",
             "properties": {
                 "hostSocket": {"type": "string"}
@@ -174,24 +178,24 @@
                 "envvar": {"$ref": "#/$defs/supportedFeatures_type"},
                 "devs": {"$ref": "#/$defs/devs_type"},
                 "gfxLibs": {"$ref": "#/$defs/gfxLibs_type"},
-		"westeros": {"$ref": "#/$defs/westeros_type"},
-		"waylandDisplay": {"type": "string"}
+                "westeros": {"$ref": "#/$defs/westeros_type"},
+                "waylandDisplay": {"type": "string"}
             },
             "required": [
                 "gfxLibs"
             ]
         },
-	"root_type": {
+        "root_type": {
             "type": "object",
             "properties": {
                 "path": {"type": "string"},
-		"readonly": {"type": "boolean"}
+                "readonly": {"type": "boolean"}
             }
         },
         "mounts_type": {
             "type": "array",
             "minItems": 0,
-	    "items": {
+            "items": {
                 "type": "object",
                 "properties": {
                     "source": {"type": "string"},
@@ -228,46 +232,72 @@
             }
         },
         "logging_type": {
-        	"type": "object",
-            	"properties": {
+            "type": "object",
+                "properties": {
                 "mode": {
-		    "type": "string",
-		    "enum": ["file", "journald", "devnull"]
-		},
+                    "type": "string",
+                    "enum": ["file", "journald", "devnull"]
+                },
                 "logDir": {"type": "string"}
-            	},
-	    	"if": {
-			"properties": { "mode": {"const": "file"}}
-	    	},
-	    	"then": {
-			"required": [
-		    		"mode",
-		    		"logDir"
-			]
-	    	},
-	    	"else": {
-			"required": [
-	   	    		"mode"
-			]
-		}
+                },
+                "if": {
+                    "properties": { "mode": {"const": "file"}}
+                },
+                "then": {
+                    "required":[
+                        "mode",
+                        "logDir"
+                    ]
+                },
+                "else": {
+                    "required": [
+                        "mode"
+                    ]
+                }
         },
-	"dobby_type": {
-		"type": "object",
-		"properties": {
-			"pluginDir": {"type": "string"},
-			"pluginDependencies": {"$ref": "#/$defs/supportedFeatures_type"},
-			"dobbyInitPath": {"type": "string"},
-			"generateCompliantConfig": {"type": "boolean"},
-			"hookLauncherExecutablePath": {"type": "string"},
-			"hookLauncherParametersPath": {"type": "string"}
-		}
-	},
-	"tarball_type": {
-		"type": "object",
-		"properties": {
-			"fileOwnershipSameAsUser": {"type": "boolean"},
-			"fileMask":  {"type": "string"}
-		}
-	}
+        "dobby_type": {
+            "type": "object",
+            "properties": {
+                "pluginDir": {"type": "string"},
+                "pluginDependencies": {"$ref": "#/$defs/supportedFeatures_type"},
+                "dobbyInitPath": {"type": "string"},
+                "generateCompliantConfig": {"type": "boolean"},
+                "hookLauncherExecutablePath": {"type": "string"},
+                "hookLauncherParametersPath": {"type": "string"}
+            }
+        },
+        "tarball_type": {
+            "type": "object",
+            "properties": {
+                "fileOwnershipSameAsUser": {"type": "boolean"},
+                "fileMask":  {"type": "string"}
+             }
+        },
+        "journaldOptions_type": {
+            "type" : "object",
+            "properties":{
+                "priority": {"type": "string"}
+            }
+        },
+        "ipc_type":{
+            "type" : "object",
+            "properties":{
+                "session":{"type": "string"},
+                "system":{"type": "string"},
+                "debug":{"type": "string"}
+            }
+        },
+        "minidump_type":{
+            "type" : "object",
+            "properties":{
+                "destinationPath":{"type": "string"}
+            }
+        },
+        "oomcrash_type":{
+            "type" : "object",
+            "properties":{
+                "path":{"type": "string"}
+            }
+        }
     }
 }
