@@ -5,3 +5,4 @@ loguru==0.5.1
 msgpack==1.0.2
 pika==1.2.0
 python-dotenv==0.18.0
+jsonschema
