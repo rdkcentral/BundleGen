@@ -68,8 +68,8 @@ class TestStbPlatform(unittest.TestCase):
         '''
         logger.debug("==> Validating the templete config schema%s \n "%(os.getcwd()))
         os.chdir('../../')
-        search_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir,'L1_testing', 'test_data_files'))
-        logger.debug(f"==> creating the search config file path : {search_path}")        
+        search_path = os.path.abspath(os.path.join( os.getcwd(),'unit_tests','L1_testing','test_data_files'))
+        logger.debug(f"==> creating the search config file path : {search_path}")
         validate = STBPlatform("rpi3_reference_vc4_dunfell",search_path)
         actual = validate.validate_platform_config()
         expected = True
@@ -85,7 +85,7 @@ class TestStbPlatform(unittest.TestCase):
         '''
         logger.debug("==> Validating the wrong templete config schema")
         os.chdir('../../')
-        search_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir,'L1_testing', 'test_data_files'))
+        search_path = os.path.abspath(os.path.join( os.getcwd(),'unit_tests','L1_testing','test_data_files'))
         validate = STBPlatform("vagrant",search_path)
         actual = validate.validate_platform_config()
         expected = False
