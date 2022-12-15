@@ -52,7 +52,7 @@
                 "enable": {"type":"boolean"}
             }
         },
-        "oomcrush": {
+        "oomcrash": {
             "type": "object",
             "properties": {
                 "enable": {"type":"boolean"}

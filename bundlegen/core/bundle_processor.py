@@ -931,49 +931,32 @@ class BundleProcessor:
         if self.platform_cfg['logging'].get('mode') == 'file':
             log_dir = self.platform_cfg['logging']['logDir']
             logfile = os.path.join(log_dir, f"{self.app_metadata['id']}.log")
-            if not self.platform_cfg.get('logging').get("limit"):
-                logging_plugin = {
-                    "required": True,
-                    "data": {
-                        "sink": "file",
-                        "fileOptions": {
-                            "path": logfile,
-                        }
+            self.platform_cfg.get('logging').get("limit")
+            limit = self.platform_cfg.get('logging').get("limit")
+            logging_plugin = {
+                "required": True,
+                "data": {
+                    "sink": "file",
+                    "fileOptions": {
+                        "path": logfile,
+                        "limit": limit
                     }
                 }
-                self._add_annotation('run.oci.hooks.stderr','/dev/stderr')
-                self._add_annotation('run.oci.hooks.stdout','/dev/stdout')
-            else:
-                limit = self.platform_cfg.get('logging').get("limit")
-                logging_plugin = {
-                    "required": True,
-                    "data": {
-                        "sink": "file",
-                        "fileOptions": {
-                            "path": logfile,
-                            "limit": limit
-                        }
-                    }
-                }
+            }
+            self._add_annotation('run.oci.hooks.stderr','/dev/stderr')
+            self._add_annotation('run.oci.hooks.stdout','/dev/stdout')
         elif self.platform_cfg['logging'].get('mode') == 'journald':
-            if not self.platform_cfg['logging'].get("journaldOptions"):
-                logging_plugin = {
-                    "required": True,
-                    "data": {
-                        "sink": "journald"
+            self.platform_cfg['logging'].get("journaldOptions")
+            priority = self.platform_cfg['logging']['journaldOptions']['priority']
+            logging_plugin = {
+                "required": True,
+                "data": {
+                    "sink": "journald",
+                    "journaldOptions": {
+                    "priority" : priority,
                     }
                 }
-            else:
-                priority = self.platform_cfg['logging']['journaldOptions']['priority']
-                logging_plugin = {
-                    "required": True,
-                    "data": {
-                        "sink": "journald",
-                        "journaldOptions": {
-                            "priority" : priority,
-                        }
-                    }
-                }
+            }
         elif self.platform_cfg['logging'].get('mode') == 'devnull':
             logging_plugin = {
                 "required": True,
@@ -1096,7 +1079,7 @@ class BundleProcessor:
         """
         Adds ipc plugin inside rdkPlugins
         """
-        if self.app_metadata['ipc']['enable']:
+        if self.app_metadata['ipc'].get('enable'):
             if self.platform_cfg.get('ipc'):
                 plugin = self.platform_cfg['ipc']
                 ipc_plugin = {
@@ -1109,7 +1092,7 @@ class BundleProcessor:
         """
         Adds midump plugin inside rdkPlugins
         """
-        if self.app_metadata['minidump']['enable']:
+        if self.app_metadata['minidump'].get('enable'):
             if self.platform_cfg.get('minidump'):
                 plugin = self.platform_cfg['minidump']
                 minidump_plugin = {
@@ -1123,7 +1106,7 @@ class BundleProcessor:
         """
         Adds oomcrash plugin inside rdkPlugins
         """
-        if self.app_metadata['oomcrash']['enable']:
+        if self.app_metadata['oomcrash'].get('enable'):
             if self.platform_cfg.get('oomcrash'):
                 plugin = self.platform_cfg['oomcrash']
                 oomcrash_plugin = {
@@ -1153,8 +1136,7 @@ class BundleProcessor:
         """
         if self.app_metadata["resources"].get('gpu'):
             app_gpu_requirement = self.app_metadata.get('resources').get('gpu')
-            app_gpu_bytes = humanfriendly.parse_size(app_gpu_requirement, binary=True)
-            plugin = app_gpu_bytes
+            plugin = humanfriendly.parse_size(app_gpu_requirement, binary=True)
             gpu_plugin = {
                 "required": True,
                 "data": {
