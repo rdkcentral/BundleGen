@@ -155,8 +155,8 @@ class TestBundleProcessor(unittest.TestCase):
         self.assertEqual(processor.oci_config, expected)
         logger.debug("-->Test was Successfully verified")
 
-    def test_process_logging(self):
-        #Assigning value "logging":{"mode": "file"} and giving limit inside loggin plugin
+    def test_process_logging1(self):
+    #Assigning value "logging":{"mode": "file"}
         logger.debug("-->Parsing values inside logging plugin based on the value of mode:file")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -167,8 +167,7 @@ class TestBundleProcessor(unittest.TestCase):
         processor.platform_cfg = {
             "logging":{
                 "mode": "file",
-                "logDir": "/var/log",
-                "limit": 65536
+                "logDir": "/var/log"
             }
         }
         processor.oci_config={
@@ -194,7 +193,6 @@ class TestBundleProcessor(unittest.TestCase):
                         'fileOptions':
                         {
                         'path': '/var/log/com.rdk.wayland-egl-test.log',
-                        'limit': 65536
                         },
                     }
                 }
@@ -203,8 +201,8 @@ class TestBundleProcessor(unittest.TestCase):
         self.assertEqual(processor.oci_config, expected)
         logger.debug("-->Test was Successfully verified")
 
-    def test_process_logging_journald(self):
-    #Assigning value "logging":{"mode": ""journald""} along with journaldOptions
+    def test_process_logging_journald1(self):
+    #Assigning value "logging":{"mode": ""journald""}
         logger.debug("-->Parsing values inside logging plugin based on the value of mode:journald")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -214,40 +212,28 @@ class TestBundleProcessor(unittest.TestCase):
         processor.platform_cfg = {
             "logging":{
                 "mode": "journald",
-                "journaldOptions": {
-                    "priority": "LOG_INFO"
-                        }
-                    }
-                }
+                 }
+        }
         processor.oci_config={
-                       "process": {
+            "process": {
                 "terminal": True
                 },
-            "annotations":
-            {},
             "rdkPlugins":
             {
             }
         }
         processor._process_logging()
-        expected = {
-            "process": {
-                "terminal": True
-                },
-            "annotations":
-            {},
+        expected={
+            "process": {'terminal': True},
             "rdkPlugins": {
                 "logging": {
                     "required": True,
                         "data": {
                         "sink": "journald",
-                            "journaldOptions": {
-                                "priority": "LOG_INFO"
                             }
                         }
                     }
                 }
-             }
         self.assertEqual(processor.oci_config, expected)
         logger.debug("-->Test was Successfully verified")
 
@@ -403,7 +389,6 @@ class TestBundleProcessor(unittest.TestCase):
             ]
         }
         processor.platform_cfg = {
-
         }
         processor.oci_config = {
             "mounts":[]
@@ -681,6 +666,53 @@ class TestBundleProcessor(unittest.TestCase):
         logger.debug("-->Test was Successfully verified")
 
 #Adding new plugins
+    def test_process_logging2(self):
+        #Assigning value "logging":{"mode": "file"} and giving limit inside loggin plugin
+        logger.debug("-->Parsing values inside logging plugin based on the value of mode:file")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "id": "com.rdk.wayland-egl-test"
+        }
+        processor.platform_cfg = {
+            "logging":{
+                "mode": "file",
+                "logDir": "/var/log",
+                "limit": 65536
+            }
+        }
+        processor.oci_config={
+            "process": {
+                "terminal": True
+                },
+            "annotations":
+            {},
+            "rdkPlugins":
+            {
+            }
+        }
+        processor._process_logging()
+        expected={
+            'process': {'terminal': True},
+            'annotations': {'run.oci.hooks.stderr': '/dev/stderr',
+                  'run.oci.hooks.stdout': '/dev/stdout'},
+            'rdkPlugins': {
+                'logging': {
+                    'required': True,
+                    'data': {
+                        'sink': 'file',
+                        'fileOptions':
+                        {
+                        'path': '/var/log/com.rdk.wayland-egl-test.log',
+                        'limit': 65536
+                        },
+                    }
+                }
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
 
     def test_process_logging_devnull(self):
     #Assigning value "logging":{"mode": ""devnull""}
@@ -716,6 +748,50 @@ class TestBundleProcessor(unittest.TestCase):
                         }
                     }
                 }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_logging_journald2(self):
+    #Assigning value "logging":{"mode": ""journald""} along with journaldOptions
+        logger.debug("-->Parsing values inside logging plugin based on the value of mode:journald")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+        }
+        processor.platform_cfg = {
+            "logging":{
+                "mode": "journald",
+                "journaldOptions": {
+                    "priority": "LOG_INFO"
+                        }
+                    }
+                }
+        processor.oci_config={
+                       "process": {
+                "terminal": True
+                },
+            "rdkPlugins":
+            {
+            }
+        }
+        processor._process_logging()
+        expected = {
+            "process": {
+                "terminal": True
+                },
+            "rdkPlugins": {
+                "logging": {
+                    "required": True,
+                        "data": {
+                        "sink": "journald",
+                            "journaldOptions": {
+                                "priority": "LOG_INFO"
+                            }
+                        }
+                    }
+                }
+             }
         self.assertEqual(processor.oci_config, expected)
         logger.debug("-->Test was Successfully verified")
 
@@ -1222,7 +1298,6 @@ class TestBundleProcessor(unittest.TestCase):
         validate.app_metadata = {
             "id": "com.rdk.wayland-egl-test"
         }
-
         actual = validate.validate_app_metadata_config()
         expected = False
         os.chdir('unit_tests/L1_testing')
@@ -1232,7 +1307,7 @@ class TestBundleProcessor(unittest.TestCase):
     def test_optional_feild_app_meta_data_schema(self):
         ''''this test is to validate optional feilds by removing required feilds.
         '''
-        logger.debug("==> Validating schema removing reqired feilds and adding optinal feilds ")
+        logger.debug("--> Validating schema removing reqired feilds and adding optinal feilds ")
         os.chdir('../../')
         validate = BundleProcessor()
         validate.app_metadata = {
@@ -1252,14 +1327,11 @@ class TestBundleProcessor(unittest.TestCase):
                 "enable": True
             }
         }
-
         actual = validate.validate_app_metadata_config()
         expected = False
         os.chdir('unit_tests/L1_testing')
         self.assertEqual(actual, expected)
         logger.debug("-->Test was Successfully verified")
-
-
 
 if __name__ == "__main__":
     unittest.main()

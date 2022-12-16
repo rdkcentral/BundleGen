@@ -931,32 +931,33 @@ class BundleProcessor:
         if self.platform_cfg['logging'].get('mode') == 'file':
             log_dir = self.platform_cfg['logging']['logDir']
             logfile = os.path.join(log_dir, f"{self.app_metadata['id']}.log")
-            self.platform_cfg.get('logging').get("limit")
-            limit = self.platform_cfg.get('logging').get("limit")
+
             logging_plugin = {
                 "required": True,
                 "data": {
                     "sink": "file",
                     "fileOptions": {
-                        "path": logfile,
-                        "limit": limit
+                        "path": logfile
                     }
                 }
             }
             self._add_annotation('run.oci.hooks.stderr','/dev/stderr')
             self._add_annotation('run.oci.hooks.stdout','/dev/stdout')
+        if self.platform_cfg['logging'].get("limit"):
+            limit = self.platform_cfg.get('logging').get("limit")
+            logging_plugin['data']['fileOptions']['limit'] = limit
+
         elif self.platform_cfg['logging'].get('mode') == 'journald':
-            self.platform_cfg['logging'].get("journaldOptions")
-            priority = self.platform_cfg['logging']['journaldOptions']['priority']
             logging_plugin = {
                 "required": True,
                 "data": {
-                    "sink": "journald",
-                    "journaldOptions": {
-                    "priority" : priority,
-                    }
+                    "sink": "journald"
                 }
             }
+        if self.platform_cfg['logging'].get("journaldOptions"):
+            priority = self.platform_cfg.get('logging').get('journaldOptions')
+            logging_plugin['data']['journaldOptions'] = priority
+
         elif self.platform_cfg['logging'].get('mode') == 'devnull':
             logging_plugin = {
                 "required": True,
@@ -1075,6 +1076,7 @@ class BundleProcessor:
         self.oci_config['linux']['seccomp'] = {}
         self.oci_config['linux']['seccomp'] = self.platform_cfg.get('seccomp')
 
+    # ==========================================================================
     def _process_ipc(self):
         """
         Adds ipc plugin inside rdkPlugins
@@ -1088,6 +1090,8 @@ class BundleProcessor:
                     }
                 self.oci_config['rdkPlugins']['ipc'] = ipc_plugin
         return
+
+    # ==========================================================================
     def _process_minidump(self):
         """
         Adds midump plugin inside rdkPlugins
@@ -1102,6 +1106,7 @@ class BundleProcessor:
                 self.oci_config['rdkPlugins']['minidump'] = minidump_plugin
         return
 
+    # ==========================================================================
     def _process_oomcrash(self):
         """
         Adds oomcrash plugin inside rdkPlugins
@@ -1116,6 +1121,7 @@ class BundleProcessor:
                 self.oci_config['rdkPlugins']['oomcrash'] = oomcrash_plugin
         return
 
+    # ==========================================================================
     def _process_thunder(self):
         """
         Adds Thunder plugin inside rdkPlugins
@@ -1130,6 +1136,7 @@ class BundleProcessor:
             self.oci_config['rdkPlugins']['thunder'] = thunder_plugin
         return
 
+    # ==========================================================================
     def _process_gpu_plugin(self):
         """
         Adds GPU plugin inside rdkPlugins
@@ -1145,3 +1152,5 @@ class BundleProcessor:
             }
             self.oci_config['rdkPlugins']['gpu'] = gpu_plugin
         return
+
+    # ==========================================================================
