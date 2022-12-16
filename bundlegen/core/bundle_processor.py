@@ -1081,7 +1081,7 @@ class BundleProcessor:
         """
         Adds ipc plugin inside rdkPlugins
         """
-        if self.app_metadata['ipc'].get('enable'):
+        if self.app_metadata.get('ipc') and self.app_metadata['ipc'].get('enable'):
             if self.platform_cfg.get('ipc'):
                 plugin = self.platform_cfg['ipc']
                 ipc_plugin = {
@@ -1096,7 +1096,7 @@ class BundleProcessor:
         """
         Adds midump plugin inside rdkPlugins
         """
-        if self.app_metadata['minidump'].get('enable'):
+        if self.app_metadata.get('minidump') and self.app_metadata['minidump'].get('enable'):
             if self.platform_cfg.get('minidump'):
                 plugin = self.platform_cfg['minidump']
                 minidump_plugin = {
@@ -1111,7 +1111,7 @@ class BundleProcessor:
         """
         Adds oomcrash plugin inside rdkPlugins
         """
-        if self.app_metadata['oomcrash'].get('enable'):
+        if self.app_metadata.get('oomcrash') and self.app_metadata['oomcrash'].get('enable'):
             if self.platform_cfg.get('oomcrash'):
                 plugin = self.platform_cfg['oomcrash']
                 oomcrash_plugin = {

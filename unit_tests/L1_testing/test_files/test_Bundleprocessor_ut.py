@@ -854,7 +854,7 @@ class TestBundleProcessor(unittest.TestCase):
         self.assertEqual(processor.oci_config, expected)
         logger.debug("-->Test was Successfully verified")
 
-    def test_process_gpu1(self):
+    def test_process_gpu_plugin1(self):
         #Adding gpu plugin
         logger.debug("-->Mentioning GPU in appmetadata")
         processor = BundleProcessor()
@@ -885,7 +885,7 @@ class TestBundleProcessor(unittest.TestCase):
         self.assertEqual(processor.oci_config, expected)
         logger.debug("-->Test was Successfully verified")
 
-    def test_process_gpu2(self):
+    def test_process_gpu_plugin2(self):
         #Adding gpu plugin
         logger.debug("-->Not Mentioning GPU in appmetadata")
         processor = BundleProcessor()
@@ -1032,6 +1032,29 @@ class TestBundleProcessor(unittest.TestCase):
         self.assertEqual(processor.oci_config, expected)
         logger.debug("-->Test was Successfully verified")
 
+    def test_process_ipc5(self):
+        #Assigning enable : False and Assigining values in platform_cfg
+        logger.debug("-->Not mentioning ipc in both appmetadata and platform_cfg")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            {
+            }
+        }
+        processor._process_ipc()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
     def test_process_minidump1(self):
         #Adding minidump
         #Assigning enable : True and Assigining values in platform_cfg
@@ -1146,6 +1169,29 @@ class TestBundleProcessor(unittest.TestCase):
         self.assertEqual(processor.oci_config, expected)
         logger.debug("-->Test was Successfully verified")
 
+    def test_process_minidump5(self):
+        #Assigning enable : False and Assigining values in platform_cfg
+        logger.debug("-->Not mentioning minidump in both appmetadata and platform_cfg")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            {
+            }
+        }
+        processor._process_minidump()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
     def test_process_oomcrash1(self):
         #Adding oomcrash
         #Assigning enable : True and Assigining values in platform_cfg
@@ -1251,6 +1297,29 @@ class TestBundleProcessor(unittest.TestCase):
         processor.oci_config={
             "rdkPlugins":
             { }
+        }
+        processor._process_oomcrash()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_oomcrash5(self):
+        #Assigning enable : False and Assigining values in platform_cfg
+        logger.debug("-->Not mentioning oomcrash in both appmetadata and platform_cfg")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            {
+            }
         }
         processor._process_oomcrash()
         expected={
