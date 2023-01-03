@@ -1,0 +1,62 @@
+{
+    "platformName": "vagrant",
+    "hardware": {
+        "graphics": false,
+        "maxRam": "4096M"
+    },
+    "storage": {
+        "persistent": {
+            "storageDir": "/tmp/data",
+            "maxSize": "100M"
+        }
+    },
+    "gpu": {
+        "extraMounts": [],
+        "gfxLibs": [],
+        "devs": []
+    },
+    "mounts": [],
+    "network": {
+        "options": [
+            "nat",
+            "open",
+            "private"
+        ]
+    },
+    "envvar": [
+        "XDG_RUNTIME_DIR=/tmp"
+    ],
+    "resourceLimits": [
+        {
+            "type": "RLIMIT_NPROC",
+            "hard": 300,
+            "soft": 300
+        },
+        {
+            "type": "RLIMIT_RTPRIO",
+            "hard": 6,
+            "soft": 6
+        }
+    ],
+    "disableUserNamespacing": false,
+    "usersAndGroups": {
+        "uidMap": [
+            {
+                "containerID": 0,
+                "hostID": 1000,
+                "size": 1
+            }
+        ],
+        "gidMap": [
+            {
+                "containerID": 0,
+                "hostID": 1000,
+                "size": 1
+            }
+        ]
+    },
+    "logging": {
+        "mode": "file",
+        "logDir": "/var/log"
+    }
+}
