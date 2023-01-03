@@ -20,6 +20,7 @@ import json
 import click
 from loguru import logger
 from jsonschema import validate
+from jsonschema.exceptions import ValidationError
 
 class STBPlatform:
     def __init__(self, name, search_path=None):
@@ -75,6 +76,9 @@ class STBPlatform:
                             with open(schemaFile, "r") as f:
                                 platformSchema = json.load(f)
                                 validate(instance=jsonFile, schema=platformSchema)
+                        except ValidationError :
+                            logger.error("ValidationError during templete platform schema ")
+                            return False
                         except IOError:
                             logger.error("IOError during platform schema open.")
                             return False
