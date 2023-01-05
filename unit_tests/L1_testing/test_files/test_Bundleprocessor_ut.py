@@ -128,7 +128,6 @@ class TestBundleProcessor(unittest.TestCase):
 
     def test_process_resources(self):
         logger.debug("-->Parsing first value for devices inside resources of linux")
-        #print("Parsing the value for devices inside resources")
         processor = BundleProcessor()
         processor.rootfs_path = None
         processor.createmountpoints = None
@@ -156,7 +155,7 @@ class TestBundleProcessor(unittest.TestCase):
         self.assertEqual(processor.oci_config, expected)
         logger.debug("-->Test was Successfully verified")
 
-    def test_process_logging(self):
+    def test_process_logging1(self):
     #Assigning value "logging":{"mode": "file"}
         logger.debug("-->Parsing values inside logging plugin based on the value of mode:file")
         processor = BundleProcessor()
@@ -186,26 +185,29 @@ class TestBundleProcessor(unittest.TestCase):
             'process': {'terminal': True},
             'annotations': {'run.oci.hooks.stderr': '/dev/stderr',
                   'run.oci.hooks.stdout': '/dev/stdout'},
-            'rdkPlugins': {'logging':
-                        {'data':
-                            {'fileOptions':
-                                {'path': '/var/log/com.rdk.wayland-egl-test.log'},
-                            'sink': 'file'},
-                        'required': True}
-                            }
-                        }
-
+            'rdkPlugins': {
+                'logging': {
+                    'required': True,
+                    'data': {
+                        'sink': 'file',
+                        'fileOptions':
+                        {
+                        'path': '/var/log/com.rdk.wayland-egl-test.log',
+                        },
+                    }
+                }
+            }
+        }
         self.assertEqual(processor.oci_config, expected)
         logger.debug("-->Test was Successfully verified")
 
-    def test_process_logging1(self):
+    def test_process_logging_journald1(self):
     #Assigning value "logging":{"mode": ""journald""}
         logger.debug("-->Parsing values inside logging plugin based on the value of mode:journald")
         processor = BundleProcessor()
         processor.rootfs_path = None
         processor.createmountpoints = None
         processor.app_metadata={
-            "id": "com.rdk.wayland-egl-test"
         }
         processor.platform_cfg = {
             "logging":{
@@ -222,11 +224,12 @@ class TestBundleProcessor(unittest.TestCase):
         }
         processor._process_logging()
         expected={
-            'process': {'terminal': True},
-            'rdkPlugins': {'logging':
-                        {"required": True,
-                            "data": {
-                            "sink": "journald"
+            "process": {'terminal': True},
+            "rdkPlugins": {
+                "logging": {
+                    "required": True,
+                        "data": {
+                        "sink": "journald",
                             }
                         }
                     }
@@ -237,8 +240,6 @@ class TestBundleProcessor(unittest.TestCase):
     def test_process_process(self):
         #Parsing dobbyinitpath and appending ennvar values from platform_cfg to env, limit values platform_cfg to rlimits
         logger.debug("-->Parsing dobbyinitpath, ennvar and limit values")
-        logger
-        #print("Parsing values to process")
         processor = BundleProcessor()
         processor.rootfs_path = None
         processor.createmountpoints = None
@@ -291,7 +292,6 @@ class TestBundleProcessor(unittest.TestCase):
     def test_process_hostname(self):
     #hostname mentioned in platform_cfg
         logger.debug("-->Parsing the hostname from platform_cfg")
-        #print("Parsing the hostname which was mentioned in platform_cfg")
         processor = BundleProcessor()
         processor.rootfs_path = None
         processor.createmountpoints = None
@@ -334,7 +334,6 @@ class TestBundleProcessor(unittest.TestCase):
     #Assigning graphics in appmetadata to True
     #Add mounts,envvar,devices
         logger.debug("-->It will parse all gpu values from platform_cfg")
-        #print("Parsing values to gpu when value of graphics in appmetadata was True")
         processor = BundleProcessor()
         processor.rootfs_path = None
         processor.createmountpoints = None
@@ -373,7 +372,6 @@ class TestBundleProcessor(unittest.TestCase):
 
     def test_process_mounts(self):
         logger.debug("-->Parsing all values of mounts from app_metadata")
-        #print("Parsing the values to mounts")
         processor = BundleProcessor()
         processor.rootfs_path = None
         processor.createmountpoints = None
@@ -391,7 +389,6 @@ class TestBundleProcessor(unittest.TestCase):
             ]
         }
         processor.platform_cfg = {
-
         }
         processor.oci_config = {
             "mounts":[]
@@ -415,7 +412,6 @@ class TestBundleProcessor(unittest.TestCase):
 
     def test_process_mounts1(self):
         logger.debug("-->Parsing all values of mounts from app_metadata")
-        #print("Parsing the values to mounts")
         processor = BundleProcessor()
         processor.rootfs_path = None
         processor.createmountpoints = None
@@ -484,7 +480,6 @@ class TestBundleProcessor(unittest.TestCase):
 
     def test_process_users_and_groups(self):
         logger.debug("-->It will add uidMappings and gidMappings")
-        #print("It will add uidMappings and gidMappings")
         processor = BundleProcessor()
         processor.rootfs_path = None
         processor.bundle_path = {
@@ -514,7 +509,6 @@ class TestBundleProcessor(unittest.TestCase):
 
     def test_process_root(self):
         logger.debug("-->Parsing all values of root to oci_config")
-        #print("Parsing the values of root from platform_cfg")
         processor = BundleProcessor()
         processor.rootfs_path = None
         processor.createmountpoints = None
@@ -544,7 +538,6 @@ class TestBundleProcessor(unittest.TestCase):
     def test_process_storage(self):
     #if storage_settings are not present
         logger.debug("-->It will create mounts")
-        #print("If storage_settings are not present")
         processor = BundleProcessor()
         processor.rootfs_path = None
         processor.createmountpoints = None
@@ -562,7 +555,6 @@ class TestBundleProcessor(unittest.TestCase):
 
     def test_add_annotation(self):
         logger.debug("-->Parsing annotation values to oci_config")
-        #print("Parsing the values to annotations")
         processor = BundleProcessor()
         processor.rootfs_path = None
         processor.createmountpoints = None
@@ -673,6 +665,742 @@ class TestBundleProcessor(unittest.TestCase):
         self.assertEqual(actual, expected)
         logger.debug("-->Test was Successfully verified")
 
+#Adding new plugins
+    def test_process_logging2(self):
+        #Assigning value "logging":{"mode": "file"} and giving limit inside loggin plugin
+        logger.debug("-->Parsing values inside logging plugin based on the value of mode:file")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "id": "com.rdk.wayland-egl-test"
+        }
+        processor.platform_cfg = {
+            "logging":{
+                "mode": "file",
+                "logDir": "/var/log",
+                "limit": 65536
+            }
+        }
+        processor.oci_config={
+            "process": {
+                "terminal": True
+                },
+            "annotations":
+            {},
+            "rdkPlugins":
+            {
+            }
+        }
+        processor._process_logging()
+        expected={
+            'process': {'terminal': True},
+            'annotations': {'run.oci.hooks.stderr': '/dev/stderr',
+                  'run.oci.hooks.stdout': '/dev/stdout'},
+            'rdkPlugins': {
+                'logging': {
+                    'required': True,
+                    'data': {
+                        'sink': 'file',
+                        'fileOptions':
+                        {
+                        'path': '/var/log/com.rdk.wayland-egl-test.log',
+                        'limit': 65536
+                        },
+                    }
+                }
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_logging_devnull(self):
+    #Assigning value "logging":{"mode": ""devnull""}
+        logger.debug("-->Parsing values inside logging plugin based on the value of mode:devnull")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+        }
+        processor.platform_cfg = {
+            "logging":{
+                "mode": "devnull",
+                 }
+        }
+        processor.oci_config={
+                       "process": {
+                "terminal": True
+                },
+            "rdkPlugins":
+            {
+            }
+        }
+        processor._process_logging()
+        expected= {
+            "process": {
+                "terminal": True
+                },
+            'rdkPlugins': {'logging':
+                        {"required": True,
+                            "data": {
+                            "sink": "devNull"
+                            }
+                        }
+                    }
+                }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_logging_journald2(self):
+    #Assigning value "logging":{"mode": ""journald""} along with journaldOptions
+        logger.debug("-->Parsing values inside logging plugin based on the value of mode:journald")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+        }
+        processor.platform_cfg = {
+            "logging":{
+                "mode": "journald",
+                "journaldOptions": {
+                    "priority": "LOG_INFO"
+                        }
+                    }
+                }
+        processor.oci_config={
+                       "process": {
+                "terminal": True
+                },
+            "rdkPlugins":
+            {
+            }
+        }
+        processor._process_logging()
+        expected = {
+            "process": {
+                "terminal": True
+                },
+            "rdkPlugins": {
+                "logging": {
+                    "required": True,
+                        "data": {
+                        "sink": "journald",
+                            "journaldOptions": {
+                                "priority": "LOG_INFO"
+                            }
+                        }
+                    }
+                }
+             }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_thunder1(self):
+        #Adding thunder plugin inside appmetadata
+        logger.debug("-->Mentioning thunder in appmetadata")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "thunder": {
+                "bearerUrl": "http://localhost",
+                "trusted": True,
+                "connLimit": 32
+            }
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            { }
+        }
+        processor._process_thunder()
+        expected={
+        "rdkPlugins":
+            {
+                "thunder": {
+                    "required": True,
+                    "dependsOn": ["networking"],
+                    "data": {"bearerUrl": "http://localhost",
+                        "trusted": True,
+                        "connLimit": 32
+                        }
+                }
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_thunder2(self):
+        #Adding thunder plugin inside appmetadata
+        logger.debug("-->Not Mentioning thunder in appmetadata")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            { }
+        }
+        processor._process_thunder()
+        expected={
+        "rdkPlugins":
+            {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_gpu_plugin1(self):
+        #Adding gpu plugin
+        logger.debug("-->Mentioning GPU in appmetadata")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "resources": {
+                "gpu": "128M"
+            }
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            { }
+        }
+        processor._process_gpu_plugin()
+        expected={
+            "rdkPlugins": {
+                "gpu": {
+                    "required": True,
+                    "data": {
+                        "memory": 134217728
+                    }
+                }
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_gpu_plugin2(self):
+        #Adding gpu plugin
+        logger.debug("-->Not Mentioning GPU in appmetadata")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "resources":{ }
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            { }
+        }
+        processor._process_gpu_plugin()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_ipc1(self):
+        #Adding ipc plugin
+        #Assigning enable : True and Assigining values in platform_cfg
+        logger.debug("-->Mentioning ipc in both appmetadata and platform_cfg")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "ipc": {
+                "enable": True
+            }
+        }
+        processor.platform_cfg = {
+            "ipc": {
+                "session": "/path/to/dbus/session",
+                "system": "/var/run/dbus/system_bus_socket",
+                "debug": "<path/to/dbus>"
+            }
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            {
+            }
+        }
+        processor._process_ipc()
+        expected={
+            "rdkPlugins": {
+                "ipc": {
+                    "required": True,
+                    "data":{
+                        "session": "/path/to/dbus/session",
+                        "system": "/var/run/dbus/system_bus_socket",
+                        "debug": "<path/to/dbus>"
+                    }
+                }
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_ipc2(self):
+        #Adding ipc plugin
+        #Assigning enable : True
+        logger.debug("-->Mentioning ipc, only in appmetadata by giving value of enable as true")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "ipc": {
+                "enable": True
+            }
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            {
+            }
+        }
+        processor._process_ipc()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_ipc3(self):
+        #Assigning enable : False and Assigining values in platform_cfg
+        logger.debug("-->Mentioning ipc in both appmetadata and platform_cfg, giving value of enable as false")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "ipc": {
+                "enable": False
+            }
+        }
+        processor.platform_cfg = {
+            "ipc": {
+                "session": "<path to dbus session>",
+                "system": "<system>",
+                "debug": "<path to debug dbus session>"
+            }
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            {
+            }
+        }
+        processor._process_ipc()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_ipc4(self):
+        #Assigning enable : False and Assigining values in platform_cfg
+        logger.debug("-->Mentioning ipc, only in appmetadata by giving value of enable as false")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "ipc": {
+                "enable": False
+            }
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            {
+            }
+        }
+        processor._process_ipc()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_ipc5(self):
+        #Assigning enable : False and Assigining values in platform_cfg
+        logger.debug("-->Not mentioning ipc in both appmetadata and platform_cfg")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            {
+            }
+        }
+        processor._process_ipc()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_minidump1(self):
+        #Adding minidump
+        #Assigning enable : True and Assigining values in platform_cfg
+        logger.debug("-->Mentioning minidump in both appmetadata and platform_cfg")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "minidump": {
+              "enable": True
+            }
+        }
+        processor.platform_cfg = {
+            "minidump": {
+                "destinationPath": "/opt/minidumps"
+            }
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            { }
+        }
+        processor._process_minidump()
+        expected={
+            "rdkPlugins": {
+                "minidump": {
+                    "required": True,
+                    "data": {
+                        "destinationPath": "/opt/minidumps"
+                    }
+                }
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_minidump2(self):
+        #Adding minidump
+        #Assigning enable : True
+        logger.debug("-->Mentioning minidump, only in appmetadata by giving value of enable as true")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "minidump": {
+              "enable": True
+            }
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            { }
+        }
+        processor._process_minidump()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_minidump3(self):
+        #Assigning enable : False and Assigining values in platform_cfg
+        logger.debug("-->Mentioning minidump in both appmetadata and platform_cfg, giving value of enable as false")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "minidump": {
+              "enable": False
+            }
+        }
+        processor.platform_cfg = {
+            "minidump": {
+                "destinationPath": "/opt/minidumps"
+            }
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            { }
+        }
+        processor._process_minidump()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_minidump4(self):
+        #Assigning enable : False
+        logger.debug("-->Mentioning minidump, only in appmetadata by giving value of enable as false")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "minidump": {
+              "enable": False
+            }
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            { }
+        }
+        processor._process_minidump()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_minidump5(self):
+        #Assigning enable : False and Assigining values in platform_cfg
+        logger.debug("-->Not mentioning minidump in both appmetadata and platform_cfg")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            {
+            }
+        }
+        processor._process_minidump()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_oomcrash1(self):
+        #Adding oomcrash
+        #Assigning enable : True and Assigining values in platform_cfg
+        logger.debug("-->Mentioning oomcrash in both appmetadata and platform_cfg")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "oomcrash": {
+                "enable": True
+            }
+        }
+        processor.platform_cfg = {
+            "oomcrash": {
+                "path": "/opt/dobby_container_crashes"
+            }
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            { }
+        }
+        processor._process_oomcrash()
+        expected={
+            "rdkPlugins": {
+                "oomcrash": {
+                    "required": True,
+                    "data": {
+                    "path": "/opt/dobby_container_crashes"
+                    }
+                }
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_oomcrash2(self):
+        #Adding oomcrash
+        #Assigning enable : True
+        logger.debug("-->Mentioning oomcrash, only in appmetadata by giving value of enable as true")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "oomcrash": {
+                "enable": True
+            }
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            { }
+        }
+        processor._process_oomcrash()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_oomcrash3(self):
+        #Assigning enable : False and Assigining values in platform_cfg
+        logger.debug("-->Mentioning oomcrash in both appmetadata and platform_cfg, giving value of enable as false")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "oomcrash": {
+                "enable": False
+            }
+        }
+        processor.platform_cfg = {
+            "oomcrash": {
+                "path": "/opt/dobby_container_crashes"
+            }
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            { }
+        }
+        processor._process_oomcrash()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_oomcrash4(self):
+        #Assigning enable : False
+        logger.debug("-->Mentioning oomcrash, only in appmetadata by giving value of enable as false")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+            "oomcrash": {
+                "enable": False
+            }
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            { }
+        }
+        processor._process_oomcrash()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_process_oomcrash5(self):
+        #Assigning enable : False and Assigining values in platform_cfg
+        logger.debug("-->Not mentioning oomcrash in both appmetadata and platform_cfg")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata={
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            "rdkPlugins":
+            {
+            }
+        }
+        processor._process_oomcrash()
+        expected={
+            "rdkPlugins": {
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_app_meta_data_schema(self):
+        ''''this test is to check, jsonschema of app meta data is proper.
+        one more changes is been added chdir because test been running in folder
+        /BundleGen/unit_tests/L1_testing to validate schema changing the directory to /BundleGen
+        '''
+        logger.debug("--> checking the appmetadata schema")
+        os.chdir('../../')
+        validate = BundleProcessor()
+        validate.app_metadata = {
+            "id": "com.rdk.wayland-egl-test",
+            "type": "application/vnd.rdk-app.dac.native",
+            "version": "1.0.0",
+            "description": "Simple wayland egl demo, showing green rectangle",
+            "priority": "optional",
+            "graphics": True,
+            "network": {
+             "type": "open"
+            },
+            "storage": {},
+            "resources": {
+             "ram": "128M"
+            }
+        }
+        actual = validate.validate_app_metadata_config()
+        expected = True
+        os.chdir('unit_tests/L1_testing')
+        self.assertEqual(actual, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_remove_required_app_meta_data_schema(self):
+        ''''this test is to validate required feilds when are removed.
+        '''
+        logger.debug("--> checking the appmetadata schema by removing the required feilds ")
+        os.chdir('../../')
+        validate = BundleProcessor()
+        validate.app_metadata = {
+            "id": "com.rdk.wayland-egl-test"
+        }
+        actual = validate.validate_app_metadata_config()
+        expected = False
+        os.chdir('unit_tests/L1_testing')
+        self.assertEqual(actual, expected)
+        logger.debug("-->Test was Successfully verified")
+
+    def test_optional_feild_app_meta_data_schema(self):
+        ''''this test is to validate optional feilds by removing required feilds.
+        '''
+        logger.debug("--> Validating schema removing reqired feilds and adding optinal feilds ")
+        os.chdir('../../')
+        validate = BundleProcessor()
+        validate.app_metadata = {
+            "priority": "optional",
+            "thunder": {
+                "bearerUrl": "http://localhost",
+                "trusted": True,
+                "connLimit": 32
+            },
+            "ipc": {
+                "enable": True
+            },
+            "minidump": {
+                "enable": True
+            },
+            "oomcrash": {
+                "enable": True
+            }
+        }
+        actual = validate.validate_app_metadata_config()
+        expected = False
+        os.chdir('unit_tests/L1_testing')
+        self.assertEqual(actual, expected)
+        logger.debug("-->Test was Successfully verified")
 
 if __name__ == "__main__":
     unittest.main()

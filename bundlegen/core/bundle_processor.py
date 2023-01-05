@@ -26,6 +26,7 @@ from pathlib import Path
 from bundlegen.core.utils import Utils
 from bundlegen.core.library_matching import LibraryMatching
 from bundlegen.core.capabilities import *
+from jsonschema.exceptions import ValidationError
 
 
 class BundleProcessor:
@@ -78,13 +79,16 @@ class BundleProcessor:
     # else function will throw an error & OCI bundle is not generated.
 
     def validate_app_metadata_config(self):
-        logger.info("validate JSON config files with the template schemas.")
+        logger.debug(f"validate JSON config files with the app meta data schemas.")
 
         # App metadata
         try:
             with open('bundlegen/schema/appMetadataSchema.json', "r") as f:
                 appSchema = json.load(f)
                 validate(instance=self.app_metadata, schema=appSchema)
+        except ValidationError:
+            logger.error("ValidationError during metadata schema Validation.")
+            return False
         except IOError:
             logger.error("IOError during metadata schema open.")
             return False
@@ -939,11 +943,26 @@ class BundleProcessor:
             }
             self._add_annotation('run.oci.hooks.stderr','/dev/stderr')
             self._add_annotation('run.oci.hooks.stdout','/dev/stdout')
+        if self.platform_cfg['logging'].get("limit"):
+            limit = self.platform_cfg.get('logging').get("limit")
+            logging_plugin['data']['fileOptions']['limit'] = limit
+
         elif self.platform_cfg['logging'].get('mode') == 'journald':
             logging_plugin = {
                 "required": True,
                 "data": {
                     "sink": "journald"
+                }
+            }
+        if self.platform_cfg['logging'].get("journaldOptions"):
+            priority = self.platform_cfg.get('logging').get('journaldOptions')
+            logging_plugin['data']['journaldOptions'] = priority
+
+        elif self.platform_cfg['logging'].get('mode') == 'devnull':
+            logging_plugin = {
+                "required": True,
+                "data": {
+                    "sink": "devNull"
                 }
             }
 
@@ -1057,3 +1076,81 @@ class BundleProcessor:
         self.oci_config['linux']['seccomp'] = {}
         self.oci_config['linux']['seccomp'] = self.platform_cfg.get('seccomp')
 
+    # ==========================================================================
+    def _process_ipc(self):
+        """
+        Adds ipc plugin inside rdkPlugins
+        """
+        if self.app_metadata.get('ipc') and self.app_metadata['ipc'].get('enable'):
+            if self.platform_cfg.get('ipc'):
+                plugin = self.platform_cfg['ipc']
+                ipc_plugin = {
+                    "required": True,
+                    "data": plugin
+                    }
+                self.oci_config['rdkPlugins']['ipc'] = ipc_plugin
+        return
+
+    # ==========================================================================
+    def _process_minidump(self):
+        """
+        Adds midump plugin inside rdkPlugins
+        """
+        if self.app_metadata.get('minidump') and self.app_metadata['minidump'].get('enable'):
+            if self.platform_cfg.get('minidump'):
+                plugin = self.platform_cfg['minidump']
+                minidump_plugin = {
+                    "required": True,
+                    "data": plugin
+                    }
+                self.oci_config['rdkPlugins']['minidump'] = minidump_plugin
+        return
+
+    # ==========================================================================
+    def _process_oomcrash(self):
+        """
+        Adds oomcrash plugin inside rdkPlugins
+        """
+        if self.app_metadata.get('oomcrash') and self.app_metadata['oomcrash'].get('enable'):
+            if self.platform_cfg.get('oomcrash'):
+                plugin = self.platform_cfg['oomcrash']
+                oomcrash_plugin = {
+                    "required": True,
+                    "data": plugin
+                    }
+                self.oci_config['rdkPlugins']['oomcrash'] = oomcrash_plugin
+        return
+
+    # ==========================================================================
+    def _process_thunder(self):
+        """
+        Adds Thunder plugin inside rdkPlugins
+        """
+        if self.app_metadata.get('thunder'):
+            plugin =self.app_metadata['thunder']
+            thunder_plugin = {
+                "required": True,
+                "dependsOn": ["networking"],
+                "data":plugin
+            }
+            self.oci_config['rdkPlugins']['thunder'] = thunder_plugin
+        return
+
+    # ==========================================================================
+    def _process_gpu_plugin(self):
+        """
+        Adds GPU plugin inside rdkPlugins
+        """
+        if self.app_metadata["resources"].get('gpu'):
+            app_gpu_requirement = self.app_metadata.get('resources').get('gpu')
+            plugin = humanfriendly.parse_size(app_gpu_requirement, binary=True)
+            gpu_plugin = {
+                "required": True,
+                "data": {
+                    "memory": plugin
+                }
+            }
+            self.oci_config['rdkPlugins']['gpu'] = gpu_plugin
+        return
+
+    # ==========================================================================
