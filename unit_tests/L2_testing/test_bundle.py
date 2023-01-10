@@ -28,27 +28,31 @@ from unit_tests.L2_testing import get_L2_test_results
 from common import setup_sys_path, TestBase
 setup_sys_path()
 
-has_failures = []
-
-netwrk_type_config = ""
-netwrk_type= ""
-path = ""
-app_id = ""
-arguments = "/usr/libexec/DobbyInit"
-process_args = ""
-process_env = ""
-process_rlimits = ""
-envvars = ""
-envvars_1 = ""
-resource_limits = ""
+final_config_netwrk_type_config = ""
+meta_netwrk_type= ""
+final_config_path = ""
+meta_app_id = ""
+platform_arguments = "/usr/libexec/DobbyInit"
+final_config_process_args = ""
+final_config_process_env = ""
+final_config_process_rlimits = ""
+platform_envvars = ""
+platform_envvars_1 = ""
+platform_resource_limits = ""
 args=""
-wayland_env= "westeros"
-mounts=""
-dev_list_platform = []
-device_infor_1=""
-linux_devices = []
-linux_resource_dev_information = []
+platform_wayland_env= "westeros"
+platform_mounts=""
+platform_dev_list_platform = []
+platform_device_infor_1=""
+final_config_linux_devices = []
+final_config_linux_resource_dev_information = []
 
+#Form all the app metadata ,platform, config related path below.
+form_bundlegen_image_path = "./bundlegen_images/"+sys.argv[1]
+form_executable_path = form_bundlegen_image_path+"-bundle/rootfs/usr/bin/"+sys.argv[1].replace("dac-image-","")
+form_final_config_json_path = form_bundlegen_image_path+"-bundle/config.json"
+form_app_metadata_json_file_path = "metadatas/"+sys.argv[1]+"-appmetadata.json"
+form_platform_json_file_path = "../../templates/generic/"+sys.argv[2]+".json"
 
 def load_json(file_path):
     # open JSON file and parse contents
@@ -91,122 +95,108 @@ class TestBundleData(TestBase):
     def tearDownClass(self):
         get_L2_test_results.add_test_results.end_results(self)
 
-    def test_bundle(self):
-        logger.debug("-->Verifying appmetadata path")
-        path = "./bundlegen_images/"+sys.argv[1]+"-bundle/rootfs/usr/bin/"+sys.argv[1].replace("dac-image-","")
-        status = os.stat(path)
+    def test_verify_final_executable_path(self):
+        logger.debug("-->Verifying appmetadata executable path in bundlegen_image")
+        status = os.stat(form_executable_path)
         self.assertNotEqual(status.st_size,0)
-        logger.debug("-->Successfully appmetadata path has verified")
+        logger.debug("-->Successfully appmetadata executable path has been verified")
 
-    def test_config(self):
-        logger.debug("-->Verifying config.json path")
-        path = "bundlegen_images/"+sys.argv[1]+"-bundle/config.json"
-        status = os.stat(path)
+    def test_verify_final_config_path(self):
+        logger.debug("-->Verifying final config.json path in bundlegen_image")
+        status = os.stat(form_final_config_json_path)
         self.assertNotEqual(status.st_size,0)
-        logger.debug("-->Successfully config.json path was verified")
+        logger.debug("-->Successfully final config.json path has been verified")
 
-    def test_app_name(self):
-        logger.debug("-->Retrieving appname from config.json")
-        config_json_path = "bundlegen_images/"+sys.argv[1]+"-bundle/config.json"
-        finalconfigdata = load_json(config_json_path)
-        #iterating through all keys in finalconfigdata
-        for k,v in finalconfigdata.items():
-                if k == "process":
-                    app_path=v['args'][1]
-        #self.assertEqual(app_path,("/usr/bin/"+sys.argv[1]+"-test"))
-        self.assertEqual(app_path,("/usr/bin/"+sys.argv[1].replace("dac-image-","")))
-        logger.debug("-->Successfully App name was retrieved from config.json")
-
-    def test_appmetadata(self):
-        logger.debug("-->Validating values in config.json")
+    def test_verify_data_in_final_config(self):
+        logger.debug("-->Validating feilds been copied to final config.json")
         #Passing the appmetadata.json(argv[1]= "wayland-egl") and platform config(argv[2]= "rpi3_reference") as an argument to input script command
         #We shall copy the app metadata in the same folder where we have this script test_bundle.py
-        appmetadata_path = "metadatas/"+sys.argv[1]+"-appmetadata.json"
-        config_json_path = "bundlegen_images/"+sys.argv[1]+"-bundle/config.json"
-        platform_path = "../../templates/generic/"+sys.argv[2]+".json"
-        appmetadata = load_json(appmetadata_path)
-        platform_cfg = load_json(platform_path)
-        finalconfigdata = load_json(config_json_path)
+
+        appmetadata = load_json(form_app_metadata_json_file_path)
+        platform_cfg = load_json(form_platform_json_file_path)
+        finalconfigdata = load_json(form_final_config_json_path)
 
         #iterating through all keys in appmetadata.json
         for key,value in appmetadata.items():
             if key == "id":
-                app_id = value
+                meta_app_id = value
             if key == "network":
-                netwrk_type = value['type']
+                meta_netwrk_type = value['type']
 
         #iterating through all keys in platform_cfg.json
         for key,value in platform_cfg.items():
             if key == "dobby" :
                 if value['dobbyInitPath'] is not None:
-                    global arguments
-                    arguments = value['dobbyInitPath']
+                    global platform_arguments
+                    platform_arguments = value['dobbyInitPath']
             if key == "gpu":
                 if value['devs'] is not None:
-                    device_infor = value['devs']
+                    platform_device_infor = value['devs']
                 if value['envvar'] is not None:
-                    envvars = value['envvar']
+                    platform_envvars = value['envvar']
                 if value['extraMounts'] is not None:
-                    mounts = value
+                    platform_mounts = value
                 if platform_cfg.get("wayland") is not None:
-                    global wayland_env
-                    wayland_env = value
+                    global platform_wayland_env
+                    platform_wayland_env = value
             if key == "envvar":
                 if value is not None:
-                    envvars_1 = value
+                    platform_envvars_1 = value
             if key == "resourceLimits":
                 if value is not None:
-                    resource_limits = value
+                    platform_resource_limits = value
             if key == "gpu":
-                 device_infor_1 = value['devs']
-                 for k in device_infor_1:
-                    dev_list_platform.append(k)
+                 platform_device_infor_1 = value['devs']
+                 for k in platform_device_infor_1:
+                    platform_dev_list_platform.append(k)
+
         #iterating through all keys in finalconfigdata i.e config.json
         for k,v in finalconfigdata.items():
             if k == "rdkPlugins":
-                netwrk_type_config=v['networking']['data']['type']
-                path = v['logging']['data']['fileOptions']['path']
+                final_config_netwrk_type_config=v['networking']['data']['type']
+                final_config_path = v['logging']['data']['fileOptions']['path']
             if k == "process":
-                process_args = v['args']
-                process_env = v['env']
-                process_rlimits = v['rlimits']
+                final_config_process_args = v['args']
+                final_config_process_env = v['env']
+                final_config_process_rlimits = v['rlimits']
             if k == "linux":
-                 linux_info = v['devices']
-                 linux_resource_dev_info = v['resources']['devices']
-                 for key in linux_info:
-                    linux_devices.append(key)
+                 final_config_linux_info = v['devices']
+                 final_config_linux_resource_dev_info = v['resources']['devices']
+                 for key in final_config_linux_info:
+                    final_config_linux_devices.append(key)
 
-                 for key in linux_resource_dev_info:
-                    linux_resource_dev_information.append(key)
+                 for key in final_config_linux_resource_dev_info:
+                    final_config_linux_resource_dev_information.append(key)
+
         #Validating the appmetadata,platform cfg in config.json
         #Check for the app metadata,.platform config fields in config.json
-        self.assertEqual(netwrk_type_config,netwrk_type)
+        self.assertEqual(final_config_netwrk_type_config,meta_netwrk_type)
         #Finding app_id if its subset of rdkPlugins.logging.data.fileOptions.path(present in config.json)
-        self.assertNotEqual(path.find(app_id),-1)
+        self.assertNotEqual(final_config_path.find(meta_app_id),-1)
 
         flag = 0
-        if(set(envvars_1).issubset(set(process_env)) and set(envvars).issubset(set(process_env))):
+        if(set(platform_envvars_1).issubset(set(final_config_process_env)) and set(platform_envvars).issubset(set(final_config_process_env))):
             flag = 1
         self.assertEqual(flag,1)
 
         flag = 0
         #converting to hashable datatype,dict to string
-        resource_limits_string= json.dumps(resource_limits)
-        process_rlimits_string= json.dumps(process_rlimits)
-        if(set(resource_limits_string).issubset(set(process_rlimits_string))):
+        platform_resource_limits_string= json.dumps(platform_resource_limits)
+        final_config_process_rlimits_string= json.dumps(final_config_process_rlimits)
+        if(set(platform_resource_limits_string).issubset(set(final_config_process_rlimits_string))):
             flag = 1
         self.assertEqual(flag,1)
-        if(set(arguments).issubset(set(process_args))):
+        if(set(platform_arguments).issubset(set(final_config_process_args))):
             flag = 1
         self.assertEqual(flag,1)
 
         # Devs list is appended at the end of the config.json linux.resource.dev and linux.devices,
         # hence reversing and checking the value of config.json against the linux.devices/linux.resources.devices for that number of nodes
-        linux_resource_dev_information.reverse()
-        dev_list_platform.reverse()
-        linux_devices.reverse()
+        final_config_linux_resource_dev_information.reverse()
+        platform_dev_list_platform.reverse()
+        final_config_linux_devices.reverse()
 
-        for f, b in zip(linux_devices, dev_list_platform):
+        for f, b in zip(final_config_linux_devices, platform_dev_list_platform):
 
                 # Shall iterate till the required length
                 if f == (len(f)-1) :
@@ -220,7 +210,7 @@ class TestBundleData(TestBase):
 
                 self.assertEqual(f.get('minor'),b.get('minor'))
 
-        for f, b in zip(linux_resource_dev_information, dev_list_platform):
+        for f, b in zip(final_config_linux_resource_dev_information, platform_dev_list_platform):
 
             # Shall iterate till the required length
             if f == (len(f)-1) :
@@ -237,6 +227,13 @@ class TestBundleData(TestBase):
             self.assertEqual(f.get('minor'),b.get('minor'))
 
         logger.debug("-->All values in config.json are validated")
+
+        #iterating through all keys in finalconfigdata
+        for k,v in finalconfigdata.items():
+                if k == "process":
+                    final_config_app_path=v['args'][1]
+        self.assertEqual(final_config_app_path,("/usr/bin/"+sys.argv[1].replace("dac-image-","")))
+        logger.debug("-->Successfully verified app name from config.json")
 
 if __name__ == '__main__':
     unittest.main(argv=['first-arg-is-ignored'])

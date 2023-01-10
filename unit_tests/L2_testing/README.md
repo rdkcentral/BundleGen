@@ -3,6 +3,15 @@ Main objective of L2 testing is verifying the bundle image for an individual app
 
 ## Pre-requisites
 Copy oci image tar file and place it in unit_tests/L2_testing/oci_images folder.
+Oci Image should be named in the form of appname and platformname.
+```
+<appname>-<platform>-oci.tar
+Ex: dac-image-wayland-egl-test-raspberrypi3-oci.tar
+```
+Filename should be saved as mentioned above it will throw below error
+```
+File name should consists of platform name
+```
 
 ## Environment Setup
 -> Python version should be greater than or equal to 3.7 to run L2_testing.
@@ -21,11 +30,36 @@ Copy oci image tar file and place it in unit_tests/L2_testing/oci_images folder.
 -> After running L2 test script file it removes all extracted ones and only oci image tar file in unit_tests/L2_testing/oci_images will be remaining.
 
 ## How to run L2 test
+```console
+    $ cd unit_tests/L2_testing
+    $ python run_L2_test.py
+```
+
+## For specified app
+-> Required Parameters to run L2 test is Appname.
+-> Appname should named as dac-image-<Appname>
+-> If platformname is not specified it will take default platformname has ''rpi3_reference_vc4_dunfell''
+-> Run the L2 test using the run_L2_test.py file.
+```console
+    $ cd unit_tests/L2_testing
+    $ python run_L2_test.py -a appname
+    Ex:  python run_L2_test.py -a dac-image-wayland-egl-test
+```
+## For specified platform
+-> Required Parameters to run L2 test is Platformname.
+-> Appname should named as dac-image-<Appname>, it will run all oci images present in oci_images folder.
+-> Run the L2 test using the run_L2_test.py file.
+```console
+    $ cd unit_tests/L2_testing
+    $ python run_L2_test.py -t platformname
+    Ex:  python run_L2_test.py -t rpi3_reference
+```
+## For particular app and platform
 -> Required Parameters to run L2 test are Appname and Platformname.
 -> Appname should named as dac-image-<Appname>
 -> Run the L2 test using the run_L2_test.py file.
 ```console
     $ cd unit_tests/L2_testing
-    $ python run_L2_test.py -a appname -p platformname
-    Ex:  python run_L2_test.py -a dac-image-wayland-egl-test -p rpi3_reference
+    $ python run_L2_test.py -a appname -t platformname
+    Ex:  python run_L2_test.py -a dac-image-wayland-egl-test -t rpi3_reference
 ```
