@@ -5,7 +5,8 @@
         "arch": "amd64"
     },
     "rdk": {
-        "version": "2020Q4"
+        "version": "2020Q4",
+        "supportedFeatures": []
     },
     "hardware": {
         "graphics": false,
