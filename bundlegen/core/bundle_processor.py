@@ -31,22 +31,23 @@ from jsonschema.exceptions import ValidationError
 
 class BundleProcessor:
     def __new__(cls, *args):
-        if (len(args)==0) or (len(args)==6):
+        if (len(args)==0) or (len(args)==7):
             return object.__new__(cls)
         else:
             logger.error("The arguments should be in a order like platform_cfg, bundle_path, app_metadata, nodepwalking, libmatchingmode, createmountpoints")
             return False
 
     def __init__(self, *args):
-        if (len(args)) == 6:
+        if (len(args)) == 7:
             # Mapping of the arguments
-            # The arguments should be given in a order like (platform_cfg, bundle_path, app_metadata, nodepwalking, libmatchingmode, createmountpoints)
+            # The arguments should be given in a order like (platform_cfg, bundle_path, app_metadata, nodepwalking, libmatchingmode, createmountpoints, crun_only)
             platform_cfg = args[0]
             bundle_path = args[1]
             app_metadata = args[2]
             nodepwalking = args[3]
             libmatchingmode = args[4]
             createmountpoints = args[5]
+            crun_only = args[6]
             self.platform_cfg: dict = platform_cfg
             self.bundle_path = bundle_path
             self.rootfs_path = os.path.join(self.bundle_path, "rootfs")
@@ -55,8 +56,10 @@ class BundleProcessor:
             self.createmountpoints = createmountpoints
             self.oci_config: dict = self.load_config()
             self.libmatcher = LibraryMatching(self.platform_cfg, self.bundle_path, self._add_bind_mount, nodepwalking, libmatchingmode, createmountpoints)
+            self.crun_only = crun_only
         else:
             logger.disable("This is for L1_unit_testing")
+            self.crun_only = False
 
     # Umoci will produce a config based on a "good, sane default" configuration
     # as defined here: https://github.com/opencontainers/umoci/blob/master/oci/config/convert/default.go
@@ -109,7 +112,8 @@ class BundleProcessor:
         self._process_mounts()
         self._process_resources()
         self._process_gpu()
-        self._process_dobby_plugin_dependencies()
+        if not self.crun_only:
+            self._process_dobby_plugin_dependencies()
         self._process_users_and_groups()
         self._process_capabilities()
         self._process_hostname()
@@ -117,7 +121,8 @@ class BundleProcessor:
         self._process_seccomp()
 
         # RDK Plugins section
-        self._add_rdk_plugins()
+        if not self.crun_only:
+            self._add_rdk_plugins()
         self._process_network()
         self._process_storage()
         self._process_logging()
@@ -357,13 +362,15 @@ class BundleProcessor:
         """Sets the config OCI version to 1.0.2-dobby
         """
         logger.debug("Setting OCI version")
-        if not self._should_generate_compliant_config():
+        if not self._should_generate_compliant_config() and not self.crun_only:
             self.oci_config['ociVersion'] = "1.0.2-dobby"
         else:
             self.oci_config['ociVersion'] = "1.0.2"
 
     # ==========================================================================
     def _process_hooks(self):
+        if self.crun_only:
+            return
         if not self._should_generate_compliant_config():
             return
         if len(self.oci_config['rdkPlugins']) == 0:
@@ -444,17 +451,18 @@ class BundleProcessor:
 
         # Args will be set to entrypoint from the image
 
-        if self.platform_cfg.get('dobby') and self.platform_cfg['dobby'].get('dobbyInitPath'):
-            dobbyinitpath = self.platform_cfg['dobby']['dobbyInitPath']
-        else:
-            dobbyinitpath = '/usr/libexec/DobbyInit'
+        if not self.crun_only:
+            if self.platform_cfg.get('dobby') and self.platform_cfg['dobby'].get('dobbyInitPath'):
+                dobbyinitpath = self.platform_cfg['dobby']['dobbyInitPath']
+            else:
+                dobbyinitpath = '/usr/libexec/DobbyInit'
 
-        # Add DobbyInit to start of arguments
-        self.oci_config['process']['args'].insert(0, dobbyinitpath)
+            # Add DobbyInit to start of arguments
+            self.oci_config['process']['args'].insert(0, dobbyinitpath)
 
-        # We'll need to mount DobbyInit into the container so we can actually use it
-        self._add_bind_mount(
-            dobbyinitpath, dobbyinitpath, self.createmountpoints)
+            # We'll need to mount DobbyInit into the container so we can actually use it
+            self._add_bind_mount(
+                dobbyinitpath, dobbyinitpath, self.createmountpoints)
 
         # Add platform envvars
         for envvar in self.platform_cfg.get('envvar'):
@@ -771,6 +779,11 @@ class BundleProcessor:
 
     # ==========================================================================
     def _process_network(self):
+        if self.crun_only:
+            if self.app_metadata.get('network'):
+                logger.warning("App metadata 'network' section ignored for crun")
+            return
+
         # If app needs networking, add the plugin
         # The network settings in app metadata mirrors the plugin config
         # so can just set directly
@@ -804,6 +817,11 @@ class BundleProcessor:
     def _process_storage(self):
         """Adds the RDK storage plugin to the config and creates any tmpfs mounts
         """
+        if self.crun_only:
+            if self.app_metadata.get('storage'):
+                logger.warning("App metadata 'storage' section ignored for crun")
+            return
+
         logger.debug("Processing storage")
 
         storage_settings = self.app_metadata.get('storage')
@@ -917,12 +935,17 @@ class BundleProcessor:
     def _process_logging(self):
         """Adds the logging plugin to the config to set up container logs
         """
-        logger.debug("Configuring logging")
+        if self.crun_only:
+            if self.platform_cfg.get('logging'):
+                logger.warning("Platform 'logging' section ignored for crun")
+            return
 
         if not self.platform_cfg.get('logging'):
             logger.info(
                 "Platform does not contain logging options - container will not produce any logs")
             return
+
+        logger.debug("Configuring logging")
 
         self.oci_config['process']['terminal'] = True
         logging_plugin = {}
@@ -983,6 +1006,10 @@ class BundleProcessor:
                     dynamic_devices.append(dev['path'])
 
             if len(dynamic_devices) == 0:
+                return
+
+            if self.crun_only:
+                logger.warning("Platform gpu 'dynamic' section ignored for crun")
                 return
 
             devicemapper_plugin = {
