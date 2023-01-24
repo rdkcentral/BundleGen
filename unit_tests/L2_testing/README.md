@@ -52,7 +52,7 @@ File name should consists of platform name
 * Run the L2 test using the run_L2_test.py file.
 ```console
     $ cd unit_tests/L2_testing
-    $ python run_L2_test.py -a appname
+    $ python run_L2_test.py -a platformname
     Ex:  python run_L2_test.py -t rpi3_reference
 ```
 ## For particular app and platform
