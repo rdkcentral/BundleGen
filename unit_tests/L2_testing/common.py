@@ -1,7 +1,7 @@
 # If not stated otherwise in this file or this component's license file the
 # following copyright and licenses apply:
 #
-# Copyright 2020 Consult Red
+# Copyright 2021 RDK Management
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,24 +15,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import setuptools
+#Description : To retrieve the name of the directory and adding "cases" to the directory.
 
-setuptools.setup(
-    name="bundlegen",
-    version='0.1',
-    long_description="RDK Component to generate extended OCI bundle*'s from OCI Images, ready to be run by Dobby",
-    packages=setuptools.find_packages(),
-    install_requires=[
-        'click',
-        'loguru',
-        'humanfriendly',
-        'jsonschema'
-    ],
-    entry_points='''
-        [console_scripts]
-        bundlegen=bundlegen.cli.main:cli
-        bundlegen-cli=bundlegen.cli.main:cli
-        bundlegen-rabbitmq=bundlegen.rabbitmq.main:cli
-    ''',
-    python_requires='>=3.7',
-)
+import sys
+import unittest
+import os
+
+def setup_sys_path():
+    directory = os.path.dirname(os.path.abspath(__file__))
+class TestBase(unittest.TestCase):
+    def setUp(self):
+        directory = os.path.dirname(os.path.abspath(__file__))
+        self.cases_path = os.path.join(directory, 'cases')

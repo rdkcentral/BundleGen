@@ -71,8 +71,9 @@ def cli(verbose):
                                   Default mode is 'normal'. When apiversion info not available the effect is the same as mode 'host'""")
 @click.option('-r', '--createmountpoints', required=False, help='Create mount points in rootfs. Main usage for platforms with RO filesystem.', is_flag=True)
 @click.option('-x', '--appid', required=False, help='Optional. Application id. Can be used to override the id inside the metadata.')
+@click.option('-u', '--crun', required=False, help='crun compatible bundle without Dobby', is_flag=True)
 # @click.option('--disable-lib-mounts', required=False, help='Disable automatically bind mounting in libraries that exist on the STB. May increase bundle size', is_flag=True)
-def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, yes, nodepwalking, libmatchingmode, createmountpoints, appid):
+def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, yes, nodepwalking, libmatchingmode, createmountpoints, appid, crun):
     """Generate an OCI Bundle for a specified platform
     """
 
@@ -94,6 +95,12 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
 
     if not selected_platform.found_config():
         logger.error(f"Could not find config for platform {platform}")
+        sys.exit(1)
+
+    # Validate platform config with JSON schema
+    success = selected_platform.validate_platform_config()
+    if not success:
+        logger.error("Validation of platform config FAILED with schema")
         sys.exit(1)
 
     # Download the image to a temp directory
@@ -151,7 +158,7 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
 
     # Begin processing. Work in the output dir where the img was unpacked to
     processor = BundleProcessor(
-        selected_platform.get_config(), outputdir, app_metadata_dict, nodepwalking, libmatchingmode, createmountpoints)
+        selected_platform.get_config(), outputdir, app_metadata_dict, nodepwalking, libmatchingmode, createmountpoints, crun)
     if processor == False:
         sys.exit(1)
 
@@ -159,6 +166,11 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
         # Not compatible - delete any work done so far
         shutil.rmtree(outputdir)
         sys.exit(2)
+
+    success = processor.validate_app_metadata_config()
+    if not success:
+        logger.error("Validation of app metadata FAILED with schema")
+        sys.exit(1)
 
     success = processor.begin_processing()
 

@@ -1,13 +1,5 @@
 {
     "platformName": "vagrant",
-    "os": "linux",
-    "arch": {
-        "arch": "amd64"
-    },
-    "rdk": {
-        "version": "2020Q4",
-        "supportedFeatures": []
-    },
     "hardware": {
         "graphics": false,
         "maxRam": "4096M"

@@ -1,0 +1,71 @@
+{
+    "$schema": "http://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+        "id": {"type": "string"},
+        "type": {"type": "string"},
+        "version": {"type": "string"},
+        "description": {"type": "string"},
+        "priority": {"type": "string"},
+        "graphics": {"type": "boolean"},
+        "network": {
+            "type": "object",
+            "properties": {
+                "type": {"type": "string"}
+            },
+            "required": ["type"]
+        },
+        "storage": {"type": "object"},
+        "resources": {
+            "type": "object",
+            "properties": {
+                "ram": {"type": "string"},
+                "gpu": {"type": "string"}
+            },
+            "required": ["ram"]
+        },
+        "features": {
+            "type": "array",
+            "items": {}
+        },
+        "mounts": {
+            "type": "array",
+            "items": {}
+        },
+        "thunder": {
+            "type": "object",
+            "properties": {
+                "bearerUrl": {"type": "string"},
+                "trusted": {"type": "boolean"},
+                "connLimit": {"type": "integer"}
+            }
+        },
+        "ipc": {
+            "type": "object",
+            "properties": {
+                "enable": {"type":"boolean"}
+            }
+        },
+        "minidump": {
+            "type": "object",
+            "properties": {
+                "enable": {"type":"boolean"}
+            }
+        },
+        "oomcrash": {
+            "type": "object",
+            "properties": {
+                "enable": {"type":"boolean"}
+            }
+        },
+        "priority": {"type": "string"}
+    },
+    "required": [
+        "id",
+        "type",
+        "graphics",
+        "network",
+        "storage",
+        "resources"
+    ]
+}
