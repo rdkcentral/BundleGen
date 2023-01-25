@@ -127,7 +127,7 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
     if appmetadata:
         # If Appmetadata is specified in /unittest/L2_testing choosing that appmetadata.
         if not os.path.exists(appmetadata):
-            # If given appmetadata is not present.
+            # If given appmetadata is not present in the above mentioned path.
             logger.error(f'App metadata file {appmetadata} does not exist')
             sys.exit(1)
         else:
