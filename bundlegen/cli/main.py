@@ -131,7 +131,7 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
             logger.error(f'App metadata file {appmetadata} does not exist')
             sys.exit(1)
         else:
-            # If given appmetadata is present.
+            # Take metadata from user provided path  
             with open(appmetadata) as metadata:
                 logger.debug(f"Loading metadata from {appmetadata}")
                 app_metadata_dict = json.load(metadata)
