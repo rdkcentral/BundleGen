@@ -136,7 +136,7 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
                 logger.debug(f"Loading metadata from {appmetadata}")
                 app_metadata_dict = json.load(metadata)
     elif metadata_from_image:
-        # If Appmetadata is not specified, taking from oci image.
+        # Take metadata from image.
         app_metadata_dict = metadata_from_image
         img_unpacker.delete_img_app_metadata()
     else:
