@@ -125,13 +125,13 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
 
     app_metadata_dict = {}
     if appmetadata:
-        # If Appmetadata is specified in /unittest/L2_testing choosing that appmetadata.
+        # User provided the App metadata path.
         if not os.path.exists(appmetadata):
-            # If given appmetadata is not present in the above mentioned path.
+            # App metadata is not present in the user provided path.
             logger.error(f'App metadata file {appmetadata} does not exist')
             sys.exit(1)
         else:
-            # Take metadata from user provided path  
+            # Take metadata from user provided path.
             with open(appmetadata) as metadata:
                 logger.debug(f"Loading metadata from {appmetadata}")
                 app_metadata_dict = json.load(metadata)
