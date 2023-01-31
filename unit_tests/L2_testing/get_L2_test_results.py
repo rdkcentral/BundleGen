@@ -17,8 +17,8 @@
 
 from loguru import logger
 
-result = open("L2_test_results.txt", "w")
-result.write("SNo\tTest Name (Results)\t\tReason\n")
+result = open("L2_test_results.txt", "a")
+result.write("\nSNo\tTest Name(Results)\t\tReason\n")
 result.write("---\t-------------------\t\t------")
 result.close()
 
@@ -33,7 +33,7 @@ class add_test_results:
         total = total+1
         global result
         result = open("L2_test_results.txt", "a")
-        result.write("\n\n%d\t" %total)
+        result.write("\n%d\t" %total)
         result.write("%s" %(self._testMethodName))
         result.close()
 
@@ -41,7 +41,7 @@ class add_test_results:
         logger.debug("Test is Passed...")
         global result
         result = open("L2_test_results.txt", "a")
-        result.write("(PASSED)\t")
+        result.write("(PASSED)\n")
         result.close()
         global passed
         passed=passed+1
@@ -61,16 +61,10 @@ class add_test_results:
        logger.debug("Passed = %s" %passed)
        logger.debug("Failed = %s" %(total-passed))
        global result
-       result = open("L2_test_results.txt", "r")
-       content = result.read()
-       result.close()
-       result = open("L2_test_results.txt", "w")
-       result.write("TEST RESULTS\n")
+       result = open("L2_test_results.txt", "a")
+       result.write("\nTEST RESULTS\n")
        result.write("============")
        result.write("\nTOTAL TESTS: %d\n" %(total))
        result.write("PASSED: %d\n" %(passed))
-       result.write("FAILED: %d\n" %(total-passed))
-       result.write("\nTEST DETAILS")
-       result.write("\n============\n")
-       result.write(content)
+       result.write("FAILED: %d\n\n" %(total-passed))
        result.close()

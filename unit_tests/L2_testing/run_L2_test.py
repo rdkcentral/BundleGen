@@ -22,41 +22,73 @@ import tarfile
 import shutil
 from bundlegen.core.utils import Utils
 from loguru import logger
+if os.path.exists("L2_test_results.txt"):
+    os.remove("L2_test_results.txt")
+platform = ['raspberrypi3','raspberrypi4','qemux']
 parse = argparse.ArgumentParser()
+parse.add_argument("-t")
 parse.add_argument("-a")
-parse.add_argument("-p")
 args = parse.parse_args()
-if args.a and args.p:
-    os.chdir("oci_images")
-    if os.path.isfile(''+args.a+'-oci.tar'):
-        file = tarfile.open(''+args.a+'-oci.tar')
-        if os.path.isdir(''+args.a+'-oci'):
-            shutil.rmtree(''+args.a+'-oci')
-        file.extractall(''+args.a+'-oci')
-        file.close()
+if args.t:
+    platform_template = args.t
+else:
+    platform_template = "rpi3_reference_vc4_dunfell"
+oci_images_list = os.listdir("oci_images")
+if (len(oci_images_list)) == 0:
+    logger.error("No oci_image was present inside oci_images folder")
+    sys.exit(1)
+result = open("L2_test_results.txt", "w")
+result.close()
+for i in oci_images_list:
+    j = i.split("-")
+    app = j[0]
+    for k in j:
+        if k in platform:
+            platform_name = k
+            break
+        elif k == "oci.tar":
+            logger.error("File name should consists of platform name")
+            sys.exit(1)
+        else:
+            if k!="dac":
+                app = app+"-"+k
+    appname = app
+    print(appname)
+    print(platform_name)
+    if args.a:
+        if args.a == appname:
+           app_name = args.a
+        else:
+            continue
     else:
-        logger.error('Oci Image for '+args.a+' App is not present inside oci_images folder')
-        sys.exit(1)
+        app_name = appname
+    os.chdir("oci_images")
+    if os.path.isfile(i):
+        file = tarfile.open(i)
+        if os.path.isdir(''+app_name+'-oci'):
+            shutil.rmtree(''+app_name+'-oci')
+        file.extractall(''+app_name+'-oci')
+        file.close()
     os.chdir("..")
     os.mkdir("bundlegen_images")
     os.chdir("../..")
-    if os.path.isfile(''+args.a+'-bundle.tar.gz'):
-        os.remove(''+args.a+'-bundle.tar.gz')
-    return_value = os.system('bundlegen generate -y --platform '+args.p+' oci:./unit_tests/L2_testing/oci_images/'+args.a+'-oci:latest ./'+args.a+'-bundle')
+    if os.path.isfile(''+app_name+'-bundle.tar.gz'):
+        os.remove(''+app_name+'-bundle.tar.gz')
+    return_value = os.system('bundlegen generate -y --platform '+platform_template+' oci:./unit_tests/L2_testing/oci_images/'+app_name+'-oci:latest ./'+app_name+'-bundle')
     if ( (return_value >> 8) != 0):
         os.chdir("unit_tests/L2_testing")
         shutil.rmtree("bundlegen_images")
         sys.exit(1)
-    file = tarfile.open(''+args.a+'-bundle.tar.gz')
+    file = tarfile.open(''+app_name+'-bundle.tar.gz')
     os.chdir("unit_tests/L2_testing/bundlegen_images")
-    file.extractall(''+args.a+'-bundle')
+    file.extractall(''+app_name+'-bundle')
     file.close()
     os.chdir("..")
     oci_images_dir_path = os.chdir("oci_images")
     oci_images_path = os.getcwd()
-    appname=str(args.a)
+    appname=str(app_name)
     # source OCI Image(tar image)
-    oci_image=appname+"-oci."+"tar"
+    oci_image= i
     src="oci_image_untar"
     #untaring OCI image and pasting in ./dac-image-wayland-egl-test directory
     oci_tar = tarfile.open(oci_image)
@@ -81,14 +113,17 @@ if args.a and args.p:
     if(os.path.isfile(app_metadata_file)):
         logger.debug("App Metadata extracted from Oci Image successfully...")
     os.chdir("..")
-    return_value = os.system('python test_bundle.py '+args.a +" "+args.p)
+    result = open("L2_test_results.txt", "a")
+    result.write("APP_NAME : %s" %(app_name))
+    result.write("  PLATFORM_NAME : %s\n" %(platform_template))
+    result.write("TEST DETAILS")
+    result.write("\n============")
+    result.close()
+    value = os.system('python test_bundle.py '+app_name +" "+platform_template)
     os.chdir("oci_images")
-    shutil.rmtree(''+args.a+'-oci')
+    shutil.rmtree(''+app_name+'-oci')
     os.chdir("..")
     shutil.rmtree("bundlegen_images")
     shutil.rmtree("metadatas")
-    if ( (return_value >> 8) != 0):
+    if ( (value >> 8) != 0):
        sys.exit(1)
-else:
-    logger.error("\n usage: run_L2_test.py [-h] [-a App_Name] [-p Platform_Name] \n")
-    sys.exit(1)
