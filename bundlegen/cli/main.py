@@ -126,6 +126,7 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
     app_metadata_dict = {}
     if appmetadata:
         # User provided the App metadata path.
+        logger.info(f"Selecting User Provided appmetadata path {appmetadata}")
         if not os.path.exists(appmetadata):
             # App metadata is not present in the user provided path.
             logger.error(f'App metadata file {appmetadata} does not exist')
@@ -136,6 +137,7 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
                 logger.debug(f"Loading metadata from {appmetadata}")
                 app_metadata_dict = json.load(metadata)
     elif metadata_from_image:
+        logger.info(f"Selecting appmetadata from ociimage")
         # Take metadata from image.
         app_metadata_dict = metadata_from_image
         img_unpacker.delete_img_app_metadata()
