@@ -124,34 +124,28 @@ def generate(image, outputdir, platform, searchpath, creds, ipk, appmetadata, ye
     appmetadata = os.path.abspath(appmetadata) if appmetadata else None
 
     app_metadata_dict = {}
-    if not metadata_from_image and not appmetadata:
+    if appmetadata:
+        # User provided the App metadata path.
+        logger.info(f"Selecting User Provided appmetadata path {appmetadata}")
+        if not os.path.exists(appmetadata):
+            # App metadata is not present in the user provided path.
+            logger.error(f'App metadata file {appmetadata} does not exist')
+            sys.exit(1)
+        else:
+            # Take metadata from user provided path.
+            with open(appmetadata) as metadata:
+                logger.debug(f"Loading metadata from {appmetadata}")
+                app_metadata_dict = json.load(metadata)
+    elif metadata_from_image:
+        logger.info(f"Selecting appmetadata from ociimage")
+        # Take metadata from image.
+        app_metadata_dict = metadata_from_image
+        img_unpacker.delete_img_app_metadata()
+    else:
         # No metadata at all
         logger.error(
             f"Cannot find app metadata file in OCI image and none provided to BundleGen")
         sys.exit(1)
-
-    if not metadata_from_image and appmetadata:
-        # No metadata in image, but custom file provided
-        if not os.path.exists(appmetadata):
-            logger.error(f'App metadata file {appmetadata} does not exist')
-            sys.exit(1)
-        with open(appmetadata) as metadata:
-            logger.debug(f"Loading metadata from {appmetadata}")
-            app_metadata_dict = json.load(metadata)
-    elif metadata_from_image and appmetadata:
-        # Got two options for metadata, which one do we want?
-        if click.confirm("Metadata found in image, but custom metadata provided. Use custom metadata?"):
-            with open(appmetadata) as metadata:
-                logger.debug(f"Loading metadata from {appmetadata}")
-                app_metadata_dict = json.load(metadata)
-        else:
-            app_metadata_dict = metadata_from_image
-
-        img_unpacker.delete_img_app_metadata()
-    else:
-        # Take metadata from image
-        app_metadata_dict = metadata_from_image
-        img_unpacker.delete_img_app_metadata()
 
     if appid:
          app_metadata_dict['id'] = appid
