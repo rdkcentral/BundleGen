@@ -64,3 +64,12 @@ File name should consists of platform name
     $ python run_L2_test.py -a appname -t platformname
     Ex:  python run_L2_test.py -a dac-image-wayland-egl-test -t rpi3_reference
 ```
+## For user specified app metadata
+* Required Parameters to run L2 test are Appname and App Metadata
+* App metadata should be named as dac-image-<Appname>-appmetadata
+* Run the L2 test using the run_L2_test.py file.
+```console
+    $ cd unit_tests/L2_testing
+    $ python run_L2_test.py -m appmetadata -a appname
+    Ex:  python run_L2_test.py.sh -m "dac-image-wayland-egl-test-appmetadata" -a "dac-image-wayland-egl-test"
+```

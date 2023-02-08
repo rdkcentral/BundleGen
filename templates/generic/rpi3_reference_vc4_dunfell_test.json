@@ -1,0 +1,309 @@
+{
+    "platformName": "rpi3_reference",
+    "os": "linux",
+    "arch": {
+        "arch": "arm",
+        "variant": "v7"
+    },
+    "dobby":{
+        "generateCompliantConfig": false,
+        "dobbyInitPath":"/usr/libexec/DobbyInit",
+        "hookLauncherExecutablePath": "/usr/bin/DobbyPluginLauncher",
+        "hookLauncherParametersPath": "/opt/dac_apps/data/{id}/dac/"
+    },
+    "rdk": {
+        "version": "2020Q4",
+        "supportedFeatures": [
+            "Controller",
+            "DeviceInfo",
+            "Monitor",
+            "OCDM",
+            "TraceControl",
+            "WifiManager",
+            "com.comcast.CoPilot",
+            "com.comcast.DeviceProvisioning",
+            "com.comcast.FrameRate",
+            "com.comcast.HdcpProfile",
+            "com.comcast.HdmiInput",
+            "com.comcast.StateObserver",
+            "com.comcast.StorageManager",
+            "org.rdk.ActivityMonitor",
+            "org.rdk.DeviceDiagnostics",
+            "org.rdk.DisplaySettings",
+            "org.rdk.FrontPanel",
+            "org.rdk.HomeNetworking",
+            "org.rdk.LoggingPreferences",
+            "org.rdk.Network",
+            "org.rdk.OCIContainer",
+            "org.rdk.Proxies",
+            "org.rdk.SleepTimer",
+            "org.rdk.TTSResource",
+            "org.rdk.TTSSettings",
+            "org.rdk.Timer",
+            "org.rdk.UserPreferences",
+            "org.rdk.Warehouse"
+        ]
+    },
+    "hardware": {
+        "graphics": true,
+        "maxRam": "120M"
+    },
+    "storage": {
+        "persistent": {
+            "storageDir": "/opt/dac_apps/data/0/dac",
+            "maxSize": "100M",
+            "size": "23",
+            "path": "/var/log/",
+            "fstype": "ext4"
+        }
+    },
+    "ipc": {
+        "session": "/path/to/dbus/session",
+        "system": "/var/run/dbus/system_bus_socket",
+        "debug": "/path/to/dbus/logfile"
+    },
+    "minidump": {
+        "destinationPath": "/opt/minidumps"
+    },
+    "oomcrash": {
+        "path": "/opt/dobby_container_crashes"
+    },
+    "gpu": {
+        "extraMounts": [
+            {
+                "source": "/usr/share/X11/xkb",
+                "destination": "/usr/share/X11/xkb",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "nosuid",
+                    "nodev",
+                    "ro",
+                    "X-mount.mkdir"
+                ]
+            },
+            {
+                "source": "/etc/ssl/certs",
+                "destination": "/etc/ssl/certs",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "nosuid",
+                    "nodev",
+                    "ro",
+                    "X-mount.mkdir"
+                ]
+            },
+            {
+                "source": "/usr/share/ca-certificates",
+                "destination": "/usr/share/ca-certificates",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "nosuid",
+                    "nodev",
+                    "ro",
+                    "X-mount.mkdir"
+                ]
+            },
+            {
+                "source": "/tmp/rialto-0",
+                "destination": "/tmp/rialto-0",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "rw",
+                    "X-dobby.optional"
+                ]
+            }
+        ],
+        "envvar": [
+            "LD_PRELOAD=/usr/lib/libGLESv2.so.2:/usr/lib/libwayland-egl.so.1"
+        ],
+        "devs": [
+            {
+                "type": "c",
+                "path": "/dev/vchiq",
+                "major": 243,
+                "minor": 0,
+                "access": "rw",
+                "dynamic": true
+            },
+            {
+                "type": "c",
+                "path": "/dev/snd/controlC0",
+                "major": 116,
+                "minor": 0,
+                "access": "rw",
+                "dynamic": true
+            },
+            {
+                "type": "c",
+                "path": "/dev/snd/seq",
+                "major": 116,
+                "minor": 1,
+                "access": "rw",
+                "dynamic": true
+            },
+            {
+                "type": "c",
+                "path": "/dev/snd/pcmC0D0p",
+                "major": 116,
+                "minor": 16,
+                "access": "rw",
+                "dynamic": true
+            },
+            {
+                "type": "c",
+                "path": "/dev/snd/pcmC0D1p",
+                "major": 116,
+                "minor": 17,
+                "access": "rw",
+                "dynamic": true
+            },
+            {
+                "type": "c",
+                "path": "/dev/snd/timer",
+                "major": 116,
+                "minor": 33,
+                "access": "rw",
+                "dynamic": true
+            },
+            {
+                "type": "c",
+                "path": "/dev/dri/card0",
+                "major": 226,
+                "minor": 0,
+                "access": "rw",
+                "dynamic": true
+            }
+        ],
+        "gfxLibs": [
+            {
+                "src": "/usr/lib/dri/vc4_dri.so",
+                "dst": "/usr/lib/dri/vc4_dri.so"
+            },
+            {
+                "src": "/usr/lib/libEGL.so.1",
+                "dst": "/usr/lib/libEGL.so"
+            },
+            {
+                "src": "/usr/lib/libEGL.so.1",
+                "dst": "/usr/lib/libEGL.so.1"
+            },
+            {
+                "src": "/usr/lib/libGLESv2.so.2",
+                "dst": "/usr/lib/libGLESv2.so"
+            },
+            {
+                "src": "/usr/lib/libGLESv2.so.2",
+                "dst": "/usr/lib/libGLESv2.so.2"
+            },
+            {
+                "src": "/usr/lib/libwayland-egl.so.1",
+                "dst": "/usr/lib/libwayland-egl.so"
+            },
+            {
+                "src": "/usr/lib/libwayland-egl.so.1",
+                "dst": "/usr/lib/libwayland-egl.so.0"
+            },
+            {
+                "src": "/usr/lib/libwayland-egl.so.1",
+                "dst": "/usr/lib/libwayland-egl.so.1"
+            },
+            {
+                "src": "/usr/lib/libessos.so.0",
+                "dst": "/usr/lib/libessos.so.0"
+            }
+        ]
+    },
+    "mounts": [
+		{
+			"destination": "/proc",
+			"type": "proc",
+			"source": "proc"
+		},
+		{
+			"destination": "/dev",
+			"type": "tmpfs",
+			"source": "tmpfs",
+			"options": ["nosuid", "strictatime", "mode=755", "size=65536k"]
+		}
+	],
+    "network": {
+        "options": [
+            "nat",
+            "open",
+            "private"
+        ]
+    },
+    "envvar": [
+        "XDG_RUNTIME_DIR=/tmp"
+    ],
+    "resourceLimits": [
+        {
+            "type": "RLIMIT_NPROC",
+            "hard": 300,
+            "soft": 300
+        },
+        {
+            "type": "RLIMIT_RTPRIO",
+            "hard": 6,
+            "soft": 6
+        }
+    ],
+    "disableUserNamespacing": true,
+    "logging": {
+        "mode": "file",
+        "logDir": "/var/log"
+    },
+	"usersAndGroups": {
+		"user":{
+			"uid":0,
+			"gid":0
+		},
+		"uidMap": [
+			{
+				"containerID": 1,
+				"hostID": 234,
+				"size": 45
+			},
+			{
+				"containerID": 2,
+				"hostID": 434,
+				"size": 55
+			}
+		],
+		"gidMap": [
+			{
+				"containerID": 3,
+				"hostID": 254,
+				"size": 15
+			},
+			{
+				"containerID": 7234,
+				"hostID": 834,
+				"size": 25
+			}
+		]		
+	},
+	"hostname": "/opt/{id}/dac_apps",
+    "root": {
+        "path": "/opt/dac_apps/data/0/dac/{id}/106f5af216bf05f2468333a63fef918cb95cbfa79da8c2171ccf99f6e769bd84.img",
+        "readonly": true
+    },
+    "seccomp": {
+		"defaultAction": "SCMP_ACT_ALLOW",
+		"architectures": ["SCMP_ARCH_X86","SCMP_ARCH_X32"],
+		"syscalls": [{
+			"names": [
+				"getcwd",
+				"chmod"
+			],
+			"action": "SCMP_ACT_ERRNO"
+			}
+		]
+    },
+    "apparmorProfile": "profilename",
+    "capabilities": ["CAP_CHOWN", "CAP_FSETID", "CAP_NET_BIND_SERVICE", "CAP_AUDIT_WRITE", "CAP_NET_RAW", "CAP_KILL", "CAP_SETPCAP", "CAP_SETUID", "CAP_SETGID"]
+}
