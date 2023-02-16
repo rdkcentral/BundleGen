@@ -127,7 +127,12 @@ class BundleProcessor:
         self._process_storage()
         self._process_logging()
         self._process_dynamic_devices()
-
+        self._process_ipc()
+        self._process_minidump()
+        self._process_oomcrash()
+        self._process_thunder()
+        self._process_gpu_plugin()
+        
         ## After all plugins are processed
         self._process_hooks()
 
@@ -985,7 +990,7 @@ class BundleProcessor:
             logging_plugin = {
                 "required": True,
                 "data": {
-                    "sink": "devNull"
+                    "sink": "devnull"
                 }
             }
 

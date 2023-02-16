@@ -8,7 +8,7 @@ Some application options are defined within the OCI Image, such as the entrypoin
 * `type` (string, REQUIRED). The mime-type of the application. **The exact MIME types are subject to change**. Currently, for native DAC apps, use `application/vnd.rdk-app.dac.native`
 * `graphics` (boolean, REQUIRED). Set to true if the application requires graphics output
 * `network` (object, REQUIRED). Network settings for the application. The object should match the `data` section of the Dobby Networking plugin as defined [here](https://github.com/rdkcentral/Dobby/tree/master/rdkPlugins/Networking/README.md)
-* `storage` (object, REQUIRED). 
+* `storage` (object, REQUIRED).
   * `persistent` (array of objects, REQUIRED). Configure persistent, read/write storage for the application. Each object should have the following options
     * `size` (string, REQUIRED). Amount of storage required
     * `path` (string, REQUIRED). Path where the storage should be mounted inside the container
@@ -17,10 +17,15 @@ Some application options are defined within the OCI Image, such as the entrypoin
     * `path` (string, REQUIRED). Path where the storage should be mounted inside the container
 * `resources`
   * `ram` (string, REQUIRED). Amount of RAM required by the container
+  * `gpu` (string, OPTIONAL). Amount of GPU memory required by the container
 * `features` (array of strings, OPTIONAL). Any rdkservices/Thunder NanoServices required by the container. If the platform does not support the necessary feature, a bundle cannot be generated
 * `mounts` (array of objects, OPTIONAL). Any additional mounts from the host the container requires. Note that these mounts must exist on the platform, otherwise the container will fail to start. Each object in the array should be an OCI `Mount` object as defined [here](https://github.com/opencontainers/runtime-spec/blob/master/config.md#mounts)
 * `priority` (string, OPTIONAL). **Only used for the IPK output format**. Sets the priority value of the IPK. Defaults to `optional` if not set. It's very unlikely you will ever need to set this.
-
+* `thunder` (object, OPTIONAL). Thunder settings. The object should match the `data` section of the Thunder plugin as defined [here](https://github.com/rdkcentral/Dobby/tree/master/rdkPlugins/Thunder/README.md)
+* `minidump` (object, OPTIONAL). Minidump settings.
+  * `enable` (boolean, REQUIRED). Set to true if minidumps are required.
+* `oomcrash` (object, OPTIONAL). OOMCrash settings.
+  * `enable` (boolean, REQUIRED). Set to true if OOMCrash is required.
 ## Example
 ```json
 {
@@ -74,7 +79,8 @@ Some application options are defined within the OCI Image, such as the entrypoin
         ]
     },
     "resources": {
-        "ram": "128M"
+        "ram": "128M",
+        "gpu": "128M"
     },
     "features": [],
     "mounts": [
@@ -88,6 +94,20 @@ Some application options are defined within the OCI Image, such as the entrypoin
             ]
         }
     ],
-    "priority": "optional"
+    "priority": "optional",
+    "thunder": {
+      "bearerUrl": "http://localhost",
+      "trusted": true,
+      "connLimit": 32
+    },
+    "ipc": {
+      "enable": true
+    },
+    "minidump": {
+      "enable": true
+    },
+    "oomcrash": {
+      "enable": true
+    }
 }
 ```

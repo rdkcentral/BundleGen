@@ -743,7 +743,7 @@ class TestBundleProcessor(unittest.TestCase):
             'rdkPlugins': {'logging':
                         {"required": True,
                             "data": {
-                            "sink": "devNull"
+                            "sink": "devnull"
                             }
                         }
                     }
