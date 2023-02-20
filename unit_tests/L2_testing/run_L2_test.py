@@ -28,6 +28,7 @@ platform = ['raspberrypi3','raspberrypi4','qemux']
 parse = argparse.ArgumentParser()
 parse.add_argument("-t")
 parse.add_argument("-a")
+parse.add_argument("-m")
 args = parse.parse_args()
 if args.t:
     platform_template = args.t
@@ -53,8 +54,6 @@ for i in oci_images_list:
             if k!="dac":
                 app = app+"-"+k
     appname = app
-    print(appname)
-    print(platform_name)
     if args.a:
         if args.a == appname:
            app_name = args.a
@@ -74,7 +73,23 @@ for i in oci_images_list:
     os.chdir("../..")
     if os.path.isfile(''+app_name+'-bundle.tar.gz'):
         os.remove(''+app_name+'-bundle.tar.gz')
-    return_value = os.system('bundlegen generate -y --platform '+platform_template+' oci:./unit_tests/L2_testing/oci_images/'+app_name+'-oci:latest ./'+app_name+'-bundle')
+    if args.m and args.a:
+        if args.m == app_name+"-appmetadata":
+            if os.path.exists("unit_tests/L2_testing/"+args.m+".json"):
+                return_value = os.system('bundlegen generate -y --platform '+platform_template+' --appmetadata ./unit_tests/L2_testing/'+args.m+'.json oci:./unit_tests/L2_testing/oci_images/'+app_name+'-oci:latest ./'+app_name+'-bundle')
+            else:
+                logger.error("Appmetadata File was not present")
+                os.chdir("unit_tests/L2_testing")
+                shutil.rmtree("bundlegen_images")
+                sys.exit(1)
+        else:
+            logger.error("Metadata path was incorrect")
+            logger.info("Metadata file should be saved as "+app_name+"-appmetadata")
+            os.chdir("unit_tests/L2_testing")
+            shutil.rmtree("bundlegen_images")
+            sys.exit(1)
+    else:
+        return_value = os.system('bundlegen generate -y --platform '+platform_template+' oci:./unit_tests/L2_testing/oci_images/'+app_name+'-oci:latest ./'+app_name+'-bundle')
     if ( (return_value >> 8) != 0):
         os.chdir("unit_tests/L2_testing")
         shutil.rmtree("bundlegen_images")
@@ -83,35 +98,38 @@ for i in oci_images_list:
     os.chdir("unit_tests/L2_testing/bundlegen_images")
     file.extractall(''+app_name+'-bundle')
     file.close()
-    os.chdir("..")
-    oci_images_dir_path = os.chdir("oci_images")
-    oci_images_path = os.getcwd()
-    appname=str(app_name)
-    # source OCI Image(tar image)
-    oci_image= i
-    src="oci_image_untar"
-    #untaring OCI image and pasting in ./dac-image-wayland-egl-test directory
-    oci_tar = tarfile.open(oci_image)
-    oci_tar.extractall(src)
-    oci_tar.close()
-    dst="../metadatas"+"/"+appname+"-bundle"
-    umoci_command = f'umoci unpack --rootless --image {src} {dst}'
-    logger.debug(umoci_command)
-    success = Utils().run_process(umoci_command)
-    if(os.path.isdir(src)):
-        shutil.rmtree(src)
-    os.chdir("../metadatas")
-    app_metadata_file_path=appname+"-bundle"+"/"+"rootfs"+"/"+"appmetadata.json"
-    app_metadata_file= appname+"-appmetadata.json"
-    if(os.path.isfile(app_metadata_file)):
-        os.remove(app_metadata_file)
-        logger.debug("Old [%s] file deleted successfully" %app_metadata_file)
-    shutil.copy(app_metadata_file_path, ".")
-    if(os.path.isdir(appname+"-bundle")):
-        shutil.rmtree(appname+"-bundle")
-    os.rename('appmetadata.json', app_metadata_file)
-    if(os.path.isfile(app_metadata_file)):
-        logger.debug("App Metadata extracted from Oci Image successfully...")
+    if args.m:
+        app_metadata_file = args.m
+    else:
+        os.chdir("..")
+        oci_images_dir_path = os.chdir("oci_images")
+        oci_images_path = os.getcwd()
+        appname=str(app_name)
+        # source OCI Image(tar image)
+        oci_image= i
+        src="oci_image_untar"
+        #untaring OCI image and pasting in ./dac-image-wayland-egl-test directory
+        oci_tar = tarfile.open(oci_image)
+        oci_tar.extractall(src)
+        oci_tar.close()
+        dst="../metadatas"+"/"+appname+"-bundle"
+        umoci_command = f'umoci unpack --rootless --image {src} {dst}'
+        logger.debug(umoci_command)
+        success = Utils().run_process(umoci_command)
+        if(os.path.isdir(src)):
+            shutil.rmtree(src)
+        os.chdir("../metadatas")
+        app_metadata_file_path=appname+"-bundle"+"/"+"rootfs"+"/"+"appmetadata.json"
+        app_metadata_file= appname+"-appmetadata.json"
+        if(os.path.isfile(app_metadata_file)):
+            os.remove(app_metadata_file)
+            logger.debug("Old [%s] file deleted successfully" %app_metadata_file)
+        shutil.copy(app_metadata_file_path, ".")
+        if(os.path.isdir(appname+"-bundle")):
+            shutil.rmtree(appname+"-bundle")
+        os.rename('appmetadata.json', app_metadata_file)
+        if(os.path.isfile(app_metadata_file)):
+            logger.debug("App Metadata extracted from Oci Image successfully...")
     os.chdir("..")
     result = open("L2_test_results.txt", "a")
     result.write("APP_NAME : %s" %(app_name))
@@ -124,6 +142,7 @@ for i in oci_images_list:
     shutil.rmtree(''+app_name+'-oci')
     os.chdir("..")
     shutil.rmtree("bundlegen_images")
-    shutil.rmtree("metadatas")
+    if  os.path.isdir('metadatas'):
+        shutil.rmtree("metadatas")
     if ( (value >> 8) != 0):
        sys.exit(1)

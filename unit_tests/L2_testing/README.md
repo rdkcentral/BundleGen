@@ -71,5 +71,5 @@ File name should consists of platform name
 ```console
     $ cd unit_tests/L2_testing
     $ python run_L2_test.py -m appmetadata -a appname
-    Ex:  python run_L2_test.py.sh -m "dac-image-wayland-egl-test-appmetadata" -a "dac-image-wayland-egl-test"
+    Ex:  python run_L2_test.py -m "dac-image-wayland-egl-test-appmetadata" -a "dac-image-wayland-egl-test"
 ```

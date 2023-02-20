@@ -21,7 +21,6 @@ import unittest
 import os
 import json
 import sys
-import re
 import humanfriendly
 
 from loguru import logger
@@ -141,14 +140,18 @@ else:
 def load_json(file_path):
     # open JSON file and parse contents
     fh = open(file_path, "r")
-    data = json.load(fh)
-    fh.close()
+    try:
+        data = json.load(fh)
+    finally:
+        fh.close()
     return data
 
 def exists(obj, chain):
     _key = chain.pop(0)
     if _key in obj:
         return exists(obj[_key], chain) if chain else obj[_key]
+    else:
+        return None
 
 class TestBundleData(TestBase):
     def setUp(self):
@@ -202,7 +205,6 @@ class TestBundleData(TestBase):
 
         if platform_graphics:
             platform_dynamic_devices = exists(platform_cfg, ['gpu','devs'])
-
             for dev in platform_dynamic_devices:
                 if 'dynamic' in dev and dev['dynamic']:
                     global platform_dynamic_devices_info
@@ -210,11 +212,9 @@ class TestBundleData(TestBase):
 
             if len(platform_dynamic_devices_info) != 0:
                 final_config_devicemapper_data = exists(finalconfigdata,['rdkPlugins','devicemapper','data','devices'])
-
                 for key in final_config_devicemapper_data:
                     global final_config_devicemapper_data_info
                     final_config_devicemapper_data_info.append(key)
-
                 flag = 0
                 if(set(platform_dynamic_devices_info).issubset(set(final_config_devicemapper_data_info))):
                     flag = 1
@@ -273,12 +273,10 @@ class TestBundleData(TestBase):
             final_config_seccomp_defaultaction = exists(finalconfigdata,['linux','seccomp','defaultAction'])
             final_config_seccomp_architectures = exists(finalconfigdata,['linux','seccomp','architectures'])
             self.assertEqual(final_config_seccomp_defaultaction,platform_seccomp_defaultaction)
-
             flag = 0
             if(set(platform_seccomp_architectures).issubset(set(final_config_seccomp_architectures))):
                 flag = 1
             self.assertEqual(flag,1)
-
             platform_seccomp_sys = exists(platform_cfg, ['seccomp','syscalls'])
             for key in platform_seccomp_sys:
                 global platform_seccomp_sys_info
@@ -320,12 +318,10 @@ class TestBundleData(TestBase):
                 final_config_uid = exists(finalconfigdata,['process','user','uid'])
                 if final_config_uid is not None:
                     self.assertEqual(final_config_uid,platform_uid)
-
             if platform_gid is not None:
                 final_config_gid = exists(finalconfigdata,['process','user','gid'])
                 if final_config_gid is not None:
                     self.assertEqual(final_config_gid,platform_gid)
-
             if platform_gids is not None:
                 final_config_gids = exists(finalconfigdata,['process','user','additionalGids'])
                 flag = 0
@@ -405,17 +401,19 @@ class TestBundleData(TestBase):
     def test_verify_final_capabilities(self):
         #changes related to capabilities
         if exists(platform_cfg,['capabilities']) is not None:
-            global meta_capabilities
-            global meta_capabilities_drop
-            global meta_capabilities_add
-            if exists(appmetadata,['capabilities','add']) is not None:
-                meta_capabilities_add = exists(appmetadata,['capabilities','add'])
-            if exists(appmetadata,['capabilities','drop']) is not None:
-                meta_capabilities_drop = exists(appmetadata,['capabilities','drop'])
-            if not meta_capabilities_add and not meta_capabilities_drop:
-                meta_capabilities = exists(platform_cfg,['capabilities'])
+            meta_capabilities = exists(platform_cfg,['capabilities'])
         else:
             meta_capabilities = capabilities_b
+
+        if exists(appmetadata,['capabilities']) is not None:
+            if exists(appmetadata,['capabilities','add']) is not None:
+                meta_capabilities_add = exists(appmetadata,['capabilities','add'])
+                for add_caps in meta_capabilities_add:
+                    meta_capabilities.append(add_caps)
+            if exists(appmetadata,['capabilities','drop']) is not None:
+                meta_capabilities_drop = exists(appmetadata,['capabilities','drop'])
+                for rem_caps in meta_capabilities_drop:
+                    meta_capabilities.remove(rem_caps)
 
         final_capabilities_bounding = exists(finalconfigdata,['process','capabilities','bounding'])
         final_capabilities_permitted = exists(finalconfigdata,['process','capabilities','permitted'])
@@ -423,18 +421,6 @@ class TestBundleData(TestBase):
         final_capabilities_inheritable = exists(finalconfigdata,['process','capabilities','inheritable'])
         final_capabilities_ambient = exists(finalconfigdata,['process','capabilities','ambient'])
 
-        if meta_capabilities_add is not None:
-            flag = 0
-            if(set(meta_capabilities_add).issubset(set(final_capabilities_bounding)) and set(meta_capabilities_add).issubset(set(final_capabilities_permitted)) and
-            set(meta_capabilities_add).issubset(set(final_capabilities_effective)) and set(meta_capabilities_add).issubset(set(final_capabilities_inheritable)) and
-            set(meta_capabilities_add).issubset(set(final_capabilities_ambient))):
-                flag = 1
-            self.assertEqual(flag,1)
-        if meta_capabilities_drop is not None:
-            flag = 0
-            if meta_capabilities_drop not in final_capabilities_bounding and meta_capabilities_drop not in final_capabilities_permitted and meta_capabilities_drop not in final_capabilities_effective and meta_capabilities_drop not in final_capabilities_inheritable and meta_capabilities_drop not in final_capabilities_ambient:
-                flag = 1
-            self.assertEqual(flag,1)
         if meta_capabilities is not None:
             flag = 0
             if(set(meta_capabilities).issubset(set(final_capabilities_bounding)) and set(meta_capabilities).issubset(set(final_capabilities_permitted)) and
@@ -494,7 +480,7 @@ class TestBundleData(TestBase):
         if exists(platform_cfg, ['logging','limit']):
             platform_logging_limit = exists(platform_cfg, ['logging','limit'])
             final_config_logging_limit = exists(finalconfigdata,['rdkPlugins','logging','data','fileOptions','limit'])
-            self.assertEqual(final_config_logging_limit,paltform_logging_limit)
+            self.assertEqual(final_config_logging_limit,platform_logging_limit)
         elif exists(platform_cfg, ['logging','mode']) == 'journald':
             platform_logging_mode_journald = exists(platform_cfg, ['logging','mode'])
             final_config_logging_mode_journald = exists(finalconfigdata,['rdkPlugins','logging','data','sink'])
@@ -551,11 +537,9 @@ class TestBundleData(TestBase):
 
     def test_verify_optional_feild_in_final_config(self):
         logger.debug("-->Verifying feilds copied form appmata data and platform to final_config files")
-
         #changes related to main mounts
         platform_main_mounts =  exists(platform_cfg, ['mounts'])
         final_config_main_mounts =  exists(finalconfigdata,['mounts'])
-
         flag = 0
         #converting to hashable datatype,dict to string
         platform_main_mounts_string= json.dumps(platform_main_mounts)
