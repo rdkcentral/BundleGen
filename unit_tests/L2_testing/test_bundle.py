@@ -205,6 +205,7 @@ class TestBundleData(TestBase):
 
         if platform_graphics:
             platform_dynamic_devices = exists(platform_cfg, ['gpu','devs'])
+
             for dev in platform_dynamic_devices:
                 if 'dynamic' in dev and dev['dynamic']:
                     global platform_dynamic_devices_info
@@ -212,6 +213,7 @@ class TestBundleData(TestBase):
 
             if len(platform_dynamic_devices_info) != 0:
                 final_config_devicemapper_data = exists(finalconfigdata,['rdkPlugins','devicemapper','data','devices'])
+
                 for key in final_config_devicemapper_data:
                     global final_config_devicemapper_data_info
                     final_config_devicemapper_data_info.append(key)
@@ -273,10 +275,12 @@ class TestBundleData(TestBase):
             final_config_seccomp_defaultaction = exists(finalconfigdata,['linux','seccomp','defaultAction'])
             final_config_seccomp_architectures = exists(finalconfigdata,['linux','seccomp','architectures'])
             self.assertEqual(final_config_seccomp_defaultaction,platform_seccomp_defaultaction)
+
             flag = 0
             if(set(platform_seccomp_architectures).issubset(set(final_config_seccomp_architectures))):
                 flag = 1
             self.assertEqual(flag,1)
+
             platform_seccomp_sys = exists(platform_cfg, ['seccomp','syscalls'])
             for key in platform_seccomp_sys:
                 global platform_seccomp_sys_info
@@ -318,10 +322,12 @@ class TestBundleData(TestBase):
                 final_config_uid = exists(finalconfigdata,['process','user','uid'])
                 if final_config_uid is not None:
                     self.assertEqual(final_config_uid,platform_uid)
+
             if platform_gid is not None:
                 final_config_gid = exists(finalconfigdata,['process','user','gid'])
                 if final_config_gid is not None:
                     self.assertEqual(final_config_gid,platform_gid)
+
             if platform_gids is not None:
                 final_config_gids = exists(finalconfigdata,['process','user','additionalGids'])
                 flag = 0
@@ -535,7 +541,7 @@ class TestBundleData(TestBase):
             self.assertEqual(final_config_root_readonly,platform_root_readonly)
             self.assertNotEqual(final_config_root_path.find(meta_app_id),-1)
 
-    def test_verify_optional_feild_in_final_config(self):
+    def test_verify_final_config_mounts(self):
         logger.debug("-->Verifying feilds copied form appmata data and platform to final_config files")
         #changes related to main mounts
         platform_main_mounts =  exists(platform_cfg, ['mounts'])

@@ -4,6 +4,7 @@
     "properties": {
         "platformName": {"type": "string"},
         "os": {"type": "string"},
+        "apparmorProfile": {"type": "string"},
         "arch": {"$ref": "#/$defs/arch_type"},
         "rdk": {"$ref": "#/$defs/rdk_type"},
         "hardware": {"$ref": "#/$defs/hardware_type"},
@@ -22,6 +23,7 @@
         "hostname": {"type": "string"},
         "dobby": {"$ref": "#/$defs/dobby_type"},
         "logging": {"$ref": "#/$defs/logging_type"},
+        "seccomp":{"$ref": "#/$defs/seccomp_type"},
         "tarball": {"$ref": "#/$defs/tarball_type"}
     },
     "required": [
@@ -297,6 +299,29 @@
             "type" : "object",
             "properties":{
                 "path":{"type": "string"}
+            }
+        },
+        "syscalls_type":{
+            "type": "array",
+            "properties": {
+                "names": {"$ref": "#/$defs/names_type"},
+                "action": {"type": "string"}
+            }
+        },
+        "architectures_type": {
+            "type": "array",
+            "items": {"type": "string"}
+        },
+        "names_type": {
+            "type": "array",
+            "items": {"type": "string"}
+        },
+        "seccomp_type":{
+            "type": "object",
+            "properties": {
+            "defaultAction": {"type": "string"},
+            "architectures": {"$ref": "#/$defs/architectures_type"},
+            "syscalls": {"$ref": "#/$defs/syscalls_type"}
             }
         }
     }
