@@ -46,6 +46,7 @@ for i in oci_images_list:
     for k in j:
         if k in platform:
             platform_name = k
+            logger.debug("platform name are [%s] " %platform_name)
             break
         elif k == "oci.tar":
             logger.error("File name should consists of platform name")
@@ -102,8 +103,7 @@ for i in oci_images_list:
         app_metadata_file = args.m
     else:
         os.chdir("..")
-        oci_images_dir_path = os.chdir("oci_images")
-        oci_images_path = os.getcwd()
+        os.chdir("oci_images")
         appname=str(app_name)
         # source OCI Image(tar image)
         oci_image= i
@@ -116,6 +116,7 @@ for i in oci_images_list:
         umoci_command = f'umoci unpack --rootless --image {src} {dst}'
         logger.debug(umoci_command)
         success = Utils().run_process(umoci_command)
+        logger.debug(success)
         if(os.path.isdir(src)):
             shutil.rmtree(src)
         os.chdir("../metadatas")

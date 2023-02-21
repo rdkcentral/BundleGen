@@ -55,7 +55,6 @@ platform_envvars_1 = ""
 platform_resource_limits = ""
 platform_wayland_env= "westeros"
 platform_dev_list_platform = []
-platform_device_infor_1=""
 platform_generateCompliantConfig = ""
 platform_graphics = ""
 platform_mounts = ""
@@ -588,10 +587,13 @@ class TestBundleData(TestBase):
             if key == "gpu":
                 if value['devs'] is not None:
                     platform_device_infor = value['devs']
+                    for k in platform_device_infor:
+                        platform_dev_list_platform.append(k)
                 if value['envvar'] is not None:
                     platform_envvars = value['envvar']
                 if value['extraMounts'] is not None:
                     platform_mounts = value
+                    logger.debug(platform_mounts)
                 if platform_cfg.get("wayland") is not None:
                     global platform_wayland_env
                     platform_wayland_env = value
@@ -601,10 +603,6 @@ class TestBundleData(TestBase):
             if key == "resourceLimits":
                 if value is not None:
                     platform_resource_limits = value
-            if key == "gpu":
-                 platform_device_infor_1 = value['devs']
-                 for k in platform_device_infor_1:
-                    platform_dev_list_platform.append(k)
 
         #iterating through all keys in finalconfigdata i.e config.json
         for k,v in finalconfigdata.items():
