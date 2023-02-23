@@ -1,0 +1,81 @@
+{
+    "id": "com.rdk.wayland-egl-test",
+    "type": "application/vnd.rdk-app.dac.native",
+    "version": "1.0.0",
+    "description": "Simple wayland egl demo, showing green rectangle",
+    "priority": "optional",
+    "graphics": true,
+    "network": {
+        "type": "open"
+    },
+	"storage": {
+        "persistent": [
+            {
+                "size": "60M",
+                "path": "/home/private"
+            },
+			            {
+                "size": "20M",
+                "path": "/home/temp"
+            }
+        ],
+        "temp": [
+            {
+                "size": "100M",
+                "path": "/home/temp"
+            },
+            {
+                "size": "10M",
+                "path": "/var/volatile"
+            }
+        ]
+    },
+    "resources": {
+        "ram": "128M",
+		"gpu":"23"
+    },
+    "thunder": {
+        "bearerUrl": "http://localhost",
+        "trusted": true,
+        "connLimit": 32
+    },
+    "ipc": {
+        "enable": true
+    },
+    "minidump": {
+        "enable": true
+    },
+    "oomcrash": {
+        "enable": true
+    },
+    "hardware":{
+        "graphics": true
+    },
+    "capabilities": {
+		"add": ["CAP_SETGIDS"],
+        "drop": ["CAP_AUDIT_WRITE", "CAP_NET_RAW"]
+    },
+    "features": [
+		"com.comcast.CoPilot",
+		"com.comcast.DeviceProvisioning",
+		"com.comcast.FrameRate",
+		"com.comcast.HdcpProfile",
+		"com.comcast.HdmiInput",
+		"com.comcast.StateObserver",
+		"com.comcast.StorageManager",
+		"org.rdk.ActivityMonitor"
+	],
+    "mounts": [{
+        "source": "/usr/share/X11/xkb",
+        "destination": "/usr/share/X11/xkb",
+        "type": "bind",
+        "options": ["rbind", "nosuid", "nodev", "ro", "X-mount.mkdir"]
+    },
+    {
+        "source": "/etc/ssl/certs",
+        "destination": "/etc/ssl/certs",
+        "type": "bind",
+        "options": ["rbind", "nosuid", "nodev", "ro", "X-mount.mkdir"]
+    }
+    ]
+}
