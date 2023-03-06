@@ -1402,5 +1402,1172 @@ class TestBundleProcessor(unittest.TestCase):
         self.assertEqual(actual, expected)
         logger.debug("-->Test was Successfully verified")
 
+    def test_network_feild_compatilibity(self):
+        logger.debug("-->checking Platform does support Network feild output")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "graphics": True,
+            "network": {
+                "type": "open",
+                "dnsmasq": "true"
+            }
+        }
+        processor.platform_cfg = {
+            "hardware":{
+                "graphics":True
+                },
+            "network": {
+                "options": [
+                    "nat",
+                    "private"
+                ]
+            },
+            "rdk": {
+                "supportedFeatures": []
+            }
+        }
+        actual = processor.check_compatibility()
+        expected = False
+        self.assertEqual(actual, expected)
+
+    def test_graphic_feild_compatilibity(self):
+        logger.debug("-->checking Platform does support graphics output")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "graphics": True
+        }
+        processor.platform_cfg = {
+            "hardware":{
+            }
+        }
+        actual = processor.check_compatibility()
+        expected = False
+        self.assertEqual(actual, expected)
+
+    def test_persistent_storage_feild_compatilibity(self):
+        logger.debug("-->checking Platform does support persistent storage output")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "graphics": False,
+            "storage": {
+                "persistent":[
+                    {
+                    "size": "62M",
+                    "path": "/home/private"
+                    }
+                ]
+            }
+        }
+        processor.platform_cfg = {
+            "rdk":{
+            },
+            "storage":{
+            }
+        }
+        actual = processor.check_compatibility()
+        expected = False
+        self.assertEqual(actual, expected)
+
+    def test_storage_persistent_maxsize_feild_compatilibity(self):
+        logger.debug("-->checking Platform does support maxsize output")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "graphics": False,
+            "storage": {
+                "persistent":[
+                    {
+                    "size": "62M",
+                    "path": "/home/private"
+                    }
+                ]
+            }
+        }
+        processor.platform_cfg = {
+            "rdk":{
+            },
+            "storage":{
+                "persistent":{
+                    "storageDir": "/opt/dac_apps/data/0/dac",
+                    "maxSize": "60M"
+                }
+            }
+        }
+        actual = processor.check_compatibility()
+        expected = False
+        self.assertEqual(actual, expected)
+
+    def test_storage_temp_maxsize_feild_compatilibity(self):
+        logger.debug("-->checking Platform does support temp storage maxsize")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "graphics": False,
+            "storage": {
+                "persistent":[
+                    {
+                    "size": "12M",
+                    "path": "/home/private"
+                    }
+                ],
+                "temp":[
+                    {
+                    "size": "9M",
+                    "path": "/home/private"
+                    }
+                ]
+            }
+        }
+        processor.platform_cfg = {
+            "rdk":{
+            },
+            "storage":{
+                "persistent":{
+                    "storageDir": "/opt/dac_apps/data/0/dac",
+                    "maxSize": "20M"
+                },
+                "temp":{
+                    "storageDir": "/opt/dac_apps/data/0/dac",
+                    "maxSize": "5M"
+                }
+            }
+        }
+        actual = processor.check_compatibility()
+        expected = False
+        self.assertEqual(actual, expected)
+
+    def test_storage_persistent_totalsize_feild_compatilibity(self):
+        logger.debug("-->checking Platform does support storage persistent totalsize")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "graphics": False,
+            "storage": {
+                "persistent":[
+                    {
+                    "size": "12M",
+                    "path": "/home/private"
+                    }
+                ]
+            }
+        }
+        processor.platform_cfg = {
+            "rdk":{
+            },
+            "storage":{
+                "persistent":{
+                    "storageDir": "/opt/dac_apps/data/0/dac",
+                    "maxSize": "20M",
+                    "maxTotalSize":"10"
+                }
+            }
+        }
+        actual = processor.check_compatibility()
+        expected = False
+        self.assertEqual(actual, expected)
+
+    def test_storage_persistent_size_lesser_than_minsize_feild_compatilibity(self):
+        logger.debug("-->Persistent storage requested by app is less than minimum required by platform")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "graphics": False,
+            "storage": {
+                "persistent":[
+                    {
+                    "size": "10M",
+                    "path": "/home/private"
+                    }
+                ]
+            }
+        }
+        processor.platform_cfg = {
+            "rdk":{
+            },
+            "storage":{
+                "persistent":{
+                    "storageDir": "/opt/dac_apps/data/0/dac",
+                    "maxSize": "20M",
+                    "minSize":"15M",
+                    "maxTotalSize":"10"
+                }
+            }
+        }
+        actual = processor.check_compatibility()
+        expected = False
+        self.assertEqual(actual, expected)
+
+    def test_temp_storage_app_less_than_min_req_compatilibity(self):
+        logger.debug("-->Temporary storage requested by app is less than minimum required by platform ")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "graphics": False,
+            "storage": {
+                "temp":[
+                    {
+                    "size": "5M",
+                    "path": "/home/private"
+                    }
+                ],
+                "persistent":{
+                    "storageDir": "/opt/dac_apps/data/0/dac"
+                }
+            }
+        }
+        processor.platform_cfg = {
+            "rdk":{
+            },
+            "storage":{
+                "temp":{
+                    "maxSize": "15M",
+                    "minSize":"7M",
+                    "maxTotalSize":"10M"
+                }
+            }
+        }
+        actual = processor.check_compatibility()
+        expected = False
+        self.assertEqual(actual, expected)
+
+    def test_storage_temp_totalsize_feild_compatilibity(self):
+        logger.debug("-->checking Platform does support storage temp totalsize")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "graphics": False,
+            "storage": {
+                "temp":[
+                    {
+                    "size": "9M",
+                    "path": "/home/private"
+                    }
+                ]
+            }
+        }
+        processor.platform_cfg = {
+            "rdk":{
+            },
+            "storage":{
+                "temp":{
+                    "maxSize": "15M",
+                    "minSize":"7",
+                    "maxTotalSize":"10"
+                }
+            }
+        }
+        actual = processor.check_compatibility()
+        expected = False
+        self.assertEqual(actual, expected)
+
+    def test_rdk_feature_compatibility(self):
+        logger.debug("-->checking rdk feature are supported")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.platform_cfg = {
+            "hardware":{
+                "graphics":True
+            },
+            "rdk":{
+                "supportedFeatures":[
+                    "com.comcast.CoPilot",
+                    "com.comcast.DeviceProvisioning",
+                    "com.comcast.FrameRate",
+                    "com.comcast.HdcpProfile",
+                    "com.comcast.HdmiInput",
+                    "com.comcast.StateObserver",
+                    "com.comcast.StorageManager",
+                    "org.rdk.ActivityMonitor",
+                    "org.rdk.DeviceDiagnostics",
+                    "org.rdk.DisplaySettings"
+                ]
+            }
+        }
+        processor.app_metadata={
+            "graphics":True,
+            "features":{
+                "com.comcast.HdmiInput",
+                "com.comcast.StateObserver",
+                "com.comcast.StorageManager",
+                "org.rdk.ActivityMonitor",
+                "org.rdk.DeviceDiagnostics",
+                "org.rdk.DisplaySettings",
+                "org.rdk.FrontPanel",
+                "org.rdk.HomeNetworking",
+                "org.rdk.LoggingPreferences",
+                "org.rdk.Network"
+            }
+        }
+        actual = processor._compatibility_check()
+        expected = False
+        self.assertEqual(actual, expected)
+
+    def test_apparmorProfile(self):
+        logger.debug("-->checking apparmorProfile output")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.platform_cfg = {
+            "apparmorProfile": "profilename"
+        }
+        processor.oci_config={
+            "process":{
+                "apparmorProfile" : {}
+            }
+        }
+        processor._process_apparmorProfile()
+        expected = {
+            "process":{
+                "apparmorProfile":"profilename"
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_empty_apparmorProfile(self):
+        logger.debug("-->checking empty apparmorProfile output")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.platform_cfg = {
+            "apparmorProfile": ""
+        }
+        processor.oci_config={
+            "process":{
+                "apparmorProfile" : {}
+            }
+        }
+        processor._process_apparmorProfile()
+        expected = {
+            "process":{
+                "apparmorProfile":{}
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_seccomp(self):
+        logger.debug("-->checking seccomp output")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.platform_cfg = {
+            "seccomp":{
+                "defaultAction": "SCMP_ACT_ALLOW",
+                "architectures": ["SCMP_ARCH_X86","SCMP_ARCH_X32"],
+                "syscalls": [{
+                    "names": [
+                        "getcwd",
+                        "chmod"
+                    ],
+                    "action": "SCMP_ACT_ERRNO"
+                    }
+                ]
+            }
+        }
+        processor.oci_config={
+            "linux":{
+                "seccomp": {}
+            }
+        }
+        processor._process_seccomp()
+        expected = {
+            "linux":{
+                "seccomp":{
+                    "defaultAction": "SCMP_ACT_ALLOW",
+                    "architectures": ["SCMP_ARCH_X86","SCMP_ARCH_X32"],
+                    "syscalls": [{
+                        "names": [
+                            "getcwd",
+                            "chmod"
+                        ],
+                        "action": "SCMP_ACT_ERRNO"
+                        }
+                    ]
+                }
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_empty_seccomp(self):
+        logger.debug("-->checking empty seccomp output")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.platform_cfg = {
+            "seccomp":{}
+        }
+        processor.oci_config={
+            "linux":{
+                "seccomp": {}
+            }
+        }
+        processor._process_seccomp()
+        expected = {
+            "linux":{
+                "seccomp":{}
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_drop_capabilities(self):
+        logger.debug("-->checking deleting capabilities output")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "capabilities":{
+                "drop":["CAP_AUDIT_WRITE", "CAP_NET_RAW"]
+            }
+        }
+        processor.platform_cfg = {
+            "capabilities": ["CAP_CHOWN","CAP_AUDIT_WRITE", "CAP_NET_RAW","CAP_FSETID"]
+        }
+        processor.oci_config={
+            'process': {
+                'capabilities': {
+                    'bounding': [],
+                    'permitted': [],
+                    'effective': [],
+                    'inheritable': [],
+                    'ambient': []
+                }
+            }
+        }
+        processor._process_capabilities()
+        expected = {
+            'process': {
+                'capabilities': {
+                    'bounding': ['CAP_FSETID', 'CAP_CHOWN'],
+                    'permitted': ['CAP_FSETID', 'CAP_CHOWN'],
+                    'effective': ['CAP_FSETID', 'CAP_CHOWN'],
+                    'inheritable': ['CAP_FSETID', 'CAP_CHOWN'],
+                    'ambient': ['CAP_FSETID', 'CAP_CHOWN']
+                }
+            }
+        }
+        self.assertEqual(sorted(processor.oci_config['process']['capabilities']['bounding']), sorted(expected['process']['capabilities']['bounding']))
+        self.assertEqual(sorted(processor.oci_config['process']['capabilities']['permitted']), sorted(expected['process']['capabilities']['permitted']))
+        self.assertEqual(sorted(processor.oci_config['process']['capabilities']['effective']), sorted(expected['process']['capabilities']['effective']))
+        self.assertEqual(sorted(processor.oci_config['process']['capabilities']['inheritable']), sorted(expected['process']['capabilities']['inheritable']))
+        self.assertEqual(sorted(processor.oci_config['process']['capabilities']['ambient']), sorted(expected['process']['capabilities']['ambient']))
+
+    def test_add_to_existing_platform_capabilities(self):
+        logger.debug("-->checking add to existing platform capabilities output")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "capabilities":{
+                "add": ["CAP_SETGIDS"]
+            }
+        }
+        processor.platform_cfg = {
+            "capabilities": ["CAP_CHOWN"]
+        }
+        processor.oci_config={
+            'process': {
+                'capabilities': {
+                    'bounding': [],
+                    'permitted': [],
+                    'effective': [],
+                    'inheritable': [],
+                    'ambient': []
+                }
+            }
+        }
+        processor._process_capabilities()
+        expected = {
+            'process': {
+                'capabilities': {
+                    'bounding': ['CAP_CHOWN','CAP_SETGIDS'],
+                    'permitted': ['CAP_CHOWN', 'CAP_SETGIDS'],
+                    'effective': ['CAP_CHOWN', 'CAP_SETGIDS'],
+                    'inheritable': ['CAP_CHOWN', 'CAP_SETGIDS'],
+                    'ambient': ['CAP_CHOWN', 'CAP_SETGIDS']
+                    }
+                }
+        }
+        self.assertEqual(sorted(processor.oci_config['process']['capabilities']['bounding']), sorted(expected['process']['capabilities']['bounding']))
+        self.assertEqual(sorted(processor.oci_config['process']['capabilities']['permitted']), sorted(expected['process']['capabilities']['permitted']))
+        self.assertEqual(sorted(processor.oci_config['process']['capabilities']['effective']), sorted(expected['process']['capabilities']['effective']))
+        self.assertEqual(sorted(processor.oci_config['process']['capabilities']['inheritable']), sorted(expected['process']['capabilities']['inheritable']))
+        self.assertEqual(sorted(processor.oci_config['process']['capabilities']['ambient']), sorted(expected['process']['capabilities']['ambient']))
+
+    def test_add_to_default_platform_capabilities(self):
+        logger.debug("-->checking defalut capabilities output")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "capabilities":{
+                "add": ["CAP_SETGIDS"]
+            }
+        }
+        processor.platform_cfg = {
+        }
+        processor.oci_config={
+            'process': {
+                'capabilities': {
+                    'bounding': [],
+                    'permitted': [],
+                    'effective': [],
+                    'inheritable': [],
+                    'ambient': []
+                }
+            }
+        }
+        processor._process_capabilities()
+        expected = {
+            'process': {
+                'capabilities': {
+                    'bounding': ['CAP_AUDIT_WRITE', 'CAP_CHOWN', 'CAP_FSETID', 'CAP_KILL', 'CAP_NET_BIND_SERVICE', 'CAP_NET_RAW', 'CAP_SETGID', 'CAP_SETGIDS', 'CAP_SETPCAP', 'CAP_SETUID'],
+                    'permitted': ['CAP_AUDIT_WRITE', 'CAP_CHOWN', 'CAP_FSETID', 'CAP_KILL', 'CAP_NET_BIND_SERVICE', 'CAP_NET_RAW', 'CAP_SETGID', 'CAP_SETGIDS', 'CAP_SETPCAP', 'CAP_SETUID'],
+                    'effective': ['CAP_AUDIT_WRITE', 'CAP_CHOWN', 'CAP_FSETID', 'CAP_KILL', 'CAP_NET_BIND_SERVICE', 'CAP_NET_RAW', 'CAP_SETGID', 'CAP_SETGIDS', 'CAP_SETPCAP', 'CAP_SETUID'],
+                    'inheritable': ['CAP_AUDIT_WRITE', 'CAP_CHOWN', 'CAP_FSETID', 'CAP_KILL', 'CAP_NET_BIND_SERVICE', 'CAP_NET_RAW', 'CAP_SETGID', 'CAP_SETGIDS', 'CAP_SETPCAP', 'CAP_SETUID'],
+                    'ambient': ['CAP_AUDIT_WRITE', 'CAP_CHOWN', 'CAP_FSETID', 'CAP_KILL', 'CAP_NET_BIND_SERVICE', 'CAP_NET_RAW', 'CAP_SETGID', 'CAP_SETGIDS', 'CAP_SETPCAP', 'CAP_SETUID']
+                }
+            }
+        }
+        self.assertEqual(sorted(processor.oci_config['process']['capabilities']['bounding']), sorted(expected['process']['capabilities']['bounding']))
+        self.assertEqual(sorted(processor.oci_config['process']['capabilities']['permitted']), sorted(expected['process']['capabilities']['permitted']))
+        self.assertEqual(sorted(processor.oci_config['process']['capabilities']['effective']), sorted(expected['process']['capabilities']['effective']))
+        self.assertEqual(sorted(processor.oci_config['process']['capabilities']['inheritable']), sorted(expected['process']['capabilities']['inheritable']))
+        self.assertEqual(sorted(processor.oci_config['process']['capabilities']['ambient']), sorted(expected['process']['capabilities']['ambient']))
+
+    def test_empty_capabilities(self):
+        logger.debug("-->checking empty capabilities output")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.platform_cfg = {
+            "capabilities": {}
+        }
+        processor.app_metadata = {
+            "capabilities":{}
+        }
+        processor.oci_config={
+            'process': {
+                'capabilities': {}
+            }
+        }
+        processor._process_capabilities()
+        expected = {
+            "process":{
+                'capabilities': {
+                    'bounding': [],
+                    'permitted': [],
+                    'effective': [],
+                    'inheritable': [],
+                    'ambient': []
+                }
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_users_and_groups(self):
+        logger.debug("-->checking user and group testing")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.platform_cfg = {
+            "usersAndGroups": {
+                "user":{
+                    "uid":0,
+                    "gid":0,
+                    "additionalGids":0
+                    },
+                "uidMap": [
+                {
+                    "containerID": 1,
+                    "hostID": 234,
+                    "size": 45
+                }
+                ],
+                "gidMap": [
+                {
+                    "containerID": 3,
+                    "hostID": 254,
+                    "size": 15
+                }
+                ]
+            }
+        }
+        processor.oci_config={
+            "process": {
+                "user": {}
+            },
+            "linux":{
+            }
+        }
+        processor._process_users_and_groups()
+        expected = {
+            "process": {
+                "user": {}
+            },
+            "linux":{
+                "uidMappings" : [{
+                        "containerID": 1,
+                        "hostID": 234,
+                        "size": 45
+                    }
+                    ],
+                "gidMappings" :[
+                    {
+                        "containerID": 3,
+                        "hostID": 254,
+                        "size": 15
+                    }
+                ]
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_users_and_groups_disableUserNamespacing(self):
+        logger.debug("-->checking user and group testing")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.platform_cfg = {
+            "disableUserNamespacing":True,
+            "usersAndGroups": {
+                "user":{
+                    "uid":2,
+                    "gid":3
+                },
+                "uidMap": [
+                {
+                    "containerID": 1,
+                    "hostID": 234,
+                    "size": 45
+                }
+                ],
+                "gidMap": [
+                {
+                    "containerID": 3,
+                    "hostID": 254,
+                    "size": 15
+                }
+                ]
+            }
+        }
+        processor.oci_config={
+            "process": {
+                "user": {}
+            },
+            "linux":{
+                'namespaces': [
+                    {'type': 'pid'},
+                    {'type': 'ipc'}
+                ],
+                "uidMappings":[],
+                "gidMappings":[]
+            }
+        }
+        actual = processor._process_users_and_groups()
+        print(actual)
+        self.assertEqual(None, actual)
+
+    def test_resources_with_zero_value(self):
+        logger.debug("-->checking resources with empty values")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.platform_cfg = {
+            "hardware":{
+                "maxRam":"0M"
+            }
+        }
+        processor.app_metadata = {
+            "resources":{
+                "ram": "0M"
+                }
+        }
+        processor.oci_config={
+            "linux":{
+                "resources":{
+                    "devices":[],
+                    "memory":{}
+                }
+            }
+        }
+        processor._process_resources()
+        expected = {
+            "linux":{
+                "resources":{
+                    "devices":[{
+                        "allow": False,
+                        "access": "rwm"
+                        }
+                    ],
+                    "memory":{
+                        "limit": 0
+                    }
+                }
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_resources_app_value_larger_than_platform(self):
+        logger.debug("-->checking ram of app value is larger than the platform")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.platform_cfg = {
+            "hardware":{
+                "maxRam":"10M"
+            }
+        }
+        processor.app_metadata = {
+            "resources":{
+                "ram": "12M"
+                }
+        }
+        processor.oci_config={
+            "linux":{
+                "resources":{
+                    "devices":[],
+                    "memory":{}
+                }
+            }
+        }
+        processor._process_resources()
+        expected = {
+            "linux":{
+                "resources":{
+                    "devices":[{
+                        "allow": False,
+                        "access": "rwm"
+                        }
+                    ],
+                    "memory":{
+                        "limit": 10485760
+                    }
+                }
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_hardware_ram_with_platform_value_larger_than_app(self):
+        logger.debug("-->checking hardware ram with platform larger than app")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.platform_cfg = {
+            "hardware":{
+                "maxRam":"122M"
+            }
+        }
+        processor.app_metadata = {
+            "resources":{
+                "ram":"120M"
+            }
+        }
+        processor.oci_config={
+            "linux":{
+                "resources":{
+                    "devices":[],
+                    "memory":{}
+                }
+            }
+        }
+        processor._process_resources()
+        expected = {
+            "linux":{
+                "resources":{
+                    "devices":[{
+                        "allow": False,
+                        "access": "rwm"
+                        }
+                    ],
+                    "memory":{
+                        "limit": 125829120
+                    }
+                }
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_dynamic_devices_graphic_True_case(self):
+        logger.debug("-->checking dynamic devices if graphic is true")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.platform_cfg = {
+            "hardware":{
+                "graphics":True
+            },
+            "gpu":{
+                "devs":[
+                {
+                    "type": "c",
+                    "path": "/dev/vchiq",
+                    "major": 243,
+                    "minor": 0,
+                    "access": "rw",
+                    "dynamic": True
+                },
+                {
+                    "type": "c",
+                    "path": "/dev/snd/controlC0",
+                    "major": 116,
+                    "minor": 0,
+                    "access": "rw",
+                    "dynamic": True
+                }]
+            }
+        }
+        processor.oci_config={
+            "rdkPlugins":{
+                "devicemapper":{
+                    "data":{
+                    "devices":[]
+                    }
+                }
+            }
+        }
+        processor._process_dynamic_devices()
+        expected = {
+            "rdkPlugins":{
+                'devicemapper': {
+                    'required': True,
+                    'data': {
+                        'devices': ['/dev/vchiq', '/dev/snd/controlC0']
+                        }
+                    }
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_dynamic_devices_graphic_False_case(self):
+        logger.debug("-->checking dynamic devices if graphic is false")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.platform_cfg = {
+            "hardware":{
+                "graphics":False
+            }
+        }
+        processor.oci_config={}
+        processor._process_dynamic_devices()
+        expected = {}
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_get_real_uid_gid(self):
+        logger.debug("-->checking get uid gid")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.platform_cfg = {
+            "disableUserNamespacing":True,
+            "usersAndGroups":{
+                "uidMap":"",
+                "gidMap":""
+            }
+        }
+        processor.oci_config={
+            "process":{
+                "user":{
+                    "uid":"1",
+                    "gid":"2"
+                }
+            }
+        }
+        actual = processor.get_real_uid_gid()
+        expected = {
+            "process": {
+                "user": {
+                    "gid": '2',
+                    "uid": '1'
+                }
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_logging_missing_in_platform(self):
+        logger.debug("-->Platform does not contain logging options")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.platform_cfg = {
+        }
+        actual = processor._process_logging()
+        self.assertEqual(None, actual)
+
+    def test_checking_storage_in_persistent(self):
+    #if storage_settings are not present
+        logger.debug("-->It will create mounts")
+        processor = BundleProcessor()
+        processor.rootfs_path = "/tmp/test"
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "id":"com.rdk.flutter",
+            "storage": {
+                "persistent":[{
+                    "size": "10M",
+                    "path": "/home/private"
+                }]
+            }
+        }
+        processor.platform_cfg = {
+            "storage":{
+                "persistent":{
+                    "storageDir": "/opt/dac_apps/data/0/dac",
+                    "maxSize": "20M",
+                    "minSize":"15M",
+                    "maxTotalSize":"10"
+                }
+            }
+        }
+        processor.oci_config = {
+            "mounts":[],
+            "rdkPlugins":{
+                "storage":{
+                    "data":{
+                        "loopback":[]
+                    }
+                }
+            }
+        }
+        processor._process_storage()
+        expected = {
+            "mounts":[],
+            'rdkPlugins': {
+                'storage': {
+                    'data': {
+                        'loopback': [{
+                            'destination': '/home/private',
+                                'flags': 14,
+                                'fstype': 'ext4',
+                                'imgsize': 10485760,
+                                'source': '/opt/dac_apps/data/0/dac/com.rdk.flutter/23e959658f5082a89c6db72c842271a117887b8658ab703f60eaba650b3d5f20.img'}]
+                            },
+                            'required': True
+                        }
+                    }
+                }
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_checking_storage_in_temp(self):
+    #if storage_settings are not present
+        logger.debug("-->It will create mounts")
+        processor = BundleProcessor()
+        processor.rootfs_path = "/tmp/test"
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "id":"com.rdk.flutter",
+            "storage": {
+                "temp":[
+                    {
+                    "size": "5M",
+                    "path": "/home/private"
+                    }
+                ],
+                "persistent":[{
+                    "size": "10M",
+                    "path": "/home/private"
+                }]
+            }
+        }
+        processor.platform_cfg = {
+            "storage":{
+                "persistent":{
+                    "storageDir": "/opt/dac_apps/data/0/dac",
+                    "maxSize": "20M",
+                    "minSize":"15M",
+                    "maxTotalSize":"10"
+                }
+            }
+        }
+        processor.oci_config = {
+            "mounts":[],
+            "process":{
+                "user":{
+                    "uid":1,
+                    "gid":2
+                }
+            },
+            "rdkPlugins":{
+                "storage":{
+                    "data":{
+                        "loopback":[]
+                    }
+                }
+            }
+        }
+        processor._process_storage()
+        expected = {
+            'mounts': [{
+                'destination': '/home/private',
+                'type': 'tmpfs',
+                'source': 'tmpfs',
+                'options': ['nosuid', 'strictatime', 'mode=755', 'size=5242880', 'uid=1', 'gid=2']
+                }],
+            'process': {
+                'user': {
+                    'uid': 1, 'gid': 2
+                    }
+                },
+            'rdkPlugins': {
+                'storage': {
+                'required': True,
+                'data': {
+                    'loopback': [{
+                        'destination': '/home/private',
+                        'flags': 14,
+                        'fstype': 'ext4',
+                        'source': '/opt/dac_apps/data/0/dac/com.rdk.flutter/23e959658f5082a89c6db72c842271a117887b8658ab703f60eaba650b3d5f20.img',
+                        'imgsize': 10485760
+                        }
+                    ]}
+                }
+            }
+        }
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_checking_missing_hookLauncherParametersPath(self):
+        logger.debug("-->Config dobby.hookLauncherParametersPath is required when dobby.generateCompliantConfig is true")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "id":"com.rdk.flutter"
+        }
+        processor.platform_cfg = {
+            "dobby":{
+                "generateCompliantConfig": True,
+                "dobbyInitPath":"/usr/libexec/DobbyInit",
+                "hookLauncherExecutablePath": "/usr/bin/DobbyPluginLauncher"
+            }
+        }
+        processor.oci_config = {
+            "rdkPlugins":{
+                "networking":{
+                    "required":True
+                }
+            },
+            "hooks":{
+            }        
+        }
+        actual = processor._process_hooks()
+        self.assertEqual(None, actual)
+
+    def test_checking_hooks(self):
+        logger.debug("-->checking the hooks api")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "id":"com.rdk.flutter"
+        }
+        processor.platform_cfg = {
+            "dobby":{
+                "generateCompliantConfig": True,
+                "dobbyInitPath":"/usr/libexec/DobbyInit",
+                "hookLauncherExecutablePath": "/usr/bin/DobbyPluginLauncher",
+                "hookLauncherParametersPath": "/opt/dac_apps/data/{id}/dac/"
+            }
+        }
+        processor.oci_config = {
+            "rdkPlugins":{
+                "networking":{
+                    "required":True
+                }
+            },
+            "hooks":{
+            }
+        }
+        processor._process_hooks()
+        expected = {
+            "rdkPlugins":{
+                "networking":{
+                    "required":True
+                }
+            },
+            "hooks":{
+                'createRuntime': [{
+                    'path': '/usr/bin/DobbyPluginLauncher',
+                    'args': ['DobbyPluginLauncher', '-h', 'createRuntime', '-c', '/opt/dac_apps/data/com.rdk.flutter/dac/config.json']
+                    }],
+                'createContainer': [{
+                    'path': '/usr/bin/DobbyPluginLauncher',
+                    'args': ['DobbyPluginLauncher', '-h', 'createContainer', '-c', '/opt/dac_apps/data/com.rdk.flutter/dac/config.json']
+                    }],
+                'poststart': [{
+                    'path': '/usr/bin/DobbyPluginLauncher',
+                    'args': ['DobbyPluginLauncher', '-h', 'poststart', '-c', '/opt/dac_apps/data/com.rdk.flutter/dac/config.json']
+                    }],
+                'poststop': [{
+                    'path': '/usr/bin/DobbyPluginLauncher',
+                    'args': ['DobbyPluginLauncher', '-h', 'poststop', '-c', '/opt/dac_apps/data/com.rdk.flutter/dac/config.json']
+                    }]
+                }
+            }
+        self.assertEqual(processor.oci_config, expected)
+        
+    def test_checking_executablepath_missing(self):
+        logger.debug("-->checking the executable path missing from hooks api")
+        processor = BundleProcessor()
+        processor.rootfs_path = None
+        processor.createmountpoints = None
+        processor.app_metadata = {
+            "id":"com.rdk.flutter"
+        }
+        processor.platform_cfg = {
+            "dobby":{
+                "generateCompliantConfig": True,
+                "dobbyInitPath":"/usr/libexec/DobbyInit",
+                "hookLauncherParametersPath": "/opt/dac_apps/data/{id}/dac/"
+            }
+        }
+        processor.oci_config = {
+            "rdkPlugins":{
+                "networking":{
+                    "required":True
+                }
+            },
+            "hooks":{
+            }
+        }
+        processor._process_hooks()
+        expected = {
+            "rdkPlugins":{
+                "networking":{
+                    "required":True
+                }
+            },
+            "hooks":{
+                'createRuntime': [{
+                    'path': '/usr/bin/DobbyPluginLauncher',
+                    'args': ['DobbyPluginLauncher', '-h', 'createRuntime', '-c', '/opt/dac_apps/data/com.rdk.flutter/dac/config.json']
+                    }],
+                'createContainer': [{
+                    'path': '/usr/bin/DobbyPluginLauncher',
+                    'args': ['DobbyPluginLauncher', '-h', 'createContainer', '-c', '/opt/dac_apps/data/com.rdk.flutter/dac/config.json']
+                    }],
+                'poststart': [{
+                    'path': '/usr/bin/DobbyPluginLauncher',
+                    'args': ['DobbyPluginLauncher', '-h', 'poststart', '-c', '/opt/dac_apps/data/com.rdk.flutter/dac/config.json']
+                    }],
+                'poststop': [{
+                    'path': '/usr/bin/DobbyPluginLauncher',
+                    'args': ['DobbyPluginLauncher', '-h', 'poststop', '-c', '/opt/dac_apps/data/com.rdk.flutter/dac/config.json']
+                    }]
+                }
+            }
+        self.assertEqual(processor.oci_config, expected)
+
 if __name__ == "__main__":
     unittest.main()
