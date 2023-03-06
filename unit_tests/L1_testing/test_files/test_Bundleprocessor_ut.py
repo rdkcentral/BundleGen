@@ -1330,10 +1330,9 @@ class TestBundleProcessor(unittest.TestCase):
         logger.debug("-->Test was Successfully verified")
 
     def test_app_meta_data_schema(self):
-        ''''this test is to check, jsonschema of app meta data is proper.
-        one more changes is been added chdir because test been running in folder
-        /BundleGen/unit_tests/L1_testing to validate schema changing the directory to /BundleGen
-        '''
+        #this test is to check, jsonschema of app meta data is proper.
+        #one more changes is been added chdir because test been running in folder
+        #/BundleGen/unit_tests/L1_testing to validate schema changing the directory to /BundleGen
         logger.debug("--> checking the appmetadata schema")
         os.chdir('../../')
         validate = BundleProcessor()
@@ -1359,8 +1358,7 @@ class TestBundleProcessor(unittest.TestCase):
         logger.debug("-->Test was Successfully verified")
 
     def test_remove_required_app_meta_data_schema(self):
-        ''''this test is to validate required feilds when are removed.
-        '''
+        #this test is to validate required feilds when are removed.
         logger.debug("--> checking the appmetadata schema by removing the required feilds ")
         os.chdir('../../')
         validate = BundleProcessor()
@@ -1374,8 +1372,7 @@ class TestBundleProcessor(unittest.TestCase):
         logger.debug("-->Test was Successfully verified")
 
     def test_optional_feild_app_meta_data_schema(self):
-        ''''this test is to validate optional feilds by removing required feilds.
-        '''
+        #this test is to validate optional feilds by removing required feilds.
         logger.debug("--> Validating schema removing reqired feilds and adding optinal feilds ")
         os.chdir('../../')
         validate = BundleProcessor()
@@ -2285,7 +2282,7 @@ class TestBundleProcessor(unittest.TestCase):
                 }
             }
         }
-        actual = processor.get_real_uid_gid()
+        processor.get_real_uid_gid()
         expected = {
             "process": {
                 "user": {
