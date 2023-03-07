@@ -174,6 +174,8 @@ def index():
 
             # Extract tar
             # Extract the .tar to a temp directory
+            # Safe extraction code from Trellix
+            # Here licensed under the MIT License
             img_temp_path = tempfile.mkdtemp()
             with tarfile.open(upload_filepath) as tar:
                def is_within_directory(directory, target):
