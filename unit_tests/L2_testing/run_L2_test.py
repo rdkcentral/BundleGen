@@ -35,6 +35,10 @@ if args.t:
 else:
     platform_template = "rpi3_reference_vc4_dunfell"
 oci_images_list = os.listdir("oci_images")
+if args.a and args.m:
+    if args.a != args.m.replace("-appmetadata",""):
+        logger.error("Check appname in the given parameters...")
+        sys.exit(1)
 if (len(oci_images_list)) == 0:
     logger.error("No oci_image was present inside oci_images folder")
     sys.exit(1)
@@ -46,7 +50,6 @@ for i in oci_images_list:
     for k in j:
         if k in platform:
             platform_name = k
-            logger.debug("platform name are [%s] " %platform_name)
             break
         elif k == "oci.tar":
             logger.error("File name should consists of platform name")
@@ -60,8 +63,14 @@ for i in oci_images_list:
            app_name = args.a
         else:
             continue
+    elif args.m:
+        if (args.m.replace("-appmetadata","")) == appname:
+            app_name = args.m.replace("-appmetadata","")
+        else:
+            continue
     else:
         app_name = appname
+    logger.debug("platform name is %s " %platform_name)
     os.chdir("oci_images")
     if os.path.isfile(i):
         file = tarfile.open(i)
@@ -74,7 +83,7 @@ for i in oci_images_list:
     os.chdir("../..")
     if os.path.isfile(''+app_name+'-bundle.tar.gz'):
         os.remove(''+app_name+'-bundle.tar.gz')
-    if args.m and args.a:
+    if args.m:
         if args.m == app_name+"-appmetadata":
             if os.path.exists("unit_tests/L2_testing/"+args.m+".json"):
                 return_value = os.system('bundlegen generate -y --platform '+platform_template+' --appmetadata ./unit_tests/L2_testing/'+args.m+'.json oci:./unit_tests/L2_testing/oci_images/'+app_name+'-oci:latest ./'+app_name+'-bundle')
@@ -99,9 +108,8 @@ for i in oci_images_list:
     os.chdir("unit_tests/L2_testing/bundlegen_images")
     file.extractall(''+app_name+'-bundle')
     file.close()
-    if args.m:
-        app_metadata_file = args.m
-    else:
+    if not args.m:
+    #Extracting appmetadata from oci image.
         os.chdir("..")
         os.chdir("oci_images")
         appname=str(app_name)
@@ -143,7 +151,11 @@ for i in oci_images_list:
     shutil.rmtree(''+app_name+'-oci')
     os.chdir("..")
     shutil.rmtree("bundlegen_images")
-    if  os.path.isdir('metadatas'):
+    if os.path.isdir('metadatas'):
         shutil.rmtree("metadatas")
     if ( (value >> 8) != 0):
        sys.exit(1)
+if (args.a or args.m) and os. path. getsize('L2_test_results.txt') == 0:
+    if (args.a!=appname) or (args.m.replace("-appmetadata","")!=appname):
+        logger.error("Check appname in the given parameters...")
+        sys.exit(1)

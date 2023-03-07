@@ -24,6 +24,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from unit_tests.L1_testing import get_L1_test_results
 from bundlegen.core.bundle_processor import BundleProcessor
+from bundlegen.core.library_matching import LibraryMatching
 from loguru import logger
 #This class will test the functionality of API's in bundleprocessor.py file.
 class TestBundleProcessor(unittest.TestCase):
@@ -1618,9 +1619,10 @@ class TestBundleProcessor(unittest.TestCase):
                     "path": "/home/private"
                     }
                 ],
-                "persistent":{
+                "persistent":[{
+                    "size": "5M",
                     "storageDir": "/opt/dac_apps/data/0/dac"
-                }
+                }]
             }
         }
         processor.platform_cfg = {
@@ -1631,11 +1633,15 @@ class TestBundleProcessor(unittest.TestCase):
                     "maxSize": "15M",
                     "minSize":"7M",
                     "maxTotalSize":"10M"
+                },
+                "persistent":{
+                    "storageDir": "/opt/dac_apps/data/0/dac",
+                    "size": "1M"
                 }
             }
         }
         actual = processor.check_compatibility()
-        expected = False
+        expected = True
         self.assertEqual(actual, expected)
 
     def test_storage_temp_totalsize_feild_compatilibity(self):
@@ -2268,7 +2274,7 @@ class TestBundleProcessor(unittest.TestCase):
         processor.rootfs_path = None
         processor.createmountpoints = None
         processor.platform_cfg = {
-            "disableUserNamespacing":True,
+            "disableUserNamespacing":False,
             "usersAndGroups":{
                 "uidMap":"",
                 "gidMap":""
@@ -2277,8 +2283,8 @@ class TestBundleProcessor(unittest.TestCase):
         processor.oci_config={
             "process":{
                 "user":{
-                    "uid":"1",
-                    "gid":"2"
+                    "gid": '2',
+                    "uid": '1'
                 }
             }
         }
@@ -2564,6 +2570,145 @@ class TestBundleProcessor(unittest.TestCase):
                     }]
                 }
             }
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_checking_gfxlibs_in_gpu(self):
+        logger.debug("-->checking _gfxlibs in gpu")
+        processor = BundleProcessor()
+        processor.rootfs_path = "/home/chandara/test_report_LOCV/rdk-dac/BundleGen/dac-image-wayland-egl-test-bundle/rootfs"
+        processor.bundle_path = "/home/chandara/test_report_LOCV/rdk-dac/BundleGen/dac-image-wayland-egl-test-bundle"
+        processor.createmountpoints = False
+        processor.app_metadata = {
+            "graphics":True
+        }
+        processor.platform_cfg = {
+            "hardware":{
+                "graphics":True
+            },
+            "gpu": {
+                "westeros": {
+                    "hostSocket": "/tmp/westeros-dac"
+                },
+                "extraMounts": [
+                    {
+                        "source": "/tmp/nxserver_ipc",
+                        "destination": "/tmp/nxserver_ipc",
+                        "type": "bind",
+                        "options": [
+                            "bind",
+                            "ro"
+                        ]
+                    }
+                ],
+                "envvar": [
+                    "LD_PRELOAD=/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.0"
+                ],
+                "devs": [
+                    {
+                        "type": "c",
+                        "path": "/dev/nexus",
+                        "major": 33,
+                        "minor": 0,
+                        "access": "rw"
+                    }
+                ],
+                "gfxLibs": [
+                    {
+                        "src": "/usr/lib/libEGL.so",
+                        "dst": "/usr/lib/libEGL.so"
+                    },
+                    {
+                        "src": "/usr/lib/libEGL.so",
+                        "dst": "/usr/lib/libEGL.so.1"
+                    },
+                    {
+                        "src": "/usr/lib/libGLESv2.so",
+                        "dst": "/usr/lib/libGLESv2.so"
+                    },
+                    {
+                        "src": "/usr/lib/libGLESv2.so",
+                        "dst": "/usr/lib/libGLESv2.so.2"
+                    }
+                ]
+            },
+            "libs": [
+            {
+                "apiversions": [
+                    "GLIBC_2.4",
+                    "GLIBC_PRIVATE"
+                ],
+                "deps": [],
+                "name": "/lib/ld-2.31.so"
+            },
+            {
+                "apiversions": [
+                    "GLIBC_2.4",
+                    "GLIBC_PRIVATE"
+                ],
+                "deps": [],
+                "name": "/lib/ld-linux-armhf.so.3"
+            }]
+        }
+        processor.oci_config = {
+            "linux":{
+                "devices":{ },
+                "resources":{
+                    "devices":[]
+                    }
+            },
+            "mounts":[],
+            "process":{
+                "env":[]
+            }
+        }
+        processor.libmatcher = LibraryMatching(processor.platform_cfg, processor.bundle_path, processor._add_bind_mount, False, "normal", processor.createmountpoints)
+        processor._process_gpu()
+        expected = {
+            'linux': {
+                'devices': [{'path': '/dev/nexus', 'type': 'c', 'major': 33, 'minor': 0}], 
+                'resources': {'devices': [{'allow': True, 'type': 'c', 'major': 33, 'minor': 0, 'access': 'rw'}]}}, 
+            'mounts': [
+                {'source': '/tmp/nxserver_ipc', 'destination': '/tmp/nxserver_ipc', 'type': 'bind', 'options': ['bind', 'ro']},
+                {'source': '/usr/lib/libEGL.so', 'destination': '/usr/lib/libEGL.so', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev', 'ro']},
+                {'source': '/usr/lib/libEGL.so', 'destination': '/usr/lib/libEGL.so.1', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev', 'ro']},
+                {'source': '/usr/lib/libGLESv2.so', 'destination': '/usr/lib/libGLESv2.so', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev', 'ro']},
+                {'source': '/usr/lib/libGLESv2.so', 'destination': '/usr/lib/libGLESv2.so.2', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev', 'ro']},
+                {'source': '/tmp/westeros-dac', 'destination': '/tmp/westeros', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev']}],
+            'process': {'env': ['LD_PRELOAD=/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.0', 'WAYLAND_DISPLAY=westeros']}
+        }
+        self.assertEqual(processor.oci_config, expected)
+
+    def test_checking_dobby_plugindependies(self):
+        logger.debug("-->checking the dobby plugin Dependencies")
+        processor = BundleProcessor()
+        processor.rootfs_path = "/home/chandara/test_report_LOCV/rdk-dac/BundleGen/dac-image-wayland-egl-test-bundle/rootfs"
+        processor.bundle_path = "/home/chandara/test_report_LOCV/rdk-dac/BundleGen/dac-image-wayland-egl-test-bundle"
+        processor.createmountpoints = False
+        processor.platform_cfg = {
+            "dobby":{
+                "pluginDependencies":[
+                    "Controller",
+                    "com.comcast.CoPilot"
+                ]
+            }
+        }
+        processor.oci_config = {
+            "mounts":[]
+        }
+        processor.libmatcher = LibraryMatching(processor.platform_cfg, processor.bundle_path, processor._add_bind_mount, False, "normal", processor.createmountpoints)
+        processor._process_dobby_plugin_dependencies()
+        expected = {
+            'mounts': [{
+                'source': 'Controller',
+                'destination': 'Controller', 'type': 'bind',
+                'options': ['rbind', 'nosuid', 'nodev', 'ro']},
+                {
+                'source': 'com.comcast.CoPilot',
+                'destination': 'com.comcast.CoPilot',
+                'type': 'bind',
+                'options': ['rbind', 'nosuid', 'nodev', 'ro']
+                }]
+        }
         self.assertEqual(processor.oci_config, expected)
 
 if __name__ == "__main__":
