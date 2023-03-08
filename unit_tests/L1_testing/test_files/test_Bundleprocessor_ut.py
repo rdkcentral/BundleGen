@@ -2575,8 +2575,8 @@ class TestBundleProcessor(unittest.TestCase):
     def test_checking_gfxlibs_in_gpu(self):
         logger.debug("-->checking _gfxlibs in gpu")
         processor = BundleProcessor()
-        processor.rootfs_path = "/home/chandara/test_report_LOCV/rdk-dac/BundleGen/dac-image-wayland-egl-test-bundle/rootfs"
-        processor.bundle_path = "/home/chandara/test_report_LOCV/rdk-dac/BundleGen/dac-image-wayland-egl-test-bundle"
+        processor.rootfs_path = "/tmp/test"
+        processor.bundle_path = "/tmp/test"
         processor.createmountpoints = False
         processor.app_metadata = {
             "graphics":True
@@ -2677,20 +2677,40 @@ class TestBundleProcessor(unittest.TestCase):
             'process': {'env': ['LD_PRELOAD=/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.0', 'WAYLAND_DISPLAY=westeros']}
         }
         self.assertEqual(processor.oci_config, expected)
-
-    def test_checking_dobby_plugindependies(self):
-        logger.debug("-->checking the dobby plugin Dependencies")
+    def test_checking_dobby_plugindependies01(self):
+        logger.debug("-->checking the dobby_plugindependies with libmatching is given as normal")
         processor = BundleProcessor()
-        processor.rootfs_path = "/home/chandara/test_report_LOCV/rdk-dac/BundleGen/dac-image-wayland-egl-test-bundle/rootfs"
-        processor.bundle_path = "/home/chandara/test_report_LOCV/rdk-dac/BundleGen/dac-image-wayland-egl-test-bundle"
+        processor.rootfs_path = "/tmp"
+        processor.bundle_path = "/tmp"
         processor.createmountpoints = False
         processor.platform_cfg = {
             "dobby":{
                 "pluginDependencies":[
-                    "Controller",
-                    "com.comcast.CoPilot"
+                    "/lib/libanl.so.1",
+                    "/lib/libnsl.so.1"
                 ]
-            }
+            },
+            "libs": [
+            {
+                "apiversions": [
+                    "GLIBC_2.4"
+                ],
+                "deps": [
+                    "/lib/libc.so.6",
+                    "/lib/libpthread.so.0"
+                ],
+                "name": "/lib/libanl.so.1"
+            },
+            {
+                "apiversions": [
+                    "GLIBC_2.4",
+                    "GLIBC_PRIVATE"
+                ],
+                "deps": [
+                    "/lib/libc.so.6"
+                ],
+                "name": "/lib/libnsl.so.1"
+            }]
         }
         processor.oci_config = {
             "mounts":[]
@@ -2699,16 +2719,60 @@ class TestBundleProcessor(unittest.TestCase):
         processor._process_dobby_plugin_dependencies()
         expected = {
             'mounts': [{
-                'source': 'Controller',
-                'destination': 'Controller', 'type': 'bind',
-                'options': ['rbind', 'nosuid', 'nodev', 'ro']},
-                {
-                'source': 'com.comcast.CoPilot',
-                'destination': 'com.comcast.CoPilot',
-                'type': 'bind',
-                'options': ['rbind', 'nosuid', 'nodev', 'ro']
+                'source': '/lib/libnsl.so.1', 'destination': '/lib/libnsl.so.1', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev', 'ro']},
+                {'source': '/lib/libanl.so.1', 'destination': '/lib/libanl.so.1', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev', 'ro']},
+                {'source': '/lib/libc.so.6', 'destination': '/lib/libc.so.6', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev', 'ro']
                 }]
+            }
+        self.assertEqual(processor.oci_config, expected)
+    
+    def test_checking_dobby_plugindependies02(self):
+        logger.debug("-->checking the dobby_plugindependies with libmatching is given as image")
+        processor = BundleProcessor()
+        processor.rootfs_path = "BundleGen/dac-image-wayland-egl-test-bundle/rootfs"
+        processor.bundle_path = "BundleGen/dac-image-wayland-egl-test-bundle"
+        processor.createmountpoints = False
+        processor.platform_cfg = {
+            "dobby":{
+                "pluginDependencies":[
+                    "/usr/lib/libffi.so.7",
+                    "/lib/libnsl.so.1"
+                ]
+            },
+            "libs": [
+            {
+                "apiversions": [
+                    "GLIBC_2.4"
+                ],
+                "deps": [
+                    "/lib/libc.so.6",
+                    "/lib/libpthread.so.0"
+                ],
+                "name": "/usr/lib/libffi.so.7"
+            },
+            {
+                "apiversions": [
+                    "GLIBC_2.4",
+                    "GLIBC_PRIVATE"
+                ],
+                "deps": [
+                    "/lib/libc.so.6"
+                ],
+                "name": "/lib/libnsl.so.1"
+            }]
         }
+        processor.oci_config = {
+            "mounts":[]
+        }
+        processor.libmatcher = LibraryMatching(processor.platform_cfg, processor.bundle_path, processor._add_bind_mount, False, "image", processor.createmountpoints)
+        processor._process_dobby_plugin_dependencies()
+        expected = {
+            'mounts': [{
+                'source': '/usr/lib/libffi.so.7', 'destination': '/usr/lib/libffi.so.7', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev', 'ro']},
+                {'source': '/lib/libc.so.6', 'destination': '/lib/libc.so.6', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev', 'ro']},
+                {'source': '/lib/libnsl.so.1', 'destination': '/lib/libnsl.so.1', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev', 'ro']
+                }]
+            }
         self.assertEqual(processor.oci_config, expected)
 
 if __name__ == "__main__":
