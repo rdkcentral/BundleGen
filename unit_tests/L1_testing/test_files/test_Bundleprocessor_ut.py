@@ -2770,9 +2770,9 @@ class TestBundleProcessor(unittest.TestCase):
             'mounts': [{
                 'source': '/usr/lib/libffi.so.7', 'destination': '/usr/lib/libffi.so.7', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev', 'ro']},
                 {'source': '/lib/libc.so.6', 'destination': '/lib/libc.so.6', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev', 'ro']},
-                {'source': '/lib/libnsl.so.1', 'destination': '/lib/libnsl.so.1', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev', 'ro']
-                }]
-            }
+                {'source': '/lib/libpthread.so.0', 'destination': '/lib/libpthread.so.0', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev', 'ro']},
+                {'source': '/lib/libnsl.so.1', 'destination': '/lib/libnsl.so.1', 'type': 'bind', 'options': ['rbind', 'nosuid', 'nodev', 'ro']}]}
+
         self.assertEqual(processor.oci_config, expected)
 
 if __name__ == "__main__":
