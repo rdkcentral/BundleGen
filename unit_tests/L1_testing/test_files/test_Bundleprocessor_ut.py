@@ -2575,7 +2575,7 @@ class TestBundleProcessor(unittest.TestCase):
     def test_checking_gfxlibs_in_gpu(self):
         logger.debug("-->checking _gfxlibs in gpu")
         processor = BundleProcessor()
-        processor.rootfs_path = "/tmp/test"
+        processor.rootfs_path = "/tmp/test/rootfs"
         processor.bundle_path = "/tmp/test"
         processor.createmountpoints = False
         processor.app_metadata = {
@@ -2677,10 +2677,11 @@ class TestBundleProcessor(unittest.TestCase):
             'process': {'env': ['LD_PRELOAD=/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.0', 'WAYLAND_DISPLAY=westeros']}
         }
         self.assertEqual(processor.oci_config, expected)
+
     def test_checking_dobby_plugindependies01(self):
         logger.debug("-->checking the dobby_plugindependies with libmatching is given as normal")
         processor = BundleProcessor()
-        processor.rootfs_path = "/tmp"
+        processor.rootfs_path = "/tmp/rootfs"
         processor.bundle_path = "/tmp"
         processor.createmountpoints = False
         processor.platform_cfg = {
@@ -2725,7 +2726,7 @@ class TestBundleProcessor(unittest.TestCase):
                 }]
             }
         self.assertEqual(processor.oci_config, expected)
-    
+
     def test_checking_dobby_plugindependies02(self):
         logger.debug("-->checking the dobby_plugindependies with libmatching is given as image")
         processor = BundleProcessor()
