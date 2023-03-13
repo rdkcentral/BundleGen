@@ -9,3 +9,7 @@ within this component.
 
 Copyright 2020 Liberty Global
 Licensed under the Apache License, version 2.0
+
+Trellix have provided safe extraction code to fix CVE-2007-4559.
+The code was provided in many github pull requests to match the associated component's license.
+e.g. https://github.com/nodejs/node-gyp/pull/2741 licensed under the MIT License.
