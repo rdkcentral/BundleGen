@@ -1,5 +1,5 @@
 {
-    "platformName": "rpi3_reference",
+    "platformName": "m393-72180ZB-stb",
     "os": "linux",
     "arch": {
         "arch": "arm",
@@ -62,6 +62,15 @@
                 ]
             },
             {
+                "source": "/tmp/nxserver_ipc",
+                "destination": "/tmp/nxserver_ipc",
+                "type": "bind",
+                "options": [
+                    "bind",
+                    "ro"
+                ]
+            },
+            {
                 "source": "/etc/ssl/certs",
                 "destination": "/etc/ssl/certs",
                 "type": "bind",
@@ -97,80 +106,41 @@
             }
         ],
         "envvar": [
-            "LD_PRELOAD=/usr/lib/libGLESv2.so.2:/usr/lib/libwayland-egl.so.1",
+            "LD_PRELOAD=/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.0",
             "XDG_RUNTIME_DIR=/tmp",
             "RIALTO_SOCKET_PATH=/tmp/rialto-0"
         ],
         "devs": [
             {
                 "type": "c",
-                "path": "/dev/vchiq",
-                "major": 243,
+                "path": "/dev/nexus",
+                "major": 33,
                 "minor": 0,
                 "access": "rw"
             },
             {
-                "type": "c",
-                "path": "/dev/snd/controlC0",
-                "major": 116,
-                "minor": 0,
-                "access": "rw"
-            },
-            {
-                "type": "c",
-                "path": "/dev/snd/seq",
-                "major": 116,
-                "minor": 1,
-                "access": "rw"
-            },
-            {
-                "type": "c",
-                "path": "/dev/snd/pcmC0D0p",
-                "major": 116,
-                "minor": 16,
-                "access": "rw"
-            },
-            {
-                "type": "c",
-                "path": "/dev/snd/pcmC0D1p",
-                "major": 116,
-                "minor": 17,
-                "access": "rw"
-            },
-            {
-                "type": "c",
-                "path": "/dev/snd/timer",
-                "major": 116,
-                "minor": 33,
-                "access": "rw"
-            },
-            {
-                "type": "c",
-                "path": "/dev/dri/card0",
-                "major": 226,
-                "minor": 0,
-                "access": "rw"
+                 "type": "c",
+                 "path": "/dev/dri/card0",
+                 "major": 226,
+                 "minor": 0,
+                 "access": "rw"
             }
         ],
         "gfxLibs": [
             {
-                "src": "/usr/lib/dri/vc4_dri.so",
-                "dst": "/usr/lib/dri/vc4_dri.so"
-            },
-            {
-                "src": "/usr/lib/libEGL.so.1",
+                "src": "/usr/lib/libEGL.so",
                 "dst": "/usr/lib/libEGL.so"
             },
             {
-                "src": "/usr/lib/libEGL.so.1",
+                "src": "/usr/lib/libEGL.so",
                 "dst": "/usr/lib/libEGL.so.1"
             },
             {
-                "src": "/usr/lib/libGLESv2.so.2",
+                "src": "/usr/lib/libGLESv2.so",
                 "dst": "/usr/lib/libGLESv2.so"
             },
             {
-                "src": "/usr/lib/libGLESv2.so.2",
+                "src": "/usr/lib/libGLESv2.so",
                 "dst": "/usr/lib/libGLESv2.so.2"
             },
             {
