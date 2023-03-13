@@ -1359,8 +1359,8 @@ class TestBundleProcessor(unittest.TestCase):
         logger.debug("-->Test was Successfully verified")
 
     def test_remove_required_app_meta_data_schema(self):
-        #this test is to validate required feilds when are removed.
-        logger.debug("--> checking the appmetadata schema by removing the required feilds ")
+        #this test is to validate required fields when are removed.
+        logger.debug("--> checking the appmetadata schema by removing the required fields ")
         os.chdir('../../')
         validate = BundleProcessor()
         validate.app_metadata = {
@@ -1372,9 +1372,9 @@ class TestBundleProcessor(unittest.TestCase):
         self.assertEqual(actual, expected)
         logger.debug("-->Test was Successfully verified")
 
-    def test_optional_feild_app_meta_data_schema(self):
-        #this test is to validate optional feilds by removing required feilds.
-        logger.debug("--> Validating schema removing reqired feilds and adding optinal feilds ")
+    def test_optional_field_app_meta_data_schema(self):
+        #this test is to validate optional fields by removing required fields.
+        logger.debug("--> Validating schema removing reqired fields and adding optional fields ")
         os.chdir('../../')
         validate = BundleProcessor()
         validate.app_metadata = {
@@ -1400,8 +1400,8 @@ class TestBundleProcessor(unittest.TestCase):
         self.assertEqual(actual, expected)
         logger.debug("-->Test was Successfully verified")
 
-    def test_network_feild_compatilibity(self):
-        logger.debug("-->checking Platform does support Network feild output")
+    def test_network_field_compatilibity(self):
+        logger.debug("-->checking Platform does support Network field output")
         processor = BundleProcessor()
         processor.rootfs_path = None
         processor.createmountpoints = None
@@ -1430,7 +1430,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = False
         self.assertEqual(actual, expected)
 
-    def test_graphic_feild_compatilibity(self):
+    def test_graphic_field_compatilibity(self):
         logger.debug("-->checking Platform does support graphics output")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -1446,7 +1446,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = False
         self.assertEqual(actual, expected)
 
-    def test_persistent_storage_feild_compatilibity(self):
+    def test_persistent_storage_field_compatilibity(self):
         logger.debug("-->checking Platform does support persistent storage output")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -1472,7 +1472,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = False
         self.assertEqual(actual, expected)
 
-    def test_storage_persistent_maxsize_feild_compatilibity(self):
+    def test_storage_persistent_maxsize_field_compatilibity(self):
         logger.debug("-->checking Platform does support maxsize output")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -1502,7 +1502,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = False
         self.assertEqual(actual, expected)
 
-    def test_storage_temp_maxsize_feild_compatilibity(self):
+    def test_storage_temp_maxsize_field_compatilibity(self):
         logger.debug("-->checking Platform does support temp storage maxsize")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -1542,7 +1542,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = False
         self.assertEqual(actual, expected)
 
-    def test_storage_persistent_totalsize_feild_compatilibity(self):
+    def test_storage_persistent_totalsize_field_compatilibity(self):
         logger.debug("-->checking Platform does support storage persistent totalsize")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -1573,7 +1573,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = False
         self.assertEqual(actual, expected)
 
-    def test_storage_persistent_size_lesser_than_minsize_feild_compatilibity(self):
+    def test_storage_persistent_size_lesser_than_minsize_field_compatilibity(self):
         logger.debug("-->Persistent storage requested by app is less than minimum required by platform")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -1644,7 +1644,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = True
         self.assertEqual(actual, expected)
 
-    def test_storage_temp_totalsize_feild_compatilibity(self):
+    def test_storage_temp_totalsize_field_compatilibity(self):
         logger.debug("-->checking Platform does support storage temp totalsize")
         processor = BundleProcessor()
         processor.rootfs_path = None
