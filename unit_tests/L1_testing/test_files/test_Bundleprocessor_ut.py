@@ -1400,7 +1400,7 @@ class TestBundleProcessor(unittest.TestCase):
         self.assertEqual(actual, expected)
         logger.debug("-->Test was Successfully verified")
 
-    def test_network_field_compatilibity(self):
+    def test_network_field_compatibility(self):
         logger.debug("-->checking Platform does support Network field output")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -1430,7 +1430,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = False
         self.assertEqual(actual, expected)
 
-    def test_graphic_field_compatilibity(self):
+    def test_graphic_field_compatibility(self):
         logger.debug("-->checking Platform does support graphics output")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -1446,7 +1446,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = False
         self.assertEqual(actual, expected)
 
-    def test_persistent_storage_field_compatilibity(self):
+    def test_persistent_storage_field_compatibility(self):
         logger.debug("-->checking Platform does support persistent storage output")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -1472,7 +1472,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = False
         self.assertEqual(actual, expected)
 
-    def test_storage_persistent_maxsize_field_compatilibity(self):
+    def test_storage_persistent_maxsize_field_compatibility(self):
         logger.debug("-->checking Platform does support maxsize output")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -1502,7 +1502,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = False
         self.assertEqual(actual, expected)
 
-    def test_storage_temp_maxsize_field_compatilibity(self):
+    def test_storage_temp_maxsize_field_compatibility(self):
         logger.debug("-->checking Platform does support temp storage maxsize")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -1542,7 +1542,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = False
         self.assertEqual(actual, expected)
 
-    def test_storage_persistent_totalsize_field_compatilibity(self):
+    def test_storage_persistent_totalsize_field_compatibility(self):
         logger.debug("-->checking Platform does support storage persistent totalsize")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -1573,7 +1573,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = False
         self.assertEqual(actual, expected)
 
-    def test_storage_persistent_size_lesser_than_minsize_field_compatilibity(self):
+    def test_storage_persistent_size_lesser_than_minsize_field_compatibility(self):
         logger.debug("-->Persistent storage requested by app is less than minimum required by platform")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -1605,7 +1605,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = False
         self.assertEqual(actual, expected)
 
-    def test_temp_storage_app_less_than_min_req_compatilibity(self):
+    def test_temp_storage_app_less_than_min_req_compatibility(self):
         logger.debug("-->Temporary storage requested by app is less than minimum required by platform ")
         processor = BundleProcessor()
         processor.rootfs_path = None
@@ -1644,7 +1644,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = True
         self.assertEqual(actual, expected)
 
-    def test_storage_temp_totalsize_field_compatilibity(self):
+    def test_storage_temp_totalsize_field_compatibility(self):
         logger.debug("-->checking Platform does support storage temp totalsize")
         processor = BundleProcessor()
         processor.rootfs_path = None
