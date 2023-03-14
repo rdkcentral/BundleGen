@@ -55,4 +55,4 @@ jobs:
       - name: Run the unit test
         working-directory: ./Bundlegen/unit_tests/L2_testing
         run: |
-            python run_L2_test.py -m "dac-image-wayland-egl-test-appmetadata" -a "dac-image-wayland-egl-test" -t "rpi3_reference_vc4_dunfell_test"
+            python run_L2_test.py -m "dac-image-wayland-egl-test-appmetadata" -t "rpi3_reference_vc4_dunfell_test"
