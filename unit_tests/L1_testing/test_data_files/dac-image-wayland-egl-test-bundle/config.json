@@ -1,0 +1,784 @@
+{
+    "ociVersion": "1.0.2-dobby",
+    "process": {
+        "terminal": true,
+        "user": {
+            "uid": 0,
+            "gid": 0
+        },
+        "args": [
+            "/usr/libexec/DobbyInit",
+            "/usr/bin/wayland-egl-test"
+        ],
+        "env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "TERM=xterm",
+            "LD_PRELOAD=/usr/lib/libGLESv2.so.2:/usr/lib/libwayland-egl.so.1",
+            "XDG_RUNTIME_DIR=/tmp",
+            "RIALTO_SOCKET_PATH=/tmp/rialto-0",
+            "WAYLAND_DISPLAY=westeros"
+        ],
+        "cwd": "/",
+        "capabilities": {
+            "bounding": [
+                "CAP_CHOWN",
+                "CAP_NET_BIND_SERVICE",
+                "CAP_SETUID",
+                "CAP_NET_RAW",
+                "CAP_FSETID",
+                "CAP_AUDIT_WRITE",
+                "CAP_SETPCAP",
+                "CAP_SETGID",
+                "CAP_KILL"
+            ],
+            "effective": [
+                "CAP_CHOWN",
+                "CAP_NET_BIND_SERVICE",
+                "CAP_SETUID",
+                "CAP_NET_RAW",
+                "CAP_FSETID",
+                "CAP_AUDIT_WRITE",
+                "CAP_SETPCAP",
+                "CAP_SETGID",
+                "CAP_KILL"
+            ],
+            "inheritable": [
+                "CAP_CHOWN",
+                "CAP_NET_BIND_SERVICE",
+                "CAP_SETUID",
+                "CAP_NET_RAW",
+                "CAP_FSETID",
+                "CAP_AUDIT_WRITE",
+                "CAP_SETPCAP",
+                "CAP_SETGID",
+                "CAP_KILL"
+            ],
+            "permitted": [
+                "CAP_CHOWN",
+                "CAP_NET_BIND_SERVICE",
+                "CAP_SETUID",
+                "CAP_NET_RAW",
+                "CAP_FSETID",
+                "CAP_AUDIT_WRITE",
+                "CAP_SETPCAP",
+                "CAP_SETGID",
+                "CAP_KILL"
+            ],
+            "ambient": [
+                "CAP_CHOWN",
+                "CAP_NET_BIND_SERVICE",
+                "CAP_SETUID",
+                "CAP_NET_RAW",
+                "CAP_FSETID",
+                "CAP_AUDIT_WRITE",
+                "CAP_SETPCAP",
+                "CAP_SETGID",
+                "CAP_KILL"
+            ]
+        },
+        "rlimits": [
+            {
+                "type": "RLIMIT_NOFILE",
+                "hard": 1024,
+                "soft": 1024
+            },
+            {
+                "type": "RLIMIT_NPROC",
+                "hard": 300,
+                "soft": 300
+            },
+            {
+                "type": "RLIMIT_RTPRIO",
+                "hard": 6,
+                "soft": 6
+            }
+        ],
+        "noNewPrivileges": true
+    },
+    "root": {
+        "path": "rootfs"
+    },
+    "hostname": "umoci-default",
+    "mounts": [
+        {
+            "destination": "/proc",
+            "type": "proc",
+            "source": "proc"
+        },
+        {
+            "destination": "/dev",
+            "type": "tmpfs",
+            "source": "tmpfs",
+            "options": [
+                "nosuid",
+                "strictatime",
+                "mode=755",
+                "size=65536k"
+            ]
+        },
+        {
+            "destination": "/dev/pts",
+            "type": "devpts",
+            "source": "devpts",
+            "options": [
+                "nosuid",
+                "noexec",
+                "newinstance",
+                "ptmxmode=0666",
+                "mode=0620"
+            ]
+        },
+        {
+            "destination": "/dev/shm",
+            "type": "tmpfs",
+            "source": "shm",
+            "options": [
+                "nosuid",
+                "noexec",
+                "nodev",
+                "mode=1777",
+                "size=65536k"
+            ]
+        },
+        {
+            "destination": "/dev/mqueue",
+            "type": "mqueue",
+            "source": "mqueue",
+            "options": [
+                "nosuid",
+                "noexec",
+                "nodev"
+            ]
+        },
+        {
+            "destination": "/sys",
+            "type": "bind",
+            "source": "/sys",
+            "options": [
+                "rbind",
+                "nosuid",
+                "noexec",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "destination": "/etc/resolv.conf",
+            "type": "bind",
+            "source": "/etc/resolv.conf",
+            "options": [
+                "rbind",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/libexec/DobbyInit",
+            "destination": "/usr/libexec/DobbyInit",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/share/X11/xkb",
+            "destination": "/usr/share/X11/xkb",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro",
+                "X-mount.mkdir"
+            ]
+        },
+        {
+            "source": "/etc/ssl/certs",
+            "destination": "/etc/ssl/certs",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro",
+                "X-mount.mkdir"
+            ]
+        },
+        {
+            "source": "/usr/share/ca-certificates",
+            "destination": "/usr/share/ca-certificates",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro",
+                "X-mount.mkdir"
+            ]
+        },
+        {
+            "source": "/usr/lib/dri/vc4_dri.so",
+            "destination": "/usr/lib/dri/vc4_dri.so",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/libc.so.6",
+            "destination": "/lib/libc.so.6",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/ld-linux-armhf.so.3",
+            "destination": "/lib/ld-linux-armhf.so.3",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/libBrokenLocale.so.1",
+            "destination": "/lib/libBrokenLocale.so.1",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/libanl.so.1",
+            "destination": "/lib/libanl.so.1",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/libdl.so.2",
+            "destination": "/lib/libdl.so.2",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/libm.so.6",
+            "destination": "/lib/libm.so.6",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/libnsl.so.1",
+            "destination": "/lib/libnsl.so.1",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/libnss_compat.so.2",
+            "destination": "/lib/libnss_compat.so.2",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/libnss_dns.so.2",
+            "destination": "/lib/libnss_dns.so.2",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/libnss_files.so.2",
+            "destination": "/lib/libnss_files.so.2",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/libpthread.so.0",
+            "destination": "/lib/libpthread.so.0",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/libresolv.so.2",
+            "destination": "/lib/libresolv.so.2",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/librt.so.1",
+            "destination": "/lib/librt.so.1",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/libutil.so.1",
+            "destination": "/lib/libutil.so.1",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/libgcc_s.so.1",
+            "destination": "/lib/libgcc_s.so.1",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/lib/libz.so.1",
+            "destination": "/lib/libz.so.1",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libdrm.so.2",
+            "destination": "/usr/lib/libdrm.so.2",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libexpat.so.1",
+            "destination": "/usr/lib/libexpat.so.1",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libglapi.so.0",
+            "destination": "/usr/lib/libglapi.so.0",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libstdc++.so.6",
+            "destination": "/usr/lib/libstdc++.so.6",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libEGL.so.1",
+            "destination": "/usr/lib/libEGL.so",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libgbm.so.1",
+            "destination": "/usr/lib/libgbm.so.1",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libwayland-server.so.0",
+            "destination": "/usr/lib/libwayland-server.so.0",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libffi.so.7",
+            "destination": "/usr/lib/libffi.so.7",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libwayland-client.so.0",
+            "destination": "/usr/lib/libwayland-client.so.0",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libEGL.so.1",
+            "destination": "/usr/lib/libEGL.so.1",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libGLESv2.so.2",
+            "destination": "/usr/lib/libGLESv2.so",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libGLESv2.so.2",
+            "destination": "/usr/lib/libGLESv2.so.2",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libwayland-egl.so.1",
+            "destination": "/usr/lib/libwayland-egl.so",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libwayland-egl.so.1",
+            "destination": "/usr/lib/libwayland-egl.so.0",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libwayland-egl.so.1",
+            "destination": "/usr/lib/libwayland-egl.so.1",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libessos.so.0",
+            "destination": "/usr/lib/libessos.so.0",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libwesteros_gl.so.0",
+            "destination": "/usr/lib/libwesteros_gl.so.0",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        },
+        {
+            "source": "/usr/lib/libwesteros_simpleshell_client.so.0",
+            "destination": "/usr/lib/libwesteros_simpleshell_client.so.0",
+            "type": "bind",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "ro"
+            ]
+        }
+    ],
+    "annotations": {
+        "org.opencontainers.image.architecture": "arm",
+        "org.opencontainers.image.author": "info@lgi.com",
+        "org.opencontainers.image.created": "2023-01-06T07:10:42Z",
+        "org.opencontainers.image.exposedPorts": "",
+        "org.opencontainers.image.os": "linux",
+        "org.opencontainers.image.stopSignal": "",
+        "run.oci.hooks.stderr": "/dev/stderr",
+        "run.oci.hooks.stdout": "/dev/stdout"
+    },
+    "linux": {
+        "namespaces": [
+            {
+                "type": "pid"
+            },
+            {
+                "type": "ipc"
+            },
+            {
+                "type": "uts"
+            },
+            {
+                "type": "mount"
+            }
+        ],
+        "maskedPaths": [
+            "/proc/kcore",
+            "/proc/latency_stats",
+            "/proc/timer_list",
+            "/proc/timer_stats",
+            "/proc/sched_debug",
+            "/sys/firmware",
+            "/proc/scsi"
+        ],
+        "readonlyPaths": [
+            "/proc/asound",
+            "/proc/bus",
+            "/proc/fs",
+            "/proc/irq",
+            "/proc/sys",
+            "/proc/sysrq-trigger"
+        ],
+        "resources": {
+            "devices": [
+                {
+                    "allow": false,
+                    "access": "rwm"
+                },
+                {
+                    "allow": true,
+                    "type": "c",
+                    "major": 243,
+                    "minor": 0,
+                    "access": "rw"
+                },
+                {
+                    "allow": true,
+                    "type": "c",
+                    "major": 116,
+                    "minor": 0,
+                    "access": "rw"
+                },
+                {
+                    "allow": true,
+                    "type": "c",
+                    "major": 116,
+                    "minor": 1,
+                    "access": "rw"
+                },
+                {
+                    "allow": true,
+                    "type": "c",
+                    "major": 116,
+                    "minor": 16,
+                    "access": "rw"
+                },
+                {
+                    "allow": true,
+                    "type": "c",
+                    "major": 116,
+                    "minor": 17,
+                    "access": "rw"
+                },
+                {
+                    "allow": true,
+                    "type": "c",
+                    "major": 116,
+                    "minor": 33,
+                    "access": "rw"
+                },
+                {
+                    "allow": true,
+                    "type": "c",
+                    "major": 226,
+                    "minor": 0,
+                    "access": "rw"
+                }
+            ]
+        },
+        "devices": [
+            {
+                "path": "/dev/vchiq",
+                "type": "c",
+                "major": 243,
+                "minor": 0
+            },
+            {
+                "path": "/dev/snd/controlC0",
+                "type": "c",
+                "major": 116,
+                "minor": 0
+            },
+            {
+                "path": "/dev/snd/seq",
+                "type": "c",
+                "major": 116,
+                "minor": 1
+            },
+            {
+                "path": "/dev/snd/pcmC0D0p",
+                "type": "c",
+                "major": 116,
+                "minor": 16
+            },
+            {
+                "path": "/dev/snd/pcmC0D1p",
+                "type": "c",
+                "major": 116,
+                "minor": 17
+            },
+            {
+                "path": "/dev/snd/timer",
+                "type": "c",
+                "major": 116,
+                "minor": 33
+            },
+            {
+                "path": "/dev/dri/card0",
+                "type": "c",
+                "major": 226,
+                "minor": 0
+            }
+        ]
+    },
+    "rdkPlugins": {
+        "networking": {
+            "required": true,
+            "data": {
+                "type": "open"
+            }
+        },
+        "storage": {
+            "required": true,
+            "data": {
+                "dynamic": [
+                    {
+                        "source": "/tmp/rialto-0",
+                        "destination": "/tmp/rialto-0",
+                        "type": "bind",
+                        "options": [
+                            "rbind",
+                            "rw"
+                        ]
+                    }
+                ]
+            }
+        },
+        "logging": {
+            "required": true,
+            "data": {
+                "sink": "file",
+                "fileOptions": {
+                    "path": "/var/log/com.rdk.wayland-egl-test.log"
+                }
+            }
+        }
+    }
+}

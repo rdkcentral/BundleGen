@@ -30,6 +30,7 @@ from loguru import logger
 from bundlegen.core.image_downloader import ImageDownloader
 from bundlegen.core.image_unpacker import ImageUnpackager
 from bundlegen.core.utils import Utils
+from bundlegen.core.readelf import ReadElf
 
 #This class will test the functionality of API's in bundleprocessor.py file.
 class TestBundleProcessor(unittest.TestCase):
@@ -2867,7 +2868,7 @@ class TestBundleProcessor(unittest.TestCase):
         img_path = "/tmp/bundlegen/20230329-120614_2e094abd57974c0895813f5c893b24ca"
         img_unpacker = ImageUnpackager(img_path, outputdir)
         img_unpacker.app_metadata_image_path = "./test_data_files/test-appmetadata.json"
-        img_appmetdata_path = img_unpacker.image_contains_metadata()
+        img_unpacker.image_contains_metadata()
         app_metadata = img_unpacker.get_app_metadata_from_img()
         final_app_metadata = {
             "id": "com.rdk.wayland-egl-test",
@@ -2886,6 +2887,87 @@ class TestBundleProcessor(unittest.TestCase):
         img_unpacker = ImageUnpackager(img_path, outputdir)
         app_metadata = img_unpacker.get_app_metadata_from_img()
         self.assertEqual(app_metadata, None)
+
+    def test_to_create_ipk_file(self):
+        logger.debug("-->checking to create the ipk file ")
+        source = "./test_data_files/dac-image-wayland-egl-test-bundle"
+        final_app_metadata = {
+            "id": "com.rdk.wayland-egl-test",
+            "type": "application/vnd.rdk-app.dac.native",
+            "version": "1.0.0",
+            "description": "Simple wayland egl demo, showing green rectangle",
+            "priority": "optional",
+            "graphics": True
+        }
+        platform_cfg = {
+            "platformName": "rpi3_reference",
+            "os": "linux",
+            "arch": {
+                "arch": "arm",
+                "variant": "v7"
+            }
+        }
+        Utils.create_control_file(platform_cfg, final_app_metadata)
+        expected = Utils.create_ipk(source, source)
+        self.assertEqual(True, expected)
+
+    def test_failed_to_create_tar_source_file(self):
+        logger.debug("-->checking to create the ipk file ")
+        source = "./dac-image-wayland-egl-test-bundle"
+        DATA_NAME = "data.tar.gz"
+        expected = Utils.create_tgz(source, DATA_NAME)
+        self.assertEqual(False, expected)
+
+    def test_negative_case_for_skopeo_not_found_error(self):
+        img_downloader = ImageDownloader()
+        img_downloader.skopeo_found = False
+        image = "oci:./oci_images/dac-image-wayland-egl-test-oci:latest"
+        creds = None
+        img_downloader.platform_cfg = {
+        }
+        img_path = img_downloader.download_image(image, creds, img_downloader.platform_cfg)
+        self.assertEqual(None, img_path)
+
+    def test_missing_creds_case(self):
+        img_downloader = ImageDownloader()
+        image = "oci:./oci_images/dac-image-wayland-egl-test-oci:latest"
+        creds = "dumpy_value"
+        img_downloader.platform_cfg = {
+            "platformName": "rpi3_reference",
+            "os": "linux",
+            "arch": {
+                "arch": "arm",
+                "variant": "v7"
+            }
+        }
+        img_path = img_downloader.download_image(image, creds, img_downloader.platform_cfg)
+        self.assertEqual(None, img_path)
+
+    def test_failed_to_run_process_and_return_output(self):
+        logger.debug("-->checking to run the command ")
+        command = "umoci unpack --rootless --image /tmp/bundlegen/20230331-112041_ae6ca9eeab67494e9cec8b206bcef66b:latest ./BundleGen/dac-image-wayland-egl-test-bundle"
+        expected = Utils.run_process_and_return_output(command)
+        self.assertEqual((1, ''), expected)
+
+    def test_utils_add_tarinfo_case(self):
+        logger.debug("-->checking new api tarinfo of utils file ")
+        source = "./test_data_files/dac-image-wayland-egl-test-bundle"
+        DATA_NAME = "data.tar.gz"
+        expected = Utils.create_tgz(source, DATA_NAME, 1, 2, '770')
+        self.assertEqual(True, expected)
+
+    def test_readif__fail_test_case(self):
+        logger.debug("-->checking new api in readif file ")
+        rootfs_filepath = "./test_data_files/dac-image-wayland-egl-test-bundle/rootfs"
+        version_defs_by_rootfs_lib = ReadElf.retrieve_apiversions(rootfs_filepath)
+        self.assertEqual([], version_defs_by_rootfs_lib)
+
+    def test_readif_test_case(self):
+        logger.debug("-->checking new api in readif file ")
+        rootfs_filepath = "./test_data_files/dac-image-wayland-egl-test-bundle/libBrokenLocale-2.31.so"
+        version_defs_by_rootfs_lib = set(ReadElf.retrieve_apiversions(rootfs_filepath))
+        expected = {'GLIBC_2.4'}
+        self.assertEqual(version_defs_by_rootfs_lib, expected)
 
 if __name__ == "__main__":
     unittest.main()
