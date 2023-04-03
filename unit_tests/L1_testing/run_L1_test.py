@@ -55,6 +55,6 @@ else:
                     return_value=os.system('python -m coverage report && python -m coverage html')
         else:
             return_value=os.system('python '+i )
-
+logging.info("\n return_value:  %s" % return_value)
 if ( (return_value >> 8) != 0):
     sys.exit(1)

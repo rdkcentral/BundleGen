@@ -2956,7 +2956,7 @@ class TestBundleProcessor(unittest.TestCase):
         expected = Utils.create_tgz(source, DATA_NAME, 1, 2, '770')
         self.assertEqual(True, expected)
 
-    def test_readif__fail_test_case(self):
+    def test_readif_fail_test_case(self):
         logger.debug("-->checking new api in readif file ")
         rootfs_filepath = "./test_data_files/dac-image-wayland-egl-test-bundle/rootfs"
         version_defs_by_rootfs_lib = ReadElf.retrieve_apiversions(rootfs_filepath)
@@ -2966,6 +2966,7 @@ class TestBundleProcessor(unittest.TestCase):
         logger.debug("-->checking new api in readif file ")
         rootfs_filepath = "./test_data_files/dac-image-wayland-egl-test-bundle/libBrokenLocale-2.31.so"
         version_defs_by_rootfs_lib = set(ReadElf.retrieve_apiversions(rootfs_filepath))
+        logger.debug("\n version_defs_by_rootfs_lib:  %s" % version_defs_by_rootfs_lib)
         expected = {'GLIBC_2.4'}
         self.assertEqual(version_defs_by_rootfs_lib, expected)
 
