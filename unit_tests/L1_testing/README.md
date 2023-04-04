@@ -41,3 +41,4 @@
 ## Adding additional testfiles
 * In L1_testing folder, add another test file(inside L1_testing/test_files/).
 * Filename should be named as follow '''test_classname_ut.py'''.
+* In test_data_files to test ReadElf.retrieve_apiversions method libBrokenLocale-2.31.so file is renamed to libBrokenLocale-2.31.1
