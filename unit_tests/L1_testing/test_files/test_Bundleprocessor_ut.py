@@ -2964,7 +2964,7 @@ class TestBundleProcessor(unittest.TestCase):
 
     def test_readif_test_case(self):
         logger.debug("-->checking new api in readif file ")
-        rootfs_filepath = "./test_data_files/dac-image-wayland-egl-test-bundle/libBrokenLocale-2.31.so"
+        rootfs_filepath = "./test_data_files/dac-image-wayland-egl-test-bundle/libBrokenLocale-2.31.1"
         version_defs_by_rootfs_lib = set(ReadElf.retrieve_apiversions(rootfs_filepath))
         logger.debug("\n version_defs_by_rootfs_lib:  %s" % version_defs_by_rootfs_lib)
         expected = {'GLIBC_2.4'}
