@@ -30,8 +30,38 @@ jobs:
           cache: 'pip'
       - run: pip install -r Bundlegen/requirements.txt
              pip install --editable Bundlegen/
+             pip install coverage
+
+      - name: Setup umoci
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.13.12'
+          check-latest: true
+      - run: |
+          sudo apt update
+          sudo apt upgrade
+          sudo apt install -y make git go-md2man
+          # Build/install umoci
+          echo "Printing GO version "
+          go version
+          GOPATH=$HOME/go
+          go get -d github.com/opencontainers/umoci
+          echo $GOPATH
+          cd $GOPATH/src/github.com/opencontainers/umoci/
+          echo $(ls)
+          make
+          sudo make install
+          echo 'Finished Job of UMOCI'
 
       - name: Run the unit test
         working-directory: ./Bundlegen/unit_tests/L1_testing
         run: |
-            python run_L1_test.py
+            python run_L1_test.py -c coverage_report
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path: |
+            Bundlegen/unit_tests/L1_testing/test_files/htmlcov/*
+          if-no-files-found: warn
