@@ -505,6 +505,19 @@ class BundleProcessor:
             hostname = hostname.format(id = self.app_metadata['id'])
             self.oci_config['hostname'] = hostname
 
+
+    # ==========================================================================
+    def _add_mount(self, mount):
+        if 'source' in mount:
+            mount['source'] = mount['source'].format(id=self.app_metadata['id'])
+        if self.createmountpoints:
+            if 'X-mount.mkdir' in mount['options']:
+                self._createEmptyDirInRootfs(mount['destination'])
+            else:
+                self._createAndWriteFileInRootfs(mount['destination'], '', 0o644)
+        self.oci_config['mounts'].append(mount)
+
+
     # ==========================================================================
     def _process_mounts(self):
         """Adds various mounts to the config file
@@ -514,12 +527,13 @@ class BundleProcessor:
         # Add any extra misc mounts if there are any
         if self.platform_cfg.get('mounts'):
             for mount in self.platform_cfg.get('mounts'):
-                self.oci_config['mounts'].append(mount)
+                self._add_mount(mount)
 
         # Add any app-specific mounts
         if self.app_metadata.get('mounts'):
             for mount in self.app_metadata.get('mounts'):
-                self.oci_config['mounts'].append(mount)
+                self._add_mount(mount)
+
 
     # ==========================================================================
     def _process_gpu(self):
@@ -537,12 +551,7 @@ class BundleProcessor:
 
             # Add mounts
             for mount in self.platform_cfg.get('gpu').get('extraMounts'):
-                self.oci_config['mounts'].append(mount)
-                if self.createmountpoints:
-                    if 'X-mount.mkdir' in mount['options']:
-                        self._createEmptyDirInRootfs(mount['destination'])
-                    else:
-                        self._createAndWriteFileInRootfs(mount['destination'], '', 0o644)
+                self._add_mount(mount)
 
             # Add envvars
             for envvar in self.platform_cfg.get('gpu').get('envvar'):
