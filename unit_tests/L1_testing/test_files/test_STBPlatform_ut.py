@@ -21,7 +21,7 @@ import os
 import sys
 import unittest
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.abspath('../../..'))
 from unit_tests.L1_testing import get_L1_test_results
 from bundlegen.core.stb_platform import STBPlatform
 from loguru import logger
