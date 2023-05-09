@@ -38,7 +38,7 @@ This extra json file contains all the dependencies of each .so library. It also 
 ## Generating a libs json file
 
 The libs.json file should be auto-generated during the build of the target host/platform. There is a bbclass for this here:
-https://code.rdkcentral.com/r/plugins/gitiles/components/generic/rdk-oe/meta-cmf-video-reference/+/refs/heads/master/classes/generate_libs_json.bbclass
+https://code.rdkcentral.com/r/plugins/gitiles/rdk/components/generic/rdk-oe/meta-cmf/+/refs/heads/rdk-next/classes/generate_libs_json.bbclass
 
 The bbclass uses readelf to generate this information. You can enable this generation by adding the following to your image target recipe:
 `inherit generate_libs_json`. The result can be found in file $MACHINE_libs.json inside your tmp/deploy dir.
