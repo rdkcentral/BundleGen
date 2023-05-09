@@ -23,11 +23,11 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from get_L1_test_results import add_test_results
-from bundlegen.core.stb_platform import STBPlatform
+from bundlegen.core.readelf import ReadElf
 from loguru import logger
 
 #This class will test the functionality of API's in stbplatform.py file.
-class TestStbPlatform(unittest.TestCase):
+class TestUtils(unittest.TestCase):
     def setUp(self):
          logger.debug("Setup")
          add_test_results.add_tests(self)
@@ -61,38 +61,19 @@ class TestStbPlatform(unittest.TestCase):
     def tearDownClass(self):
         add_test_results.end_results(self)
 
-    def test_platform_config_schema(self):
-        ''''this test is to check is jsonschema of tempete platform schema is proper.
-        one more changes is been added chdir because test been running in folder /BundleGen/unit_tests/L1_testing
-        to validate schema changing the directory to /BundleGen
-        '''
-        logger.debug("==> Validating the templete config schema%s \n "%(os.getcwd()))
-        os.chdir('../../')
-        search_path = os.path.abspath(os.path.join( os.getcwd(),'unit_tests','L1_testing','test_data_files'))
-        logger.debug(f"==> creating the search config file path : {search_path}")
-        validate = STBPlatform("rpi3_reference_vc4_dunfell",search_path)
-        actual = validate.validate_platform_config()
-        expected = True
-        os.chdir('unit_tests/L1_testing')
-        self.assertEqual(actual, expected)
-        logger.debug("-->Test was Successfully verified")
+    def test_readelf_fail_test_case(self):
+        logger.debug("-->checking new api in readelf file ")
+        rootfs_filepath = "./test_data_files/dac-image-wayland-egl-test-bundle/rootfs"
+        version_defs_by_rootfs_lib = ReadElf.retrieve_apiversions(rootfs_filepath)
+        self.assertEqual([], version_defs_by_rootfs_lib)
 
-
-    def test_wrong_platform_config_schema(self):
-        ''''this test is to validate if jsonschema of tempete plateform is proper.
-        here i have used vagrant file for testing because in rdk feild "supportedFeatures" is required that
-        feild was not there so used.
-        '''
-        logger.debug("==> Validating the wrong templete config schema")
-        os.chdir('../../')
-        search_path = os.path.abspath(os.path.join( os.getcwd(),'unit_tests','L1_testing','test_data_files'))
-        validate = STBPlatform("vagrant",search_path)
-        actual = validate.validate_platform_config()
-        expected = False
-        self.assertEqual(actual, expected)
-        os.chdir('unit_tests/L1_testing')
-        logger.debug("-->Test was Successfully verified")
-
+    def test_readelf_test_case(self):
+        logger.debug("-->checking new api in readelf  file ")
+        rootfs_filepath = "./test_data_files/dac-image-wayland-egl-test-bundle/libBrokenLocale-2.31.1"
+        version_defs_by_rootfs_lib = set(ReadElf.retrieve_apiversions(rootfs_filepath))
+        logger.debug("\n version_defs_by_rootfs_lib:  %s" % version_defs_by_rootfs_lib)
+        expected = {'GLIBC_2.4'}
+        self.assertEqual(version_defs_by_rootfs_lib, expected)
 
 if __name__ == "__main__":
     unittest.main()

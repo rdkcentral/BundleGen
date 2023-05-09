@@ -23,8 +23,9 @@ import json
 import sys
 import humanfriendly
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from loguru import logger
-from unit_tests.L2_testing import get_L2_test_results
+from get_L2_test_results import add_test_results
 from common import setup_sys_path, TestBase
 setup_sys_path()
 
@@ -155,7 +156,7 @@ def exists(obj, chain):
 class TestBundleData(TestBase):
     def setUp(self):
          logger.debug("Setup")
-         get_L2_test_results.add_test_results.add_tests(self)
+         add_test_results.add_tests(self)
 
     def tearDown(self):
         logger.debug("tearDown")
@@ -171,7 +172,7 @@ class TestBundleData(TestBase):
         # Demo output:  (print short info immediately - not important)
         if ok:
             logger.debug('\nOK: %s' % (self.id(),))
-            get_L2_test_results.add_test_results.test_passed(self)
+            add_test_results.test_passed(self)
 
         for typ, errors in (('ERROR', result.errors), ('FAIL', result.failures)):
             for test, text in errors:
@@ -180,11 +181,11 @@ class TestBundleData(TestBase):
                     msg = [x for x in text.split('\n')[1:]
                            if not x.startswith(' ')][0]
                     logger.debug("\n\n%s: %s\n     %s" % (typ, self.id(), msg))
-                    get_L2_test_results.add_test_results.test_failed(self, msg)
+                    add_test_results.test_failed(self, msg)
 
     @classmethod
     def tearDownClass(self):
-        get_L2_test_results.add_test_results.end_results(self)
+        add_test_results.end_results(self)
 
     def test_verify_final_executable_path(self):
         logger.debug("-->Verifying appmetadata executable path in bundlegen_image")

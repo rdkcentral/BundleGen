@@ -23,11 +23,11 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from get_L1_test_results import add_test_results
-from bundlegen.core.stb_platform import STBPlatform
+from bundlegen.core.image_unpacker import ImageUnpackager
 from loguru import logger
 
 #This class will test the functionality of API's in stbplatform.py file.
-class TestStbPlatform(unittest.TestCase):
+class TestImageUnpackager(unittest.TestCase):
     def setUp(self):
          logger.debug("Setup")
          add_test_results.add_tests(self)
@@ -61,37 +61,39 @@ class TestStbPlatform(unittest.TestCase):
     def tearDownClass(self):
         add_test_results.end_results(self)
 
-    def test_platform_config_schema(self):
-        ''''this test is to check is jsonschema of tempete platform schema is proper.
-        one more changes is been added chdir because test been running in folder /BundleGen/unit_tests/L1_testing
-        to validate schema changing the directory to /BundleGen
-        '''
-        logger.debug("==> Validating the templete config schema%s \n "%(os.getcwd()))
-        os.chdir('../../')
-        search_path = os.path.abspath(os.path.join( os.getcwd(),'unit_tests','L1_testing','test_data_files'))
-        logger.debug(f"==> creating the search config file path : {search_path}")
-        validate = STBPlatform("rpi3_reference_vc4_dunfell",search_path)
-        actual = validate.validate_platform_config()
-        expected = True
-        os.chdir('unit_tests/L1_testing')
-        self.assertEqual(actual, expected)
-        logger.debug("-->Test was Successfully verified")
+    def test_imageunpacker_image_app_metadata_missing(self):
+        logger.debug("-->checking the image app metadata is missing ")
+        outputdir = "./BundleGen/dac-image-wayland-egl-test-bundle"
+        img_path = "/tmp/bundlegen/20230329-120614_2e094abd57974c0895813f5c893b24ca"
+        img_unpacker = ImageUnpackager(img_path, outputdir)
+        img_appmetdata_path = img_unpacker.image_contains_metadata()
+        self.assertEqual(img_appmetdata_path, False)
 
+    def test_imageunpacker_image_app_metadata_in_given_path(self):
+        logger.debug("-->checking the image appmetadata is present in the given path ")
+        outputdir = "./BundleGen/dac-image-wayland-egl-test-bundle"
+        img_path = "/tmp/bundlegen/20230329-120614_2e094abd57974c0895813f5c893b24ca"
+        img_unpacker = ImageUnpackager(img_path, outputdir)
+        img_unpacker.app_metadata_image_path = "./test_data_files/test-appmetadata.json"
+        img_unpacker.image_contains_metadata()
+        app_metadata = img_unpacker.get_app_metadata_from_img()
+        final_app_metadata = {
+            "id": "com.rdk.wayland-egl-test",
+            "type": "application/vnd.rdk-app.dac.native",
+            "version": "1.0.0",
+            "description": "Simple wayland egl demo, showing green rectangle",
+            "priority": "optional",
+            "graphics": True
+        }
+        self.assertEqual(final_app_metadata, app_metadata)
 
-    def test_wrong_platform_config_schema(self):
-        ''''this test is to validate if jsonschema of tempete plateform is proper.
-        here i have used vagrant file for testing because in rdk feild "supportedFeatures" is required that
-        feild was not there so used.
-        '''
-        logger.debug("==> Validating the wrong templete config schema")
-        os.chdir('../../')
-        search_path = os.path.abspath(os.path.join( os.getcwd(),'unit_tests','L1_testing','test_data_files'))
-        validate = STBPlatform("vagrant",search_path)
-        actual = validate.validate_platform_config()
-        expected = False
-        self.assertEqual(actual, expected)
-        os.chdir('unit_tests/L1_testing')
-        logger.debug("-->Test was Successfully verified")
+    def test_imageunpacker_app_metadata_missing(self):
+        logger.debug("-->checking the image app metadata not specified ")
+        outputdir = "./BundleGen/dac-image-wayland-egl-test-bundle"
+        img_path = "/tmp/bundlegen/20230329-120614_2e094abd57974c0895813f5c893b24ca"
+        img_unpacker = ImageUnpackager(img_path, outputdir)
+        app_metadata = img_unpacker.get_app_metadata_from_img()
+        self.assertEqual(app_metadata, None)
 
 
 if __name__ == "__main__":

@@ -35,8 +35,9 @@ jobs:
       - name: Setup umoci
         uses: actions/setup-go@v3
         with:
-          go-version: '1.13.12'
+          go-version: '1.20.x'
           check-latest: true
+          cache: false
       - run: |
           sudo apt update
           sudo apt upgrade
@@ -45,9 +46,9 @@ jobs:
           echo "Printing GO version "
           go version
           GOPATH=$HOME/go
-          go get -d github.com/opencontainers/umoci
-          echo $GOPATH
-          cd $GOPATH/src/github.com/opencontainers/umoci/
+          cd $GOPATH
+          git clone https://github.com/opencontainers/umoci.git
+          cd $GOPATH/umoci/
           echo $(ls)
           make
           sudo make install
