@@ -379,6 +379,7 @@ class TestBundleProcessor(unittest.TestCase):
         processor.rootfs_path = None
         processor.createmountpoints = None
         processor.app_metadata={
+            "id": "com.rdk.netflix",
             "mounts": [
             {
             "destination": "/data",
@@ -419,6 +420,7 @@ class TestBundleProcessor(unittest.TestCase):
         processor.rootfs_path = None
         processor.createmountpoints = None
         processor.app_metadata={
+            "id": "com.rdk.netflix"
         }
         processor.platform_cfg = {
          "mounts": [
@@ -2581,6 +2583,7 @@ class TestBundleProcessor(unittest.TestCase):
         processor.bundle_path = "/tmp/test"
         processor.createmountpoints = False
         processor.app_metadata = {
+            "id": "com.rdk.netflix",
             "graphics":True
         }
         processor.platform_cfg = {
