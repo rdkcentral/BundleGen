@@ -95,7 +95,7 @@
                 ]
             },
             {
-                "source": "/tmp/rialto-0",
+                "source": "/tmp/{id}",
                 "destination": "/tmp/rialto-0",
                 "type": "bind",
                 "options": [
@@ -117,23 +117,37 @@
                 "major": 33,
                 "minor": 0,
                 "access": "rw"
+            },
+            {
+                "type": "c",
+                "path": "/dev/dri/card0",
+                "major": 226,
+                "minor": 0,
+                "access": "rw"
+            },
+            {
+                "type": "c",
+                "path": "/dev/dri/card1",
+                "major": 226,
+                "minor": 1,
+                "access": "rw"
             }
         ],
         "gfxLibs": [
             {
-                "src": "/usr/lib/libEGL.so",
+                "src": "/usr/lib/libEGL.so.1",
                 "dst": "/usr/lib/libEGL.so"
             },
             {
-                "src": "/usr/lib/libEGL.so",
+                "src": "/usr/lib/libEGL.so.1",
                 "dst": "/usr/lib/libEGL.so.1"
             },
             {
-                "src": "/usr/lib/libGLESv2.so",
+                "src": "/usr/lib/libGLESv2.so.2",
                 "dst": "/usr/lib/libGLESv2.so"
             },
             {
-                "src": "/usr/lib/libGLESv2.so",
+                "src": "/usr/lib/libGLESv2.so.2",
                 "dst": "/usr/lib/libGLESv2.so.2"
             },
             {
