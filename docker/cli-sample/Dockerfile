@@ -31,6 +31,6 @@ RUN git clone https://github.com/rdkcentral/BundleGen.git && \
     sudo pip3 install --editable .
 
 
-WORKDIR /home/bundlegenuser/bundlegen
+WORKDIR /home/bundlegenuser/BundleGen
 
 ENTRYPOINT [ "bundlegen" ]
