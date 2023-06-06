@@ -247,7 +247,7 @@ def index():
 
         # Begin processing. Work in the output dir where the img was unpacked to
         processor = BundleProcessor(
-            selected_platform.get_config(), outputdir, app_metadata_dict, False, form.lib_match.data)
+            selected_platform.get_config(), outputdir, app_metadata_dict, False, form.lib_match.data, False, False)
         if not processor.check_compatibility():
             # Not compatible - delete any work done so far
             shutil.rmtree(outputdir)

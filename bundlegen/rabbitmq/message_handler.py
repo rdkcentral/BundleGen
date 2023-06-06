@@ -188,6 +188,7 @@ def generate_bundle(options: message.Message) -> Tuple[Result, str]:
         False,
         options.lib_match_mode.value,
         options.createmountpoints,
+        False
     )
 
     if not processor.check_compatibility():
