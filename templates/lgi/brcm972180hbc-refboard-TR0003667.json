@@ -1,0 +1,202 @@
+{
+    "platformName": "brcm972180hbc-refboard-TR0003667",
+    "os": "linux",
+    "arch": {
+        "arch": "arm",
+        "variant": "v7"
+    },
+    "rdk": {
+        "version": "2020Q4",
+        "supportedFeatures": [
+            "Controller",
+            "DeviceInfo",
+            "Monitor",
+            "OCDM",
+            "TraceControl",
+            "WifiManager",
+            "com.comcast.CoPilot",
+            "com.comcast.DeviceProvisioning",
+            "com.comcast.FrameRate",
+            "com.comcast.HdcpProfile",
+            "com.comcast.HdmiInput",
+            "com.comcast.StateObserver",
+            "com.comcast.StorageManager",
+            "org.rdk.ActivityMonitor",
+            "org.rdk.DeviceDiagnostics",
+            "org.rdk.DisplaySettings",
+            "org.rdk.FrontPanel",
+            "org.rdk.HomeNetworking",
+            "org.rdk.LoggingPreferences",
+            "org.rdk.Network",
+            "org.rdk.OCIContainer",
+            "org.rdk.Proxies",
+            "org.rdk.SleepTimer",
+            "org.rdk.TTSResource",
+            "org.rdk.TTSSettings",
+            "org.rdk.Timer",
+            "org.rdk.UserPreferences",
+            "org.rdk.Warehouse"
+        ]
+    },
+    "hardware": {
+        "graphics": true
+    },
+    "storage": {
+        "persistent": {
+            "storageDir": "/opt/dac_apps/data/0",
+            "maxSize": "100M"
+        }
+    },
+    "gpu": {
+        "extraMounts": [
+            {
+                "source": "/usr/share/X11/xkb",
+                "destination": "/usr/share/X11/xkb",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "nosuid",
+                    "nodev",
+                    "ro",
+                    "X-mount.mkdir"
+                ]
+            },
+            {
+                "source": "/tmp/nxserver_ipc",
+                "destination": "/tmp/nxserver_ipc",
+                "type": "bind",
+                "options": [
+                    "bind",
+                    "ro"
+                ]
+            },
+            {
+                "source": "/etc/ssl/certs",
+                "destination": "/etc/ssl/certs",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "nosuid",
+                    "nodev",
+                    "ro",
+                    "X-mount.mkdir"
+                ]
+            },
+            {
+                "source": "/usr/share/ca-certificates",
+                "destination": "/usr/share/ca-certificates",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "nosuid",
+                    "nodev",
+                    "ro",
+                    "X-mount.mkdir"
+                ]
+            },
+            {
+                "source": "/tmp/rialto-0",
+                "destination": "/tmp/rialto-0",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "rw",
+                    "X-dobby.optional"
+                ]
+            }
+        ],
+        "args": [
+            "/usr/libexec/DobbyInit",
+            "/usr/bin/essos-egl"
+        ],
+        "envvar": [
+            "LD_PRELOAD=/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.0",
+            "XDG_RUNTIME_DIR=/tmp",
+            "RIALTO_SOCKET_PATH=/tmp/rialto-0"
+        ],
+        "devs": [
+            {
+                "type": "c",
+                "path": "/dev/nexus",
+                "major": 33,
+                "minor": 0,
+                "access": "rw"
+            },
+            {
+                 "type": "c",
+                 "path": "/dev/dri/card0",
+                 "major": 226,
+                 "minor": 0,
+                 "access": "rw"
+            },
+            {
+                 "type": "c",
+                 "path": "/dev/dri/card1",
+                 "major": 226,
+                 "minor": 1,
+                 "access": "rw"
+            }
+        ],
+        "gfxLibs": [
+            {
+                "src": "/usr/lib/libEGL.so.1",
+                "dst": "/usr/lib/libEGL.so"
+            },
+            {
+                "src": "/usr/lib/libEGL.so.1",
+                "dst": "/usr/lib/libEGL.so.1"
+            },
+            {
+                "src": "/usr/lib/libGLESv2.so.2",
+                "dst": "/usr/lib/libGLESv2.so"
+            },
+            {
+                "src": "/usr/lib/libGLESv2.so.2",
+                "dst": "/usr/lib/libGLESv2.so.2"
+            },
+            {
+                "src": "/usr/lib/libwayland-egl.so.1",
+                "dst": "/usr/lib/libwayland-egl.so"
+            },
+            {
+                "src": "/usr/lib/libwayland-egl.so.1",
+                "dst": "/usr/lib/libwayland-egl.so.0"
+            },
+            {
+                "src": "/usr/lib/libwayland-egl.so.1",
+                "dst": "/usr/lib/libwayland-egl.so.1"
+            },
+            {
+                "src": "/usr/lib/libessos.so.0",
+                "dst": "/usr/lib/libessos.so.0"
+            }
+        ]
+    },
+    "mounts": [],
+    "network": {
+        "options": [
+            "nat",
+            "open",
+            "private"
+        ]
+    },
+    "envvar": [
+    ],
+    "resourceLimits": [
+        {
+            "type": "RLIMIT_NPROC",
+            "hard": 300,
+            "soft": 300
+        },
+        {
+            "type": "RLIMIT_RTPRIO",
+            "hard": 6,
+            "soft": 6
+        }
+    ],
+    "disableUserNamespacing": true,
+    "logging": {
+        "mode": "file",
+        "logDir": "/var/log"
+    }
+}
