@@ -638,6 +638,50 @@
             "name": "/lib/libpamc.so.0.82.1"
         },
         {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1",
+                "/lib/libudev.so.1"
+            ],
+            "name": "/lib/libply-splash-core.so.4"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1",
+                "/lib/libudev.so.1"
+            ],
+            "name": "/lib/libply-splash-core.so.4.0.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/librt.so.1"
+            ],
+            "name": "/lib/libply.so.4"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/librt.so.1"
+            ],
+            "name": "/lib/libply.so.4.0.0"
+        },
+        {
             "apiversions": [
                 "GLIBC_2.4",
                 "GLIBC_2.11",
@@ -1217,14 +1261,6 @@
                 "/usr/lib/liblzma.so.5"
             ],
             "name": "/lib/systemd/libsystemd-shared-244.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/usr/lib/libapparmor.so.1"
-            ],
-            "name": "/usr/lib/apparmor/ptest/testsuite/libraries/libapparmor/swig/perl/blib/arch/auto/LibAppArmor/LibAppArmor.so"
         },
         {
             "apiversions": [],
@@ -5234,42 +5270,6 @@
             "name": "/usr/lib/libabr.so"
         },
         {
-            "apiversions": [
-                "IMMUNIX_1.0",
-                "APPARMOR_1.0",
-                "APPARMOR_1.1",
-                "APPARMOR_2.9",
-                "APPARMOR_2.10",
-                "APPARMOR_2.11",
-                "APPARMOR_2.13",
-                "APPARMOR_2.13.1",
-                "PRIVATE"
-            ],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libpthread.so.0"
-            ],
-            "name": "/usr/lib/libapparmor.so.1"
-        },
-        {
-            "apiversions": [
-                "IMMUNIX_1.0",
-                "APPARMOR_1.0",
-                "APPARMOR_1.1",
-                "APPARMOR_2.9",
-                "APPARMOR_2.10",
-                "APPARMOR_2.11",
-                "APPARMOR_2.13",
-                "APPARMOR_2.13.1",
-                "PRIVATE"
-            ],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libpthread.so.0"
-            ],
-            "name": "/usr/lib/libapparmor.so.1.6.2"
-        },
-        {
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
@@ -5334,26 +5334,6 @@
                 "/lib/librt.so.1"
             ],
             "name": "/usr/lib/libasound.so.2.0.0"
-        },
-        {
-            "apiversions": [
-                "LIBASSUAN_1.0"
-            ],
-            "deps": [
-                "/lib/libc.so.6",
-                "/usr/lib/libgpg-error.so.0"
-            ],
-            "name": "/usr/lib/libassuan.so.0"
-        },
-        {
-            "apiversions": [
-                "LIBASSUAN_1.0"
-            ],
-            "deps": [
-                "/lib/libc.so.6",
-                "/usr/lib/libgpg-error.so.0"
-            ],
-            "name": "/usr/lib/libassuan.so.0.8.3"
         },
         {
             "apiversions": [],
@@ -6264,37 +6244,6 @@
                 "/usr/lib/libssl.so.1.1"
             ],
             "name": "/usr/lib/libcmndrmprdy.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/ld-linux-armhf.so.3",
-                "/lib/libc.so.6",
-                "/lib/libdl.so.2",
-                "/lib/libgcc_s.so.1",
-                "/lib/libm.so.6",
-                "/lib/libpthread.so.0",
-                "/usr/lib/libEGL.so.1",
-                "/usr/lib/libGLESv2.so.2",
-                "/usr/lib/libWPEFrameworkCore.so.2",
-                "/usr/lib/libWPEFrameworkCryptography.so.2",
-                "/usr/lib/libWPEFrameworkDefinitions.so.2",
-                "/usr/lib/libWPEFrameworkTracing.so.2",
-                "/usr/lib/libWPEFrameworkWebSocket.so.2",
-                "/usr/lib/libessos.so.0",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgobject-2.0.so.0",
-                "/usr/lib/libgstapp-1.0.so.0",
-                "/usr/lib/libgstaudio-1.0.so.0",
-                "/usr/lib/libgstbase-1.0.so.0",
-                "/usr/lib/libgstpbutils-1.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
-                "/usr/lib/libgstvideo-1.0.so.0",
-                "/usr/lib/libocdm.so.2",
-                "/usr/lib/librfcapi.so.0",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/libcobalt.so"
         },
         {
             "apiversions": [],
@@ -7295,32 +7244,6 @@
                 "/lib/libc.so.6"
             ],
             "name": "/usr/lib/libgpg-error.so.0.28.0"
-        },
-        {
-            "apiversions": [
-                "GPGME_1.1",
-                "GPGME_1.0"
-            ],
-            "deps": [
-                "/lib/ld-linux-armhf.so.3",
-                "/lib/libc.so.6",
-                "/usr/lib/libassuan.so.0",
-                "/usr/lib/libgpg-error.so.0"
-            ],
-            "name": "/usr/lib/libgpgme.so.11"
-        },
-        {
-            "apiversions": [
-                "GPGME_1.1",
-                "GPGME_1.0"
-            ],
-            "deps": [
-                "/lib/ld-linux-armhf.so.3",
-                "/lib/libc.so.6",
-                "/usr/lib/libassuan.so.0",
-                "/usr/lib/libgpg-error.so.0"
-            ],
-            "name": "/usr/lib/libgpgme.so.11.22.1"
         },
         {
             "apiversions": [],
@@ -8823,6 +8746,37 @@
         {
             "apiversions": [],
             "deps": [
+                "/lib/ld-linux-armhf.so.3",
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libgcc_s.so.1",
+                "/lib/libm.so.6",
+                "/lib/libpthread.so.0",
+                "/usr/lib/libEGL.so.1",
+                "/usr/lib/libGLESv2.so.2",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkCryptography.so.2",
+                "/usr/lib/libWPEFrameworkDefinitions.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libWPEFrameworkWebSocket.so.2",
+                "/usr/lib/libessos.so.0",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libgobject-2.0.so.0",
+                "/usr/lib/libgstapp-1.0.so.0",
+                "/usr/lib/libgstaudio-1.0.so.0",
+                "/usr/lib/libgstbase-1.0.so.0",
+                "/usr/lib/libgstpbutils-1.0.so.0",
+                "/usr/lib/libgstreamer-1.0.so.0",
+                "/usr/lib/libgstvideo-1.0.so.0",
+                "/usr/lib/libocdm.so.2",
+                "/usr/lib/librfcapi.so.0",
+                "/usr/lib/libstdc++.so.6"
+            ],
+            "name": "/usr/lib/libloader_app.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
                 "/lib/libc.so.6",
                 "/lib/libpthread.so.0"
             ],
@@ -9581,9 +9535,7 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/usr/lib/libarchive.so.13",
-                "/usr/lib/libassuan.so.0",
-                "/usr/lib/libgpg-error.so.0",
-                "/usr/lib/libgpgme.so.11"
+                "/usr/lib/libsolv.so.1"
             ],
             "name": "/usr/lib/libopkg.so.1"
         },
@@ -9592,9 +9544,7 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/usr/lib/libarchive.so.13",
-                "/usr/lib/libassuan.so.0",
-                "/usr/lib/libgpg-error.so.0",
-                "/usr/lib/libgpgme.so.11"
+                "/usr/lib/libsolv.so.1"
             ],
             "name": "/usr/lib/libopkg.so.1.0.0"
         },
@@ -9864,26 +9814,6 @@
         {
             "apiversions": [],
             "deps": [
-                "/lib/libc.so.6",
-                "/lib/libdl.so.2",
-                "/lib/libm.so.6",
-                "/usr/lib/libcrypt.so.2"
-            ],
-            "name": "/usr/lib/libperl.so.5"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libdl.so.2",
-                "/lib/libm.so.6",
-                "/usr/lib/libcrypt.so.2"
-            ],
-            "name": "/usr/lib/libperl.so.5.30.0"
-        },
-        {
-            "apiversions": [],
-            "deps": [
                 "/lib/ld-linux-armhf.so.3",
                 "/lib/libc.so.6",
                 "/lib/libm.so.6",
@@ -9911,6 +9841,58 @@
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libplayready30pk.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1"
+            ],
+            "name": "/usr/lib/libply-boot-client.so.4"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1"
+            ],
+            "name": "/usr/lib/libply-boot-client.so.4.0.0"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply-splash-core.so.4",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1",
+                "/lib/libudev.so.1",
+                "/lib/libz.so.1",
+                "/usr/lib/libpng16.so.16"
+            ],
+            "name": "/usr/lib/libply-splash-graphics.so.4"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply-splash-core.so.4",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1",
+                "/lib/libudev.so.1",
+                "/lib/libz.so.1",
+                "/usr/lib/libpng16.so.16"
+            ],
+            "name": "/usr/lib/libply-splash-graphics.so.4.0.0"
         },
         {
             "apiversions": [
@@ -10953,6 +10935,29 @@
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/libsocinit.so.0.0.0"
+        },
+        {
+            "apiversions": [
+                "SOLV_1.0",
+                "SOLV_1.1",
+                "SOLV_1.2",
+                "SOLV_1.3"
+            ],
+            "deps": [
+                "/lib/libc.so.6"
+            ],
+            "name": "/usr/lib/libsolv.so.1"
+        },
+        {
+            "apiversions": [
+                "SOLV_1.0"
+            ],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libz.so.1",
+                "/usr/lib/libsolv.so.1"
+            ],
+            "name": "/usr/lib/libsolvext.so.1"
         },
         {
             "apiversions": [],
@@ -12922,23 +12927,6 @@
             "apiversions": [],
             "deps": [
                 "/lib/libc.so.6",
-                "/usr/lib/libapparmor.so.1"
-            ],
-            "name": "/usr/lib/perl5/vendor_perl/5.30.1/arm-linux/auto/LibAppArmor/LibAppArmor.so"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
-                "/lib/libgcc_s.so.1",
-                "/usr/lib/libstdc++.so.6"
-            ],
-            "name": "/usr/lib/plugins/dobby/libDeviceMapperPlugin.so.1"
-        },
-        {
-            "apiversions": [],
-            "deps": [
-                "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
                 "/usr/lib/libstdc++.so.6"
             ],
@@ -13016,6 +13004,160 @@
                 "/usr/lib/libwesteros_compositor.so.0"
             ],
             "name": "/usr/lib/plugins/westeros/libwesteros_plugin_rdkshell_extended_input.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply-splash-core.so.4",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1",
+                "/lib/libudev.so.1"
+            ],
+            "name": "/usr/lib/plymouth/details.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply-splash-core.so.4",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1",
+                "/lib/libudev.so.1",
+                "/lib/libz.so.1",
+                "/usr/lib/libply-splash-graphics.so.4",
+                "/usr/lib/libpng16.so.16"
+            ],
+            "name": "/usr/lib/plymouth/fade-throbber.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply-splash-core.so.4",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1",
+                "/lib/libudev.so.1",
+                "/lib/libz.so.1",
+                "/usr/lib/libcairo.so.2",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libgobject-2.0.so.0",
+                "/usr/lib/libharfbuzz.so.0",
+                "/usr/lib/libpango-1.0.so.0",
+                "/usr/lib/libpangocairo-1.0.so.0",
+                "/usr/lib/libply-splash-graphics.so.4",
+                "/usr/lib/libpng16.so.16"
+            ],
+            "name": "/usr/lib/plymouth/label.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply-splash-core.so.4",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1",
+                "/lib/libudev.so.1"
+            ],
+            "name": "/usr/lib/plymouth/renderers/frame-buffer.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply-splash-core.so.4",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1",
+                "/lib/libudev.so.1",
+                "/lib/libz.so.1",
+                "/usr/lib/libply-splash-graphics.so.4",
+                "/usr/lib/libpng16.so.16"
+            ],
+            "name": "/usr/lib/plymouth/script.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply-splash-core.so.4",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1",
+                "/lib/libudev.so.1",
+                "/lib/libz.so.1",
+                "/usr/lib/libply-splash-graphics.so.4",
+                "/usr/lib/libpng16.so.16"
+            ],
+            "name": "/usr/lib/plymouth/space-flares.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply-splash-core.so.4",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1",
+                "/lib/libudev.so.1"
+            ],
+            "name": "/usr/lib/plymouth/text.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply-splash-core.so.4",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1",
+                "/lib/libudev.so.1",
+                "/lib/libz.so.1",
+                "/usr/lib/libply-splash-graphics.so.4",
+                "/usr/lib/libpng16.so.16"
+            ],
+            "name": "/usr/lib/plymouth/throbgress.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply-splash-core.so.4",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1",
+                "/lib/libudev.so.1"
+            ],
+            "name": "/usr/lib/plymouth/tribar.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libdl.so.2",
+                "/lib/libm.so.6",
+                "/lib/libply-splash-core.so.4",
+                "/lib/libply.so.4",
+                "/lib/librt.so.1",
+                "/lib/libudev.so.1",
+                "/lib/libz.so.1",
+                "/usr/lib/libply-splash-graphics.so.4",
+                "/usr/lib/libpng16.so.16"
+            ],
+            "name": "/usr/lib/plymouth/two-step.so"
         },
         {
             "apiversions": [],
@@ -13224,6 +13366,22 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
+                "/usr/lib/libBTMgr.so.0",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkBluetooth.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
                 "/usr/lib/libWPEFrameworkCore.so.2",
                 "/usr/lib/libWPEFrameworkDefinitions.so.2",
                 "/usr/lib/libWPEFrameworkPlugins.so.2",
@@ -13241,10 +13399,58 @@
                 "/usr/lib/libWPEFrameworkCore.so.2",
                 "/usr/lib/libWPEFrameworkTracing.so.2",
                 "/usr/lib/libbreakpadwrapper.so.0",
-                "/usr/lib/libcobalt.so",
+                "/usr/lib/libloader_app.so",
                 "/usr/lib/libstdc++.so.6"
             ],
             "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkCobaltImpl.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libcrypto.so.1.1",
+                "/usr/lib/librfcapi.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0",
+                "/usr/lib/libtrower-base64.so.1.0.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkContinueWatching.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libcurl.so.4",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkDataCapture.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libcurl.so.4",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkDeviceDiagnostics.so"
         },
         {
             "apiversions": [],
@@ -13286,17 +13492,33 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
+                "/usr/lib/libIARMBus.so.0",
                 "/usr/lib/libWPEFrameworkCore.so.2",
                 "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkProtocols.so.2",
                 "/usr/lib/libWPEFrameworkTracing.so.2",
-                "/usr/lib/libaamp.so",
                 "/usr/lib/libbreakpadwrapper.so.0",
-                "/usr/lib/libglib-2.0.so.0",
-                "/usr/lib/libgstreamer-1.0.so.0",
+                "/usr/lib/libds.so",
                 "/usr/lib/libstdc++.so.6",
                 "/usr/lib/libtelemetry_msgsender.so.0"
             ],
-            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkFireboltMediaPlayer.so"
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkDisplaySettings.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libds.so",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkFrameRate.so"
         },
         {
             "apiversions": [],
@@ -13313,6 +13535,40 @@
                 "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkFrontPanel.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libds.so",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkHdcpProfile.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libRCEC.so.0",
+                "/usr/lib/libRCECIARMBusHal.so.0",
+                "/usr/lib/libRCECOSHal.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkHdmiCec.so"
         },
         {
             "apiversions": [],
@@ -13368,6 +13624,37 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkLoggingPreferences.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkCryptalgo.so.2",
+                "/usr/lib/libWPEFrameworkDefinitions.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkMessenger.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
                 "/usr/lib/libWPEFrameworkCore.so.2",
                 "/usr/lib/libWPEFrameworkPlugins.so.2",
                 "/usr/lib/libWPEFrameworkTracing.so.2",
@@ -13376,6 +13663,21 @@
                 "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkMonitor.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkNetwork.so"
         },
         {
             "apiversions": [],
@@ -13436,6 +13738,21 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libsqlite3.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkPersistentStore.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
                 "/usr/lib/libIARMBus.so.0",
                 "/usr/lib/libWPEFrameworkCore.so.2",
                 "/usr/lib/libWPEFrameworkDefinitions.so.2",
@@ -13471,6 +13788,123 @@
             "deps": [
                 "/lib/libc.so.6",
                 "/lib/libgcc_s.so.1",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkRemoteControl.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libcurl.so.4",
+                "/usr/lib/libpng16.so.16",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkScreenCapture.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkCryptalgo.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkProcessContainers.so.2",
+                "/usr/lib/libWPEFrameworkProtocols.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkSecurityAgent.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/ld-linux-armhf.so.3",
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libcurl.so.4",
+                "/usr/lib/libds.so",
+                "/usr/lib/librfcapi.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkSystemServices.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/librbus.so.0",
+                "/usr/lib/librfcapi.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkTelemetry.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libcurl.so.4",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libgobject-2.0.so.0",
+                "/usr/lib/libgstreamer-1.0.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkTextToSpeech.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkTimer.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
                 "/usr/lib/libWPEFrameworkCore.so.2",
                 "/usr/lib/libWPEFrameworkDefinitions.so.2",
                 "/usr/lib/libWPEFrameworkPlugins.so.2",
@@ -13480,6 +13914,69 @@
                 "/usr/lib/libtelemetry_msgsender.so.0"
             ],
             "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkTraceControl.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/ld-linux-armhf.so.3",
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/lib/libudev.so.1",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkUsbAccess.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libglib-2.0.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkUserPreferences.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkVoiceControl.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libds.so",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkWarehouse.so"
         },
         {
             "apiversions": [],
@@ -13512,6 +14009,38 @@
                 "/usr/lib/libwpe-1.0.so.1"
             ],
             "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkWebKitBrowserImpl.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkWifiManager.so"
+        },
+        {
+            "apiversions": [],
+            "deps": [
+                "/lib/libc.so.6",
+                "/lib/libgcc_s.so.1",
+                "/usr/lib/libIARMBus.so.0",
+                "/usr/lib/libWPEFrameworkCore.so.2",
+                "/usr/lib/libWPEFrameworkPlugins.so.2",
+                "/usr/lib/libWPEFrameworkTracing.so.2",
+                "/usr/lib/libbreakpadwrapper.so.0",
+                "/usr/lib/librtCore.so",
+                "/usr/lib/librtRemote.so",
+                "/usr/lib/libstdc++.so.6",
+                "/usr/lib/libtelemetry_msgsender.so.0"
+            ],
+            "name": "/usr/lib/wpeframework/plugins/libWPEFrameworkXCast.so"
         },
         {
             "apiversions": [],
