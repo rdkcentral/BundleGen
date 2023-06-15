@@ -95,7 +95,7 @@
                 ]
             },
             {
-                "source": "/tmp/rialto-0",
+                "source": "/tmp/{id}",
                 "destination": "/tmp/rialto-0",
                 "type": "bind",
                 "options": [
@@ -106,7 +106,9 @@
             }
         ],
         "envvar": [
-            "LD_PRELOAD=/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.0"
+            "LD_PRELOAD=/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.0",
+            "XDG_RUNTIME_DIR=/tmp",
+            "RIALTO_SOCKET_PATH=/tmp/rialto-0"
         ],
         "devs": [
             {
@@ -168,7 +170,6 @@
         ]
     },
     "envvar": [
-        "XDG_RUNTIME_DIR=/tmp"
     ],
     "resourceLimits": [
         {
