@@ -1,5 +1,5 @@
 {
-    "platformName": "ah212_reference",
+    "platformName": "ah212",
     "os": "linux",
     "arch": {
         "arch": "arm",
@@ -43,7 +43,7 @@
     },
     "storage": {
         "persistent": {
-            "storageDir": "/tmp/data",
+            "storageDir": "/opt/dac_apps/data/0",
             "maxSize": "100M"
         }
     },
@@ -57,11 +57,49 @@
                     "rbind",
                     "nosuid",
                     "nodev",
-                    "ro"
+                    "ro",
+                    "X-mount.mkdir"
                 ]
-            }],
+            },
+            {
+                "source": "/etc/ssl/certs",
+                "destination": "/etc/ssl/certs",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "nosuid",
+                    "nodev",
+                    "ro",
+                    "X-mount.mkdir"
+                ]
+            },
+            {
+                "source": "/usr/share/ca-certificates",
+                "destination": "/usr/share/ca-certificates",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "nosuid",
+                    "nodev",
+                    "ro",
+                    "X-mount.mkdir"
+                ]
+            },
+            {
+                "source": "/tmp/{id}",
+                "destination": "/tmp/rialto-0",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "rw",
+                    "X-dobby.optional"
+                ]
+            }
+        ],
         "envvar": [
-            "LD_PRELOAD=/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.0"
+            "LD_PRELOAD=/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.0",
+            "XDG_RUNTIME_DIR=/tmp",
+            "RIALTO_SOCKET_PATH=/tmp/rialto-0"
         ],
         "devs": [
             {
@@ -70,9 +108,9 @@
                 "major": 10,
                 "minor": 115,
                 "access": "rw",
-		"dynamic": true
+                "dynamic": true
             },
-	    {
+            {
                 "type": "c",
                 "path": "/dev/ion",
                 "major": 10,
@@ -98,7 +136,7 @@
                 "src": "/usr/lib/libGLESv2.so",
                 "dst": "/usr/lib/libGLESv2.so.2"
             },
-	    {
+            {
                 "src": "/usr/lib/libwayland-egl.so",
                 "dst": "/usr/lib/libwayland-egl.so"
             },
@@ -125,7 +163,6 @@
         ]
     },
     "envvar": [
-        "XDG_RUNTIME_DIR=/tmp"
     ],
     "resourceLimits": [
         {
