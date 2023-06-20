@@ -95,7 +95,7 @@
                 ]
             },
             {
-                "source": "/tmp/rialto-0",
+                "source": "/tmp/{id}",
                 "destination": "/tmp/rialto-0",
                 "type": "bind",
                 "options": [
@@ -104,10 +104,6 @@
                     "X-dobby.optional"
                 ]
             }
-        ],
-        "args": [
-            "/usr/libexec/DobbyInit",
-            "/usr/bin/essos-egl"
         ],
         "envvar": [
             "LD_PRELOAD=/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.0",
