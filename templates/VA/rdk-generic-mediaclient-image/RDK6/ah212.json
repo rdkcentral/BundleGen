@@ -1,5 +1,5 @@
 {
-    "platformName": "m393-72180ZB-stb",
+    "platformName": "ah212",
     "os": "linux",
     "arch": {
         "arch": "arm",
@@ -62,15 +62,6 @@
                 ]
             },
             {
-                "source": "/tmp/nxserver_ipc",
-                "destination": "/tmp/nxserver_ipc",
-                "type": "bind",
-                "options": [
-                    "bind",
-                    "ro"
-                ]
-            },
-            {
                 "source": "/etc/ssl/certs",
                 "destination": "/etc/ssl/certs",
                 "type": "bind",
@@ -95,7 +86,7 @@
                 ]
             },
             {
-                "source": "/tmp/rialto-0",
+                "source": "/tmp/{id}",
                 "destination": "/tmp/rialto-0",
                 "type": "bind",
                 "options": [
@@ -113,17 +104,19 @@
         "devs": [
             {
                 "type": "c",
-                "path": "/dev/nexus",
-                "major": 33,
-                "minor": 0,
-                "access": "rw"
+                "path": "/dev/mali0",
+                "major": 10,
+                "minor": 115,
+                "access": "rw",
+                "dynamic": true
             },
             {
-                 "type": "c",
-                 "path": "/dev/dri/card0",
-                 "major": 226,
-                 "minor": 0,
-                 "access": "rw"
+                "type": "c",
+                "path": "/dev/ion",
+                "major": 10,
+                "minor": 127,
+                "access": "rw",
+                "dynamic": true
             }
         ],
         "gfxLibs": [
@@ -144,15 +137,15 @@
                 "dst": "/usr/lib/libGLESv2.so.2"
             },
             {
-                "src": "/usr/lib/libwayland-egl.so.1",
+                "src": "/usr/lib/libwayland-egl.so",
                 "dst": "/usr/lib/libwayland-egl.so"
             },
             {
-                "src": "/usr/lib/libwayland-egl.so.1",
+                "src": "/usr/lib/libwayland-egl.so",
                 "dst": "/usr/lib/libwayland-egl.so.0"
             },
             {
-                "src": "/usr/lib/libwayland-egl.so.1",
+                "src": "/usr/lib/libwayland-egl.so",
                 "dst": "/usr/lib/libwayland-egl.so.1"
             },
             {

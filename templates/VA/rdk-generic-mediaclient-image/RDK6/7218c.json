@@ -1,5 +1,5 @@
 {
-    "platformName": "ah212_reference",
+    "platformName": "7218c",
     "os": "linux",
     "arch": {
         "arch": "arm",
@@ -43,7 +43,7 @@
     },
     "storage": {
         "persistent": {
-            "storageDir": "/tmp/data",
+            "storageDir": "/opt/dac_apps/data/0",
             "maxSize": "100M"
         }
     },
@@ -57,57 +57,109 @@
                     "rbind",
                     "nosuid",
                     "nodev",
+                    "ro",
+                    "X-mount.mkdir"
+                ]
+            },
+            {
+                "source": "/tmp/nxserver_ipc",
+                "destination": "/tmp/nxserver_ipc",
+                "type": "bind",
+                "options": [
+                    "bind",
                     "ro"
                 ]
-            }],
+            },
+            {
+                "source": "/etc/ssl/certs",
+                "destination": "/etc/ssl/certs",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "nosuid",
+                    "nodev",
+                    "ro",
+                    "X-mount.mkdir"
+                ]
+            },
+            {
+                "source": "/usr/share/ca-certificates",
+                "destination": "/usr/share/ca-certificates",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "nosuid",
+                    "nodev",
+                    "ro",
+                    "X-mount.mkdir"
+                ]
+            },
+            {
+                "source": "/tmp/{id}",
+                "destination": "/tmp/rialto-0",
+                "type": "bind",
+                "options": [
+                    "rbind",
+                    "rw",
+                    "X-dobby.optional"
+                ]
+            }
+        ],
         "envvar": [
-            "LD_PRELOAD=/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.0"
+            "LD_PRELOAD=/usr/lib/libwayland-client.so.0:/usr/lib/libwayland-egl.so.0",
+            "XDG_RUNTIME_DIR=/tmp",
+            "RIALTO_SOCKET_PATH=/tmp/rialto-0"
         ],
         "devs": [
             {
                 "type": "c",
-                "path": "/dev/mali0",
-                "major": 10,
-                "minor": 115,
-                "access": "rw",
-		"dynamic": true
+                "path": "/dev/nexus",
+                "major": 33,
+                "minor": 0,
+                "access": "rw"
             },
-	    {
+            {
                 "type": "c",
-                "path": "/dev/ion",
-                "major": 10,
-                "minor": 127,
-                "access": "rw",
-                "dynamic": true
+                "path": "/dev/dri/card0",
+                "major": 226,
+                "minor": 0,
+                "access": "rw"
+            },
+            {
+                "type": "c",
+                "path": "/dev/dri/card1",
+                "major": 226,
+                "minor": 1,
+                "access": "rw"
             }
         ],
         "gfxLibs": [
             {
-                "src": "/usr/lib/libEGL.so",
+                "src": "/usr/lib/libEGL.so.1",
                 "dst": "/usr/lib/libEGL.so"
             },
             {
-                "src": "/usr/lib/libEGL.so",
+                "src": "/usr/lib/libEGL.so.1",
                 "dst": "/usr/lib/libEGL.so.1"
             },
             {
-                "src": "/usr/lib/libGLESv2.so",
+                "src": "/usr/lib/libGLESv2.so.2",
                 "dst": "/usr/lib/libGLESv2.so"
             },
             {
-                "src": "/usr/lib/libGLESv2.so",
+                "src": "/usr/lib/libGLESv2.so.2",
                 "dst": "/usr/lib/libGLESv2.so.2"
             },
-	    {
-                "src": "/usr/lib/libwayland-egl.so",
+            {
+                "src": "/usr/lib/libwayland-egl.so.1",
                 "dst": "/usr/lib/libwayland-egl.so"
             },
             {
-                "src": "/usr/lib/libwayland-egl.so",
+                "src": "/usr/lib/libwayland-egl.so.1",
                 "dst": "/usr/lib/libwayland-egl.so.0"
             },
             {
-                "src": "/usr/lib/libwayland-egl.so",
+                "src": "/usr/lib/libwayland-egl.so.1",
                 "dst": "/usr/lib/libwayland-egl.so.1"
             },
             {
@@ -125,7 +177,6 @@
         ]
     },
     "envvar": [
-        "XDG_RUNTIME_DIR=/tmp"
     ],
     "resourceLimits": [
         {
