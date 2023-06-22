@@ -94,12 +94,27 @@
                     "rw",
                     "X-dobby.optional"
                 ]
+            },
+            {
+            "source": "/tmp",
+            "destination": "/tmp",
+            "options": [
+                "rbind",
+                "nosuid",
+                "nodev",
+                "rw"
+            ],
+            "type": "bind"
             }
         ],
         "envvar": [
             "LD_PRELOAD=/usr/lib/libGLESv2.so.2:/usr/lib/libwayland-egl.so.1",
             "XDG_RUNTIME_DIR=/tmp",
-            "RIALTO_SOCKET_PATH=/tmp/rialto-0"
+            "RIALTO_SOCKET_PATH=/tmp/{id}",       
+            "SAGEBIN_PATH=/usr/bin/",
+            "LD_LIBRARY_PATH=/usr/lib:/usr/lib/wpeframework/plugins",
+            "GST_PLUGIN_PATH=$GST_PLUGIN_PATH:/usr/lib/gstreamer-1.0",
+            "GST_DEBUG=gstplayer:4,2"
         ],
         "devs": [
             {
