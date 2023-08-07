@@ -150,6 +150,20 @@
                 "major": 226,
                 "minor": 0,
                 "access": "rw"
+            },
+            {
+                "type": "c",
+                "path": "/dev/dri/card1",
+                "major": 226,
+                "minor": 1,
+                "access": "rw"
+            },
+            {
+                "type": "c",
+                "path": "/dev/dri/renderD128",
+                "major": 226,
+                "minor": 128,
+                "access": "rw"
             }
         ],
         "gfxLibs": [
@@ -188,10 +202,6 @@
             {
                 "src": "/usr/lib/libessos.so.0",
                 "dst": "/usr/lib/libessos.so.0"
-            },
-            {
-                "src": "/usr/lib/dri/swrast_dri.so",
-                "dst": "/usr/lib/dri/swrast_dri.so"
             }
         ]
     },
