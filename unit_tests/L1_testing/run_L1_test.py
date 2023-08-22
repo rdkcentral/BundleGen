@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#Test Purpose
+#Testing Purpose
 
 import argparse
 import glob
