@@ -108,10 +108,12 @@ def start():
                 connection = pika.BlockingConnection(
                     pika.ConnectionParameters(host=os.environ.get('RABBITMQ_HOST'),
                                               port=os.environ.get('RABBITMQ_PORT'),
+                                              heartbeat=int(os.environ.get('RABBITMQ_HEARTBEAT_SECONDS', 60)),
                                               connection_attempts=3, retry_delay=1))
             else:
                 connection = pika.BlockingConnection(
                     pika.ConnectionParameters(host=os.environ.get('RABBITMQ_HOST'),
+                                              heartbeat=int(os.environ.get('RABBITMQ_HEARTBEAT_SECONDS', 60)),
                                               connection_attempts=3, retry_delay=1))
 
             channel = connection.channel()
