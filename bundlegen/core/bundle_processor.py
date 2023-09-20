@@ -511,11 +511,12 @@ class BundleProcessor:
         if 'source' in mount:
             mount['source'] = mount['source'].format(id=self.app_metadata['id'])
         if self.createmountpoints:
-            if 'X-mount.mkdir' in mount['options']:
+            if 'options' in mount and 'X-mount.mkdir' in mount['options']:
                 self._createEmptyDirInRootfs(mount['destination'])
             else:
                 self._createAndWriteFileInRootfs(mount['destination'], '', 0o644)
-        self.oci_config['mounts'].append(mount)
+        if 'options' not in mount or 'X-mount.no' not in mount['options']:
+            self.oci_config['mounts'].append(mount)
 
 
     # ==========================================================================

@@ -94,6 +94,12 @@
                     "rw",
                     "X-dobby.optional"
                 ]
+            },
+            {
+                "destination": "/tmp/westeros",
+                "options": [
+                    "X-mount.no"
+                ]
             }
         ],
         "envvar": [
