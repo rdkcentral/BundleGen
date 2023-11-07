@@ -61,17 +61,17 @@ For development, you will need Python >=3.7 installed and configured. Once insta
 It's easier to work in Fedora as the OCI tooling is already available
 ```bash
 # Install dependencies
-$ sudo dnf upgrade -y
-$ sudo dnf install -y make git skopeo go go-md2man
+sudo dnf upgrade -y
+sudo dnf install -y make git skopeo go go-md2man
 # Install Go
-$ mkdir -p $HOME/go
-$ echo 'export GOPATH=$HOME/go' >> $HOME/.bashrc
-$ source $HOME/.bashrc
+mkdir -p $HOME/go
+echo 'export GOPATH=$HOME/go' >> $HOME/.bashrc
+source $HOME/.bashrc
 # Build/install umoci
-$ go get -d github.com/opencontainers/umoci
-$ cd $GOPATH/src/github.com/opencontainers/umoci/
-$ make
-$ sudo make install
+go get -d github.com/opencontainers/umoci
+cd $GOPATH/src/github.com/opencontainers/umoci/
+make
+sudo make install
 ```
 
 ### Ubuntu >=18.04
@@ -80,28 +80,28 @@ Note Skopeo only publishes packages for Ubuntu 18.04 or newer. It may be possibl
 
 ```bash
 # Install dependencies
-$ sudo apt update
-$ sudo apt upgrade
-$ sudo apt install -y make git go-md2man
+sudo apt update
+sudo apt upgrade
+sudo apt install -y make git go-md2man
 # Install Go 1.13
-$ wget https://dl.google.com/go/go1.13.12.linux-amd64.tar.gz
-$ tar -xvf go1.13.12.linux-amd64.tar.gz
-$ sudo mv go /usr/local
-$ mkdir -p $HOME/go
-$ echo 'export GOPATH=$HOME/go' >> $HOME/.bashrc
-$ echo 'export GOROOT=/usr/local/go' >> $HOME/.bashrc
-$ echo 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> $HOME/.bashrc
-$ source $HOME/.bashrc
+wget https://dl.google.com/go/go1.13.12.linux-amd64.tar.gz
+tar -xvf go1.13.12.linux-amd64.tar.gz
+sudo mv go /usr/local
+mkdir -p $HOME/go
+echo 'export GOPATH=$HOME/go' >> $HOME/.bashrc
+echo 'export GOROOT=/usr/local/go' >> $HOME/.bashrc
+echo 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> $HOME/.bashrc
+source $HOME/.bashrc
 # Build/install umoci
-$ go get -d github.com/opencontainers/umoci
-$ cd $GOPATH/src/github.com/opencontainers/umoci/
-$ make
-$ sudo make install
+go get -d github.com/opencontainers/umoci
+cd $GOPATH/src/github.com/opencontainers/umoci/
+make
+sudo make install
 # Install skopeo
-$ . /etc/os-release
-$ sudo sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${NAME}_${VERSION_ID}/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
-$ wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/x${NAME}_${VERSION_ID}/Release.key -O- | sudo apt-key add -
-$ sudo apt update && sudo apt install skopeo
+. /etc/os-release
+sudo sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${NAME}_${VERSION_ID}/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
+wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/x${NAME}_${VERSION_ID}/Release.key -O- | sudo apt-key add -
+sudo apt update && sudo apt install skopeo
 ```
 
 ---
