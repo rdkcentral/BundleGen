@@ -9,14 +9,14 @@ A Fedora 32 `Vagrantfile` is included to provide a ready-to-use environment. Oth
 ## Quick Start
 Start the Vagrant VM and SSH in.
 ```console
-$ vagrant up
-$ vagrant ssh
+vagrant up
+vagrant ssh
 ```
 
 Activate the Python venv
 ```console
-$ cd ~/bundlegen
-$ source .venv/bin/activate
+cd ~/bundlegen
+source .venv/bin/activate
 ```
 
 Run BundleGen:
@@ -72,6 +72,12 @@ go get -d github.com/opencontainers/umoci
 cd $GOPATH/src/github.com/opencontainers/umoci/
 make
 sudo make install
+
+# Setup virtual envioment
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pip install --editable .
 ```
 
 ### Ubuntu >=18.04
@@ -102,6 +108,12 @@ sudo make install
 sudo sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${NAME}_${VERSION_ID}/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
 wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/x${NAME}_${VERSION_ID}/Release.key -O- | sudo apt-key add -
 sudo apt update && sudo apt install skopeo
+
+# Setup virtual envioment
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pip install --editable .
 ```
 
 ---
