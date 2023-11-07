@@ -27,7 +27,6 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: '3.x'
-          cache: 'pip'
       - run: pip install -r Bundlegen/requirements.txt
              pip install --editable Bundlegen/
              pip install coverage
@@ -40,7 +39,7 @@ jobs:
           cache: false
       - run: |
           sudo apt update
-          sudo apt upgrade
+          sudo apt upgrade -y
           sudo apt install -y make git go-md2man
           # Build/install umoci
           echo "Printing GO version "
@@ -54,12 +53,23 @@ jobs:
           sudo make install
           echo 'Finished Job of UMOCI'
 
+      - name: Setup skopeo
+        if: ${{ env.ACT }}
+        run: |
+          echo 'Installing skopeo'
+          . /etc/os-release && \
+          sudo sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${NAME}_${VERSION_ID}/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list" && \
+          sudo wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/x${NAME}_${VERSION_ID}/Release.key -O- | sudo apt-key add - && \
+          sudo apt update && apt install -y skopeo
+          echo 'Finished Installing skopeo'
+
       - name: Run the unit test
         working-directory: ./Bundlegen/unit_tests/L1_testing
         run: |
             python run_L1_test.py -c coverage_report
 
       - name: Upload artifacts
+        if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v3
         with:
           name: artifacts
