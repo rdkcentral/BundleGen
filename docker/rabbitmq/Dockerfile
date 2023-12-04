@@ -53,4 +53,4 @@ RUN cd ./bundlegen && \
 WORKDIR /home/bundlegenuser/bundlegen
 
 # Start BundleGen consumer
-ENTRYPOINT [ "bundlegen-rabbitmq", "-vv", "start" ]
+ENTRYPOINT [ "./entrypoint.sh" ]
