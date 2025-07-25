@@ -19,6 +19,7 @@ import os
 import json
 import humanfriendly
 import textwrap
+import shlex
 from jsonschema import validate
 from hashlib import sha256
 from loguru import logger
@@ -461,6 +462,15 @@ class BundleProcessor:
                 dobbyinitpath = self.platform_cfg['dobby']['dobbyInitPath']
             else:
                 dobbyinitpath = '/usr/libexec/DobbyInit'
+            args = self.oci_config['process']['args']
+            new_args = []
+            for item in args:
+                if ' ' in item:
+                    item = item.replace('\\@', ' ')
+                    new_args.extend(shlex.split(item))
+                else:
+                    new_args.append(item)
+            self.oci_config['process']['args'] = new_args
 
             # Add DobbyInit to start of arguments
             self.oci_config['process']['args'].insert(0, dobbyinitpath)
