@@ -463,14 +463,14 @@ class BundleProcessor:
             else:
                 dobbyinitpath = '/usr/libexec/DobbyInit'
             args = self.oci_config['process']['args']
-
             new_args = []
             for item in args:
-                item = item.replace('\\@', ' ')
-                if ' ' in item:
-                    new_args.extend(shlex.split(item))
+                item = item.replace(r'\@', '@')
+                if '@' in item:
+                    parts = item.split('@')
                 else:
-                    new_args.append(item)
+                    parts = shlex.split(item) if ' ' in item else [item]
+                new_args.extend(part for part in parts if part)
             self.oci_config['process']['args'] = new_args
 
             # Add DobbyInit to start of arguments
